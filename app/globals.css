@@ -1,0 +1,121 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* Updated to Dispa8ch brand colors */
+:root {
+  --background: #FDFDFD;
+  --foreground: #171717;
+  --card: #FFFFFF;
+  --card-foreground: #171717;
+  --popover: #FFFFFF;
+  --popover-foreground: #171717;
+  --primary: #E41F47;
+  --primary-foreground: #FFFFFF;
+  --secondary: #757575;
+  --secondary-foreground: #171717;
+  --muted: #F5F5F5;
+  --muted-foreground: #757575;
+  --accent: #FFEDF0;
+  --accent-foreground: #E41F47;
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
+  --border: #E6E6E6;
+  --input: #E6E6E6;
+  --ring: rgba(228, 31, 71, 0.12);
+  --radius: 8px;
+  
+  /* Add exact spacing tokens from requirements */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
+}
+
+.dark {
+  --background: #171717;
+  --foreground: #FDFDFD;
+  --card: #1F1F1F;
+  --card-foreground: #FDFDFD;
+  --popover: #1F1F1F;
+  --popover-foreground: #FDFDFD;
+  --primary: #E41F47;
+  --primary-foreground: #FFFFFF;
+  --secondary: #757575;
+  --secondary-foreground: #FDFDFD;
+  --muted: #2A2A2A;
+  --muted-foreground: #A3A3A3;
+  --accent: #3D1F27;
+  --accent-foreground: #E41F47;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: #2A2A2A;
+  --input: #2A2A2A;
+  --ring: #E41F47;
+}
+
+@theme inline {
+  --font-sans: var(--font-sans), system-ui, -apple-system, sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  
+  /* Input styling - no shadows, exact border, focus ring */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="number"],
+  textarea,
+  select {
+    @apply border border-input bg-background px-3 py-2 rounded-md;
+    @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring;
+    @apply transition-all duration-150;
+    box-shadow: none !important;
+  }
+  
+  /* Label spacing - 8px above inputs */
+  label {
+    @apply block mb-2 text-sm font-medium;
+  }
+  
+  /* Button radius - 6px for buttons */
+  button {
+    @apply rounded-md;
+    border-radius: 6px;
+  }
+}

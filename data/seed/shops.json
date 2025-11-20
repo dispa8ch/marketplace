@@ -1,0 +1,252 @@
+[
+  {
+    "id": "shop-001",
+    "name": "Emeka & Son's LTD",
+    "slug": "emeka-sons-ltd",
+    "type": "Super Mart",
+    "description": "Your one-stop shop for groceries, electronics, and household items",
+    "logo": "/placeholder.svg?height=100&width=100",
+    "banner": "/placeholder.svg?height=400&width=1200",
+    "verified": true,
+    "rating": 4.5,
+    "total_reviews": 123,
+    "total_customers": 123,
+    "location": {
+      "address": "No, 43 Alabaja Road",
+      "lga": "Ikeja",
+      "state": "Lagos",
+      "country": "Nigeria"
+    },
+    "contact": {
+      "email": "contact@emekasons.com",
+      "phone": "+234 709 786 6890"
+    },
+    "categories": ["Electronics", "Fashion", "Groceries"],
+    "joined_date": "2023-01-15"
+  },
+  {
+    "id": "shop-002",
+    "name": "TechHub Nigeria",
+    "slug": "techhub-nigeria",
+    "type": "Retail Store",
+    "description": "Premium electronics and gadgets",
+    "logo": "/placeholder.svg?height=100&width=100",
+    "banner": "/placeholder.svg?height=400&width=1200",
+    "verified": true,
+    "rating": 4.7,
+    "total_reviews": 89,
+    "total_customers": 89,
+    "location": {
+      "address": "Plot 15, Ikeja GRA",
+      "lga": "Ikeja",
+      "state": "Lagos",
+      "country": "Nigeria"
+    },
+    "contact": {
+      "email": "info@techhubnigeria.com",
+      "phone": "+234 805 123 4567"
+    },
+    "categories": ["Electronics", "Gaming"],
+    "joined_date": "2023-03-20"
+  },
+  {
+    "id": "shop-003",
+    "name": "Fashion Trends",
+    "slug": "fashion-trends",
+    "type": "Retail Store",
+    "description": "Latest fashion styles for men and women",
+    "logo": "/placeholder.svg?height=100&width=100",
+    "banner": "/placeholder.svg?height=400&width=1200",
+    "verified": true,
+    "rating": 4.3,
+    "total_reviews": 156,
+    "total_customers": 156,
+    "location": {
+      "address": "12 Allen Avenue",
+      "lga": "Ikeja",
+      "state": "Lagos",
+      "country": "Nigeria"
+    },
+    "contact": {
+      "email": "hello@fashiontrends.ng",
+      "phone": "+234 803 456 7890"
+    },
+    "categories": ["Fashion"],
+    "joined_date": "2023-02-10"
+  },
+  {
+    "id": "shop-004",
+    "name": "Island Warehouse",
+    "slug": "island-warehouse",
+    "type": "Warehouse",
+    "description": "Bulk supplies and wholesale items",
+    "logo": "/placeholder.svg?height=100&width=100",
+    "banner": "/placeholder.svg?height=400&width=1200",
+    "verified": false,
+    "rating": 4.1,
+    "total_reviews": 67,
+    "total_customers": 67,
+    "location": {
+      "address": "Victoria Island Business District",
+      "lga": "V.I",
+      "state": "Lagos",
+      "country": "Nigeria"
+    },
+    "contact": {
+      "email": "sales@islandwarehouse.ng",
+      "phone": "+234 807 890 1234"
+    },
+    "categories": ["Groceries", "Health & Beauty"],
+    "joined_date": "2023-04-05"
+  },
+  {
+    "id": "shop-005",
+    "name": "Kids Paradise",
+    "slug": "kids-paradise",
+    "type": "Mom & Pop",
+    "description": "Everything for your little ones",
+    "logo": "/placeholder.svg?height=100&width=100",
+    "banner": "/placeholder.svg?height=400&width=1200",
+    "verified": true,
+    "rating": 4.8,
+    "total_reviews": 201,
+    "total_customers": 201,
+    "location": {
+      "address": "18 Opebi Road",
+      "lga": "Ikeja",
+      "state": "Lagos",
+      "country": "Nigeria"
+    },
+    "contact": {
+      "email": "info@kidsparadise.ng",
+      "phone": "+234 806 234 5678"
+    },
+    "categories": ["Toys & Hobby"],
+    "joined_date": "2023-05-12"
+  },
+  {
+    "id": "shop-006",
+    "name": "Health Plus Pharmacy",
+    "slug": "health-plus-pharmacy",
+    "type": "Retail Store",
+    "description": "Your trusted health and wellness partner",
+    "logo": "/placeholder.svg?height=100&width=100",
+    "banner": "/placeholder.svg?height=400&width=1200",
+    "verified": true,
+    "rating": 4.6,
+    "total_reviews": 178,
+    "total_customers": 178,
+    "location": {
+      "address": "45 Surulere Way",
+      "lga": "Surulere",
+      "state": "Lagos",
+      "country": "Nigeria"
+    },
+    "contact": {
+      "email": "contact@healthplus.ng",
+      "phone": "+234 809 345 6789"
+    },
+    "categories": ["Health & Beauty"],
+    "joined_date": "2023-01-28"
+  },
+  {
+    "id": "shop-007",
+    "name": "Furniture World",
+    "slug": "furniture-world",
+    "type": "Super Mart",
+    "description": "Quality furniture for your home and office",
+    "logo": "/placeholder.svg?height=100&width=100",
+    "banner": "/placeholder.svg?height=400&width=1200",
+    "verified": true,
+    "rating": 4.4,
+    "total_reviews": 92,
+    "total_customers": 92,
+    "location": {
+      "address": "3 Oshodi-Apapa Expressway",
+      "lga": "Oshodi",
+      "state": "Lagos",
+      "country": "Nigeria"
+    },
+    "contact": {
+      "email": "sales@furnitureworld.ng",
+      "phone": "+234 802 567 8901"
+    },
+    "categories": ["Furniture"],
+    "joined_date": "2023-06-01"
+  },
+  {
+    "id": "shop-008",
+    "name": "Gaming Zone",
+    "slug": "gaming-zone",
+    "type": "Retail Store",
+    "description": "Gaming consoles, accessories and more",
+    "logo": "/placeholder.svg?height=100&width=100",
+    "banner": "/placeholder.svg?height=400&width=1200",
+    "verified": true,
+    "rating": 4.9,
+    "total_reviews": 234,
+    "total_customers": 234,
+    "location": {
+      "address": "Lekki Phase 1",
+      "lga": "Lekki",
+      "state": "Lagos",
+      "country": "Nigeria"
+    },
+    "contact": {
+      "email": "support@gamingzone.ng",
+      "phone": "+234 804 678 9012"
+    },
+    "categories": ["Gaming", "Electronics"],
+    "joined_date": "2023-02-14"
+  },
+  {
+    "id": "shop-009",
+    "name": "Fresh Market",
+    "slug": "fresh-market",
+    "type": "Super Mart",
+    "description": "Fresh groceries delivered daily",
+    "logo": "/placeholder.svg?height=100&width=100",
+    "banner": "/placeholder.svg?height=400&width=1200",
+    "verified": false,
+    "rating": 4.2,
+    "total_reviews": 145,
+    "total_customers": 145,
+    "location": {
+      "address": "28 Herbert Macaulay Way",
+      "lga": "Yaba",
+      "state": "Lagos",
+      "country": "Nigeria"
+    },
+    "contact": {
+      "email": "orders@freshmarket.ng",
+      "phone": "+234 808 789 0123"
+    },
+    "categories": ["Groceries"],
+    "joined_date": "2023-03-08"
+  },
+  {
+    "id": "shop-010",
+    "name": "Beauty Haven",
+    "slug": "beauty-haven",
+    "type": "Retail Store",
+    "description": "Premium beauty products and cosmetics",
+    "logo": "/placeholder.svg?height=100&width=100",
+    "banner": "/placeholder.svg?height=400&width=1200",
+    "verified": true,
+    "rating": 4.7,
+    "total_reviews": 189,
+    "total_customers": 189,
+    "location": {
+      "address": "Ajah Shopping Complex",
+      "lga": "Ajah",
+      "state": "Lagos",
+      "country": "Nigeria"
+    },
+    "contact": {
+      "email": "hello@beautyhaven.ng",
+      "phone": "+234 801 890 1234"
+    },
+    "categories": ["Health & Beauty"],
+    "joined_date": "2023-04-22"
+  }
+]

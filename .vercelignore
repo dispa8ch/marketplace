@@ -1,0 +1,17 @@
+# Exclude Express API backend (deploy separately to Railway/Render)
+api/
+scripts/
+docs/
+
+# Test files
+**/*.test.ts
+**/__tests__/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Development files
+*.log
+.DS_Store

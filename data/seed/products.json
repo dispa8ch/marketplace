@@ -1,0 +1,186 @@
+[
+  {
+    "id": "prod-001",
+    "name": "Amazing Brand - Cool product with nice color",
+    "slug": "amazing-brand-cool-product",
+    "description": "High-quality product with excellent features and durability",
+    "category": "Electronics",
+    "price": 60000,
+    "original_price": 128000,
+    "discount_percentage": 40,
+    "shop_id": "shop-001",
+    "shop_name": "Emeka & Son's LTD",
+    "images": [
+      "/placeholder.svg?height=400&width=400",
+      "/placeholder.svg?height=400&width=400",
+      "/placeholder.svg?height=400&width=400"
+    ],
+    "stock": 20,
+    "rating": 4.5,
+    "total_reviews": 123,
+    "location": {
+      "address": "No, 43 Alabaja Road",
+      "lga": "Ikeja"
+    },
+    "variants": [
+      { "name": "Color", "options": ["Red", "Blue", "Black"] },
+      { "name": "Size", "options": ["Small", "Medium", "Large"] }
+    ],
+    "specifications": {
+      "Brand": "Amazing Brand",
+      "Model": "AB-2024",
+      "Weight": "2.5kg"
+    },
+    "in_stock": true,
+    "featured": true
+  },
+  {
+    "id": "prod-002",
+    "name": "Premium Wireless Headphones",
+    "slug": "premium-wireless-headphones",
+    "description": "High-fidelity audio with active noise cancellation",
+    "category": "Electronics",
+    "price": 45000,
+    "original_price": 75000,
+    "discount_percentage": 40,
+    "shop_id": "shop-002",
+    "shop_name": "TechHub Nigeria",
+    "images": ["/placeholder.svg?height=400&width=400"],
+    "stock": 15,
+    "rating": 4.7,
+    "total_reviews": 89,
+    "location": {
+      "address": "Plot 15, Ikeja GRA",
+      "lga": "Ikeja"
+    },
+    "variants": [
+      { "name": "Color", "options": ["Black", "White", "Silver"] }
+    ],
+    "in_stock": true,
+    "featured": true
+  },
+  {
+    "id": "prod-003",
+    "name": "Designer T-Shirt Collection",
+    "slug": "designer-tshirt-collection",
+    "description": "Premium cotton t-shirts with unique designs",
+    "category": "Fashion",
+    "price": 8500,
+    "original_price": 15000,
+    "discount_percentage": 43,
+    "shop_id": "shop-003",
+    "shop_name": "Fashion Trends",
+    "images": ["/placeholder.svg?height=400&width=400"],
+    "stock": 50,
+    "rating": 4.3,
+    "total_reviews": 67,
+    "location": {
+      "address": "12 Allen Avenue",
+      "lga": "Ikeja"
+    },
+    "variants": [
+      { "name": "Size", "options": ["S", "M", "L", "XL", "XXL"] },
+      { "name": "Color", "options": ["White", "Black", "Navy", "Grey"] }
+    ],
+    "in_stock": true,
+    "featured": false
+  },
+  {
+    "id": "prod-004",
+    "name": "Smart LED TV 55 Inch",
+    "slug": "smart-led-tv-55-inch",
+    "description": "4K Ultra HD Smart TV with HDR support",
+    "category": "Electronics",
+    "price": 285000,
+    "original_price": 450000,
+    "discount_percentage": 37,
+    "shop_id": "shop-002",
+    "shop_name": "TechHub Nigeria",
+    "images": ["/placeholder.svg?height=400&width=400"],
+    "stock": 8,
+    "rating": 4.8,
+    "total_reviews": 54,
+    "location": {
+      "address": "Plot 15, Ikeja GRA",
+      "lga": "Ikeja"
+    },
+    "in_stock": true,
+    "featured": true
+  },
+  {
+    "id": "prod-005",
+    "name": "Elegant Yellow Ankara Gown",
+    "slug": "elegant-yellow-ankara-gown",
+    "description": "Beautiful handcrafted Ankara gown",
+    "category": "Fashion",
+    "price": 15000,
+    "original_price": 25000,
+    "discount_percentage": 40,
+    "shop_id": "shop-003",
+    "shop_name": "Fashion Trends",
+    "images": ["/placeholder.svg?height=400&width=400"],
+    "stock": 12,
+    "rating": 4.6,
+    "total_reviews": 78,
+    "location": {
+      "address": "12 Allen Avenue",
+      "lga": "Ikeja"
+    },
+    "variants": [
+      { "name": "Size", "options": ["8", "10", "12", "14", "16"] }
+    ],
+    "in_stock": true,
+    "featured": true
+  },
+  {
+    "id": "prod-005",
+    "name": "Elegant Yellow Ankara Gown",
+    "slug": "elegant-yellow-ankara-gown",
+    "description": "Beautiful handcrafted Ankara gown",
+    "category": "Fashion",
+    "price": 15000,
+    "original_price": 25000,
+    "discount_percentage": 40,
+    "shop_id": "shop-003",
+    "shop_name": "Fashion Trends",
+    "images": ["/placeholder.svg?height=400&width=400"],
+    "stock": 12,
+    "rating": 4.6,
+    "total_reviews": 78,
+    "location": {
+      "address": "12 Allen Avenue",
+      "lga": "Ikeja"
+    },
+    "variants": [
+      { "name": "Size", "options": ["8", "10", "12", "14", "16"] }
+    ],
+    "in_stock": true,
+    "featured": true
+  },
+  {
+    "id": "prod-003",
+    "name": "Designer T-Shirt Collection",
+    "slug": "designer-tshirt-collection",
+    "description": "Premium cotton t-shirts with unique designs",
+    "category": "Fashion",
+    "price": 8500,
+    "original_price": 15000,
+    "discount_percentage": 43,
+    "shop_id": "shop-003",
+    "shop_name": "Fashion Trends",
+    "images": ["/placeholder.svg?height=400&width=400"],
+    "stock": 50,
+    "rating": 4.3,
+    "total_reviews": 67,
+    "location": {
+      "address": "12 Allen Avenue",
+      "lga": "Ikeja"
+    },
+    "variants": [
+      { "name": "Size", "options": ["S", "M", "L", "XL", "XXL"] },
+      { "name": "Color", "options": ["White", "Black", "Navy", "Grey"] }
+    ],
+    "in_stock": true,
+    "featured": false
+  }
+]

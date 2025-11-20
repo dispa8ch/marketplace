@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from 'react'
-import { Users, Package, Star } from 'lucide-react'
-import FollowButton from './follow-button'
+import { useState } from "react"
+import { Users, Package, Star } from "lucide-react"
+import FollowButton from "./follow-button"
 
 type Props = {
   vendorId: string
@@ -23,7 +23,11 @@ export default function VendorStats({ vendorId, initialFollowers, productCount, 
         </div>
         <p className="text-lg font-bold text-[#171717] mt-1">{followers.toLocaleString()}</p>
         <div className="mt-3">
-          <FollowButton vendorId={vendorId} initialFollowed={false} onChange={(followed) => setFollowers((f) => followed ? f + 1 : Math.max(0, f - 1))} />
+          <FollowButton
+            vendorId={vendorId}
+            initialFollowed={false}
+            onChange={(followed) => setFollowers((f) => (followed ? f + 1 : Math.max(0, f - 1)))}
+          />
         </div>
       </div>
 

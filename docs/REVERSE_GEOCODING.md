@@ -7,7 +7,7 @@ Where to integrate
 
 Example server handler (next.js api route /app/api/reverse-geocode/route.ts):
 
-```ts
+\`\`\`ts
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
@@ -25,17 +25,17 @@ export async function POST(request: Request) {
   const formatted = data?.results?.[0]?.formatted || ''
   return NextResponse.json({ address: formatted })
 }
-```
+\`\`\`
 
 Client integration
 
 - In `LocationModal.requestGeolocation`, after obtaining coords, call your server endpoint to translate to a human readable address:
 
-```ts
+\`\`\`ts
 const res = await fetch('/api/reverse-geocode', { method: 'POST', body: JSON.stringify({ lat, lng }), headers: { 'Content-Type': 'application/json' } })
 const json = await res.json()
 setAddress(json.address || `Lat ${lat}, Lng ${lng}`)
-```
+\`\`\`
 
 Security notes
 

@@ -1,4 +1,4 @@
- 'use client'
+'use client'
 
  import { NavBar } from '@/components/marketplace/nav-bar'
  import { ProductCard } from '@/components/marketplace/product-card'

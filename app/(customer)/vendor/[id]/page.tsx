@@ -1,14 +1,12 @@
-import { notFound } from 'next/navigation'
-import Image from 'next/image'
-import { MapPin, Phone, Mail, Star, Users, Package, Flag, MessageSquare } from 'lucide-react'
-import BackButton from '@/components/ui/back-button'
-import { Button } from '@/components/ui/button'
-import VendorStats from '@/components/marketplace/vendor-stats.client'
-import { ProductCard } from '@/components/marketplace/product-card'
-import { Badge } from '@/components/ui/badge'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { ReportVendorModal } from '@/components/marketplace/report-vendor-modal'
-import VendorInfoModal from '@/components/marketplace/vendor-info-modal'
+import Image from "next/image"
+import { MapPin, Phone, Mail, Star, MessageSquare } from "lucide-react"
+import BackButton from "@/components/ui/back-button"
+import { Button } from "@/components/ui/button"
+import VendorStats from "@/components/marketplace/vendor-stats"
+import { ProductCard } from "@/components/marketplace/product-card"
+import { Badge } from "@/components/ui/badge"
+import { ReportVendorModal } from "@/components/marketplace/report-vendor-modal"
+import VendorInfoModal from "@/components/marketplace/vendor-info-modal"
 
 export default async function VendorPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -25,7 +23,7 @@ export default async function VendorPage({ params }: { params: Promise<{ id: str
     rating: 4.5,
     reviewCount: 44,
     timeOnPlatform: "10m on Dispa8ch",
-  followers: 1234,
+    followers: 1234,
     productCount: 156,
     banner: "/placeholder.svg?height=300&width=1200",
     avatar: "/generic-vendor-logo.png",
@@ -48,12 +46,7 @@ export default async function VendorPage({ params }: { params: Promise<{ id: str
     <div className="min-h-screen bg-[#FDFDFD]">
       {/* Vendor Banner */}
       <div className="relative h-[240px] w-full bg-gray-200">
-        <Image
-          src={vendor.banner || "/placeholder.svg"}
-          alt={vendor.name}
-          fill
-          className="object-cover"
-        />
+        <Image src={vendor.banner || "/placeholder.svg"} alt={vendor.name} fill className="object-cover" />
       </div>
 
       {/* Vendor Profile Card */}
@@ -76,9 +69,7 @@ export default async function VendorPage({ params }: { params: Promise<{ id: str
                   />
                 </div>
                 {vendor.verified && (
-                  <Badge className="absolute -top-2 -right-2 bg-[#E41F47] text-white">
-                    Verified
-                  </Badge>
+                  <Badge className="absolute -top-2 -right-2 bg-[#E41F47] text-white">Verified</Badge>
                 )}
               </div>
 
@@ -88,7 +79,7 @@ export default async function VendorPage({ params }: { params: Promise<{ id: str
                   <div>
                     <h1 className="text-2xl font-bold text-[#171717] mb-1">{vendor.name}</h1>
                     <p className="text-sm text-[#757575] mb-3">{vendor.type}</p>
-                    
+
                     <div className="flex items-center gap-4 mb-4">
                       <div className="flex items-center gap-1">
                         <Star className="w-4 h-4 fill-[#FFA500] text-[#FFA500]" />
@@ -99,14 +90,25 @@ export default async function VendorPage({ params }: { params: Promise<{ id: str
                     </div>
 
                     {/* Vendor stats & follow (client) */}
-                    <VendorStats vendorId={vendor.id} initialFollowers={vendor.followers} productCount={vendor.productCount} rating={vendor.rating} />
+                    <VendorStats
+                      vendorId={vendor.id}
+                      initialFollowers={vendor.followers}
+                      productCount={vendor.productCount}
+                      rating={vendor.rating}
+                    />
 
                     <div className="space-y-2 hidden">
-                      <a href={`mailto:${vendor.email}`} className="flex items-center gap-2 text-sm text-[#757575] hover:text-[#E41F47]">
+                      <a
+                        href={`mailto:${vendor.email}`}
+                        className="flex items-center gap-2 text-sm text-[#757575] hover:text-[#E41F47]"
+                      >
                         <Mail className="w-4 h-4" />
                         <span>{vendor.email}</span>
                       </a>
-                      <a href={`tel:${vendor.phone}`} className="flex items-center gap-2 text-sm text-[#757575] hover:text-[#E41F47]">
+                      <a
+                        href={`tel:${vendor.phone}`}
+                        className="flex items-center gap-2 text-sm text-[#757575] hover:text-[#E41F47]"
+                      >
                         <Phone className="w-4 h-4" />
                         <span>{vendor.phone}</span>
                       </a>
@@ -118,14 +120,18 @@ export default async function VendorPage({ params }: { params: Promise<{ id: str
                   </div>
 
                   <div className="flex flex-col gap-2">
-                      <a href={`https://wa.me/${vendor.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hi ' + vendor.name + ', I have a question about your products.')}`} target="_blank" rel="noreferrer">
-                        <Button className="bg-[#25D366] hover:bg-[#1da851] text-white hidden">
-                          <MessageSquare className="w-4 h-4 mr-2" />
-                          WhatsApp
-                        </Button>
-                      </a>
-                      <VendorInfoModal vendor={vendor} />
-                      <ReportVendorModal vendor={vendor} />
+                    <a
+                      href={`https://wa.me/${vendor.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent("Hi " + vendor.name + ", I have a question about your products.")}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Button className="bg-[#25D366] hover:bg-[#1da851] text-white hidden">
+                        <MessageSquare className="w-4 h-4 mr-2" />
+                        WhatsApp
+                      </Button>
+                    </a>
+                    <VendorInfoModal vendor={vendor} />
+                    <ReportVendorModal vendor={vendor} />
                   </div>
                 </div>
               </div>

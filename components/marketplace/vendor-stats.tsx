@@ -4,14 +4,14 @@ import { useState } from "react"
 import { Users, Package, Star } from "lucide-react"
 import FollowButton from "./follow-button"
 
-type Props = {
+interface VendorStatsProps {
   vendorId: string
   initialFollowers: number
   productCount: number
   rating: number | string
 }
 
-export default function VendorStats({ vendorId, initialFollowers, productCount, rating }: Props) {
+export default function VendorStats({ vendorId, initialFollowers, productCount, rating }: VendorStatsProps) {
   const [followers, setFollowers] = useState(initialFollowers)
 
   return (

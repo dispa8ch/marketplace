@@ -1,27 +1,26 @@
-import { Package, Shirt, Gamepad2, Laptop, Heart, Sofa } from 'lucide-react';
-import { NavBar } from '@/components/marketplace/nav-bar';
-import { ProductCard } from '@/components/marketplace/product-card';
-import { VendorCard } from '@/components/marketplace/vendor-card';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import Link from 'next/link';
-import productsData from '@/data/seed/products.json';
-import shopsData from '@/data/seed/shops.json';
-import { usePathname } from 'next/navigation'
+import { Package, Shirt, Gamepad2, Laptop, Heart, Sofa } from "lucide-react"
+import { NavBar } from "@/components/marketplace/nav-bar"
+import { ProductCard } from "@/components/marketplace/product-card"
+import { VendorCard } from "@/components/marketplace/vendor-card"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import Link from "next/link"
+import productsData from "@/data/seed/products.json"
+import shopsData from "@/data/seed/shops.json"
 
 const categories = [
-  { name: 'Toys & Hobby', icon: Package, slug: 'toys-hobby' },
-  { name: 'Gaming', icon: Gamepad2, slug: 'gaming' },
-  { name: 'Electronics', icon: Laptop, slug: 'electronics' },
-  { name: 'Health & Beauty', icon: Heart, slug: 'health-beauty' },
-  { name: 'Furniture', icon: Sofa, slug: 'furniture' },
-  { name: 'Fashion', icon: Shirt, slug: 'fashion' },
-];
+  { name: "Toys & Hobby", icon: Package, slug: "toys-hobby" },
+  { name: "Gaming", icon: Gamepad2, slug: "gaming" },
+  { name: "Electronics", icon: Laptop, slug: "electronics" },
+  { name: "Health & Beauty", icon: Heart, slug: "health-beauty" },
+  { name: "Furniture", icon: Sofa, slug: "furniture" },
+  { name: "Fashion", icon: Shirt, slug: "fashion" },
+]
 
 export default function HomePage() {
-  const featuredProducts = productsData.filter(p => p.featured).slice(0, 6);
-  const allProducts = productsData.slice(0, 18);
-  const verifiedShops = shopsData.filter(s => s.verified).slice(0, 7);
+  const featuredProducts = productsData.filter((p) => p.featured).slice(0, 6)
+  const allProducts = productsData.slice(0, 18)
+  const verifiedShops = shopsData.filter((s) => s.verified).slice(0, 7)
 
   return (
     <div className="min-h-screen bg-background">
@@ -60,7 +59,7 @@ export default function HomePage() {
           <h2 className="text-xl font-medium mb-4">Popular Categories</h2>
           <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
             {categories.map((category) => {
-              const Icon = category.icon;
+              const Icon = category.icon
               return (
                 <Link key={category.name} href={`/categories/${category.slug}`}>
                   <Card className="hover:border-primary transition-colors cursor-pointer">
@@ -72,7 +71,7 @@ export default function HomePage() {
                     </CardContent>
                   </Card>
                 </Link>
-              );
+              )
             })}
           </div>
         </section>
@@ -95,8 +94,8 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {featuredProducts.map((product) => (
-              <ProductCard 
-                key={product.id} 
+              <ProductCard
+                key={product.id}
                 id={product.id}
                 name={product.name}
                 price={product.price}
@@ -124,8 +123,8 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {verifiedShops.map((shop) => (
-              <VendorCard 
-                key={shop.id} 
+              <VendorCard
+                key={shop.id}
                 id={shop.id}
                 name={shop.name}
                 location={`${shop.location.state} | ${shop.location.country}`}
@@ -143,7 +142,7 @@ export default function HomePage() {
           <h2 className="text-2xl font-bold mb-4">Products You May Like</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
             {allProducts.map((product) => (
-              <ProductCard 
+              <ProductCard
                 key={product.id}
                 id={product.id}
                 name={product.name}
@@ -174,28 +173,76 @@ export default function HomePage() {
             <div>
               <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/about" className="hover:text-primary">About Us</Link></li>
-                <li><Link href="/career" className="hover:text-primary">Career</Link></li>
-                <li><Link href="/pricing" className="hover:text-primary">Pricing</Link></li>
-                <li><Link href="/contact" className="hover:text-primary">Contact Us</Link></li>
-                <li><Link href="/privacy" className="hover:text-primary">Privacy Policy</Link></li>
+                <li>
+                  <Link href="/about" className="hover:text-primary">
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/career" className="hover:text-primary">
+                    Career
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pricing" className="hover:text-primary">
+                    Pricing
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/contact" className="hover:text-primary">
+                    Contact Us
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/privacy" className="hover:text-primary">
+                    Privacy Policy
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Customer</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/help" className="hover:text-primary">Help</Link></li>
-                <li><Link href="/payment" className="hover:text-primary">Payment Methods</Link></li>
-                <li><Link href="/track" className="hover:text-primary">Track Buyer Orders</Link></li>
-                <li><Link href="/returns" className="hover:text-primary">Returns & Refunds</Link></li>
+                <li>
+                  <Link href="/help" className="hover:text-primary">
+                    Help
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/payment" className="hover:text-primary">
+                    Payment Methods
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/track" className="hover:text-primary">
+                    Track Buyer Orders
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/returns" className="hover:text-primary">
+                    Returns & Refunds
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Vendor</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/vendor/start" className="hover:text-primary">How to Start Selling</Link></li>
-                <li><Link href="/vendor/commission" className="hover:text-primary">Commission Structure</Link></li>
-                <li><Link href="/vendor/dashboard" className="hover:text-primary">Dashboard</Link></li>
+                <li>
+                  <Link href="/vendor/start" className="hover:text-primary">
+                    How to Start Selling
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/vendor/commission" className="hover:text-primary">
+                    Commission Structure
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/vendor/dashboard" className="hover:text-primary">
+                    Dashboard
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
@@ -205,5 +252,5 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
-  );
+  )
 }

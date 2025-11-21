@@ -1,20 +1,10 @@
-import { VendorSidebar } from '@/components/vendor/vendor-sidebar';
-import { VendorHeader } from '@/components/vendor/vendor-header';
+import type React from "react"
+import { VendorLayout } from "@/components/layouts/VendorLayout"
 
-export default function VendorLayout({
+export default function Layout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  return (
-    <div className="flex h-screen overflow-hidden">
-      <VendorSidebar />
-      <div className="flex flex-1 flex-col overflow-hidden ml-64">
-        <VendorHeader />
-        <main className="flex-1 overflow-y-auto bg-muted/20 p-6">
-          {children}
-        </main>
-      </div>
-    </div>
-  );
+  return <VendorLayout>{children}</VendorLayout>
 }

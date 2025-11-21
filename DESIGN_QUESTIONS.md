@@ -135,3 +135,77 @@ This document tracks any ambiguities or questions encountered while implementing
 **Status:** Phase 1 (Customer Marketplace UI) - Complete  
 **Last Updated:** 2025-01-XX  
 **Next:** Phase 2 will implement vendor dashboard and admin console scaffolds
+
+## Phase 2: Vendor & Admin Portal Design Questions
+
+### Iconex Icon Library
+**Question:** PDF specifies "Iconex" for vendor/admin icons, but this is not a standard npm package or icon library.
+
+**Resolution:** Using **Lucide React** as a high-quality alternative with matching visual style. Lucide provides:
+- Consistent 24px grid system
+- Clean, modern aesthetic matching PDF examples
+- Excellent React/Next.js integration
+- Wide icon coverage for all vendor/admin needs
+
+**Action Required:** If Iconex is a custom or proprietary icon set, please provide:
+- npm package name or CDN link
+- Icon mapping guide (which Iconex icon corresponds to which UI element)
+
+### Satoshi Font Implementation
+**Specification:** Project requires Satoshi font family for vendor/admin portals.
+
+**Implementation:**
+- Using `Satoshi-Variable.woff2` (variable font, 300-900 weight range)
+- Loaded via `next/font/local` for optimal performance
+- Applied globally via `--font-sans` CSS variable
+- Replaces SF Pro Display/Text
+
+**Status:** Complete
+
+### Vendor/Admin Design Tokens
+**Colors - Confirmed from PDF:**
+- Primary: `#E41F47`
+- Dark: `#171717`
+- Gray: `#757575`
+- Light Pink: `#FFEDF0`
+- Background: `#FDFDFD`
+
+**Spacing - Confirmed from PDF:**
+- xs: 4px
+- sm: 8px
+- md: 12px
+- lg: 16px
+- xl: 24px
+
+**Border Radius - Confirmed from PDF:**
+- Cards: 8px
+- Buttons: 6px
+- Inputs: 6px
+
+**Status:** All implemented exactly per PDF
+
+### Navigation Structure
+**Team & Support Placement:** PDF shows Team Management and Support under Settings submenu, not as top-level navigation items.
+
+**Implementation:**
+- Removed Team and Support from top-level vendor sidebar
+- Both accessible via `/vendor/settings/team` and `/vendor/settings/support`
+- Settings shows 7 sub-pages: General, Security, Compliance, Billing, Notifications, Team, Support
+
+**Status:** Complete
+
+### Order Details Display
+**Question:** Should order details open in a modal or dedicated page?
+
+**Resolution:** Implemented as dedicated page at `/vendor/orders/[id]` for better UX:
+- More space for order information, customer details, and delivery address
+- Easier to bookmark and share specific orders
+- Better mobile experience
+- Follows standard e-commerce patterns
+
+**Alternative:** Can be converted to modal using Dialog component if PDF specifically shows modal pattern.
+
+---
+
+**Phase 2 Status:** Vendor & Admin UI Alignment - Complete  
+**Last Updated:** January 2024

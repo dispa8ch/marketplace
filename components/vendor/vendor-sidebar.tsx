@@ -11,8 +11,6 @@ import {
   Megaphone,
   CreditCard,
   Settings,
-  Users,
-  HelpCircle,
   LogOut,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -27,8 +25,6 @@ const navItems = [
   { name: "Promotions", href: "/vendor/promotions", icon: Megaphone },
   { name: "Subscription", href: "/vendor/subscription", icon: CreditCard },
   { name: "Settings", href: "/vendor/settings", icon: Settings },
-  { name: "Team", href: "/vendor/team", icon: Users },
-  { name: "Support", href: "/vendor/support", icon: HelpCircle },
 ]
 
 export function VendorSidebar() {
@@ -36,7 +32,7 @@ export function VendorSidebar() {
 
   return (
     <aside className="fixed left-0 top-0 z-40 h-screen w-64 border-r bg-card">
-      <div className="flex h-16 items-center gap-2 border-b px-6">
+      <div className="flex h-16 items-center gap-2 border-b px-4">
         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
           <span className="text-lg font-bold text-primary-foreground">D</span>
         </div>
@@ -68,7 +64,7 @@ export function VendorSidebar() {
         })}
       </nav>
 
-      <div className="absolute bottom-6 left-4 right-4">
+      <div className="absolute bottom-4 left-4 right-4">
         <Button
           variant="ghost"
           className="w-full justify-start text-muted-foreground hover:text-destructive hover:bg-destructive/10"

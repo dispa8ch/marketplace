@@ -1,55 +1,50 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import { Plus, Edit, Trash2, Eye } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
-import Link from 'next/link';
+import { useState } from "react"
+import { Plus, Edit, Trash2, Eye } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export default function VendorProductsPage() {
+  const router = useRouter()
   const [products] = useState([
     {
-      id: '1',
-      name: 'Premium Wireless Headphones',
-      category: 'Electronics',
+      id: "1",
+      name: "Premium Wireless Headphones",
+      category: "Electronics",
       price: 25000,
       stock: 15,
-      status: 'active',
+      status: "active",
     },
     {
-      id: '2',
-      name: 'Designer Handbag',
-      category: 'Fashion',
+      id: "2",
+      name: "Designer Handbag",
+      category: "Fashion",
       price: 35000,
       stock: 8,
-      status: 'active',
+      status: "active",
     },
     {
-      id: '3',
-      name: 'Smart Watch Series 5',
-      category: 'Electronics',
+      id: "3",
+      name: "Smart Watch Series 5",
+      category: "Electronics",
       price: 45000,
       stock: 0,
-      status: 'inactive',
+      status: "inactive",
     },
     {
-      id: '4',
-      name: 'Organic Vegetables Pack',
-      category: 'Food',
+      id: "4",
+      name: "Organic Vegetables Pack",
+      category: "Food",
       price: 5000,
       stock: 50,
-      status: 'active',
+      status: "active",
     },
-  ]);
+  ])
 
   return (
     <div className="space-y-6">
@@ -83,27 +78,19 @@ export default function VendorProductsPage() {
                   <TableCell>{product.category}</TableCell>
                   <TableCell>₦{product.price.toLocaleString()}</TableCell>
                   <TableCell>
-                    <span
-                      className={
-                        product.stock === 0 ? 'text-destructive' : 'text-foreground'
-                      }
-                    >
+                    <span className={product.stock === 0 ? "text-destructive" : "text-foreground"}>
                       {product.stock}
                     </span>
                   </TableCell>
                   <TableCell>
-                    <Badge
-                      variant={product.status === 'active' ? 'default' : 'secondary'}
-                    >
-                      {product.status}
-                    </Badge>
+                    <Badge variant={product.status === "active" ? "default" : "secondary"}>{product.status}</Badge>
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
                       <Button variant="ghost" size="icon">
                         <Eye className="h-4 w-4" />
                       </Button>
-                      <Button variant="ghost" size="icon">
+                      <Button variant="ghost" size="icon" onClick={() => router.push(`/vendor/products/${product.id}`)}>
                         <Edit className="h-4 w-4" />
                       </Button>
                       <Button variant="ghost" size="icon">
@@ -118,5 +105,5 @@ export default function VendorProductsPage() {
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }

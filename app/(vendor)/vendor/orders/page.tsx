@@ -1,75 +1,64 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { Card, CardContent } from "@/components/ui/card"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function VendorOrdersPage() {
+  const router = useRouter()
   const [orders] = useState([
     {
-      id: 'ORD-1001',
-      customer: 'John Doe',
-      date: '2024-01-15',
+      id: "ORD-1001",
+      customer: "John Doe",
+      date: "2024-01-15",
       total: 60000,
-      status: 'paid',
+      status: "paid",
       items: 2,
     },
     {
-      id: 'ORD-1002',
-      customer: 'Jane Smith',
-      date: '2024-01-15',
+      id: "ORD-1002",
+      customer: "Jane Smith",
+      date: "2024-01-15",
       total: 35000,
-      status: 'assigned',
+      status: "assigned",
       items: 1,
     },
     {
-      id: 'ORD-1003',
-      customer: 'Mike Johnson',
-      date: '2024-01-14',
+      id: "ORD-1003",
+      customer: "Mike Johnson",
+      date: "2024-01-14",
       total: 25000,
-      status: 'in_transit',
+      status: "in_transit",
       items: 1,
     },
     {
-      id: 'ORD-1004',
-      customer: 'Sarah Williams',
-      date: '2024-01-14',
+      id: "ORD-1004",
+      customer: "Sarah Williams",
+      date: "2024-01-14",
       total: 45000,
-      status: 'delivered',
+      status: "delivered",
       items: 2,
     },
-  ]);
+  ])
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'paid':
-        return 'default';
-      case 'assigned':
-        return 'secondary';
-      case 'in_transit':
-        return 'default';
-      case 'delivered':
-        return 'default';
+      case "paid":
+        return "default"
+      case "assigned":
+        return "secondary"
+      case "in_transit":
+        return "default"
+      case "delivered":
+        return "default"
       default:
-        return 'secondary';
+        return "secondary"
     }
-  };
+  }
 
   return (
     <div className="space-y-6">
@@ -112,12 +101,10 @@ export default function VendorOrdersPage() {
                   <TableCell>{order.items}</TableCell>
                   <TableCell>₦{order.total.toLocaleString()}</TableCell>
                   <TableCell>
-                    <Badge variant={getStatusColor(order.status)}>
-                      {order.status.replace('_', ' ')}
-                    </Badge>
+                    <Badge variant={getStatusColor(order.status)}>{order.status.replace("_", " ")}</Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button variant="outline" size="sm">
+                    <Button variant="outline" size="sm" onClick={() => router.push(`/vendor/orders/${order.id}`)}>
                       View Details
                     </Button>
                   </TableCell>
@@ -128,5 +115,5 @@ export default function VendorOrdersPage() {
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }

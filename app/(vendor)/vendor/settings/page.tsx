@@ -4,12 +4,12 @@ import type React from "react"
 
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { getVendorProfile, updateVendorProfile, type VendorProfile } from "../../../../lib/api/vendor"
-import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { getVendorProfile, updateVendorProfile, type VendorProfile } from "@/lib/api/vendor"
+import { useToast } from "@/hooks/use-toast"
 
 export default function VendorSettingsGeneralPage() {
   const { toast } = useToast()

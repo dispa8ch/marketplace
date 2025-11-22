@@ -1,5 +1,5 @@
 # Exclude Express API backend (deploy separately to Railway/Render)
-api/
+/api/
 scripts/
 docs/
 

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Check } from "lucide-react"
 import { Iconex } from "@/components/icons/iconex"
-import { getSubscriptionPlans, getCurrentSubscription } from "../../../../lib/api/vendor"
+import { getSubscriptionPlans, getCurrentSubscription } from "@/lib/api/vendor"
 import { useToast } from "@/hooks/use-toast"
 
 export default function VendorSubscriptionPage() {

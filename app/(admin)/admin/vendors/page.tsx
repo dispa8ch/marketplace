@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
-import { getVendors, type Vendor } from "../../../lib/api/admin"
+import { getVendors, type Vendor } from "../../../../lib/api/admin"
 import { useToast } from "@/hooks/use-toast"
 import { VendorDetailsModal } from "@/components/admin/modals/vendor-details-modal"
 import { SuspendVendorModal } from "@/components/admin/modals/suspend-vendor-modal"

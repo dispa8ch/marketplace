@@ -10,19 +10,29 @@ interface VendorLayoutProps {
 /**
  * VendorLayout Component
  * Main layout wrapper for vendor dashboard pages
- * - Fixed 256px (w-64) left sidebar with navigation
+ * - Fixed 256px (w-64) left sidebar with navigation on desktop
  * - Top header with search, quick actions, and profile
- * - Main content area with exact 24px padding per PDF specs
+ * - Main content area with responsive padding
+ * - Bottom navigation for mobile
  */
 export function VendorLayout({ children }: VendorLayoutProps) {
   return (
-    <div className="flex h-screen overflow-hidden">
-      <VendorSidebar />
-      <div className="flex flex-1 flex-col overflow-hidden ml-64">
-        <VendorHeader />
-        <main className="flex-1 overflow-y-auto bg-muted/20 p-6">{children}</main>
+    <div className="flex h-screen overflow-hidden bg-muted/20">
+      {/* Sidebar - hidden on mobile */}
+      <div className="hidden sm:block">
+        <VendorSidebar />
       </div>
-      <VendorBottomNav />
+
+      {/* Main Content Wrapper */}
+      <div className="flex flex-1 flex-col overflow-hidden sm:ml-64 pb-16 sm:pb-0">
+        <VendorHeader />
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6">{children}</main>
+      </div>
+
+      {/* Bottom Navigation - visible only on mobile */}
+      <div className="sm:hidden">
+        <VendorBottomNav />
+      </div>
     </div>
   )
 }

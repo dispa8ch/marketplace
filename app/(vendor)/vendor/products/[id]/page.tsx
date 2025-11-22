@@ -12,12 +12,14 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useToast } from "@/hooks/use-toast"
 import { ArrowLeft } from "lucide-react"
+import { getProduct, updateProduct } from "@/lib/api/vendor"
 
 export default function EditProductPage() {
   const router = useRouter()
   const params = useParams()
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
+  const [isFetching, setIsFetching] = useState(true)
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -26,25 +28,46 @@ export default function EditProductPage() {
     stock: "",
   })
 
-  // Mock: Load product data
   useEffect(() => {
-    // In real app, fetch product by params.id
-    setFormData({
-      name: "Premium Wireless Headphones",
-      description: "High-quality wireless headphones with noise cancellation",
-      price: "25000",
-      category: "electronics",
-      stock: "15",
-    })
-  }, [params.id])
+    const loadProduct = async () => {
+      try {
+        const product = await getProduct(params.id as string)
+        setFormData({
+          name: product.name,
+          description: product.description,
+          price: product.price.toString(),
+          category: product.category,
+          stock: product.stock.toString(),
+        })
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to load product details",
+          variant: "destructive",
+        })
+        router.push("/vendor/products")
+      } finally {
+        setIsFetching(false)
+      }
+    }
+
+    if (params.id) {
+      loadProduct()
+    }
+  }, [params.id, router, toast])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
 
     try {
-      // API call would go here
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await updateProduct(params.id as string, {
+        name: formData.name,
+        description: formData.description,
+        price: Number(formData.price),
+        category: formData.category,
+        stock: Number(formData.stock),
+      })
 
       toast({
         title: "Product updated",
@@ -55,12 +78,20 @@ export default function EditProductPage() {
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message,
+        description: error.message || "Failed to update product",
         variant: "destructive",
       })
     } finally {
       setIsLoading(false)
     }
+  }
+
+  if (isFetching) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <p className="text-muted-foreground">Loading product...</p>
+      </div>
+    )
   }
 
   return (

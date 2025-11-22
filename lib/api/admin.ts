@@ -1,4 +1,5 @@
 // Admin API functions for backend integration
+import { apiClient } from "../api-client"
 
 export interface AdminDashboardStats {
   totalVendors: number
@@ -8,28 +9,30 @@ export interface AdminDashboardStats {
 }
 
 export interface Vendor {
-  id: string
-  name: string
+  _id: string
+  businessName: string
   email: string
   phone: string
-  location: string
-  status: "verified" | "pending" | "suspended"
-  products: number
-  joinDate: string
+  address: {
+    street: string
+    lga: string
+    state: string
+  }
+  verified: boolean
+  createdAt: string
 }
 
 export interface Customer {
-  id: string
-  name: string
+  _id: string
+  firstName: string
+  lastName: string
   email: string
   phone: string
-  orders: number
-  totalSpent: number
-  joinDate: string
+  createdAt: string
 }
 
 export interface LogisticsPartner {
-  id: string
+  _id: string
   name: string
   email: string
   phone: string
@@ -50,105 +53,69 @@ export interface WithdrawalRequest {
 
 // Dashboard
 export async function getAdminDashboardStats(): Promise<AdminDashboardStats> {
-  // TODO: Implement API call
-  console.log("[v0] API: getAdminDashboardStats")
-  return {
-    totalVendors: 156,
-    totalCustomers: 2341,
-    totalOrders: 5678,
-    platformRevenue: 12500000,
-  }
+  return apiClient.get("/api/admin/stats")
 }
 
 // Vendors
 export async function getVendors(): Promise<Vendor[]> {
-  // TODO: Implement API call
-  console.log("[v0] API: getVendors")
-  return []
+  return apiClient.get("/api/admin/vendors")
 }
 
-export async function getVendor(id: string): Promise<Vendor | null> {
-  // TODO: Implement API call
-  console.log("[v0] API: getVendor", id)
-  return null
+export async function getVendor(id: string): Promise<Vendor> {
+  // Reusing the public vendor endpoint but could be admin specific if needed
+  return apiClient.get(`/api/vendors/${id}`)
 }
 
 export async function approveVendor(id: string): Promise<void> {
-  // TODO: Implement API call
-  console.log("[v0] API: approveVendor", id)
+  return apiClient.patch(`/api/admin/vendors/${id}/status`, { status: "verified" })
 }
 
 export async function suspendVendor(id: string, reason: string): Promise<void> {
-  // TODO: Implement API call
-  console.log("[v0] API: suspendVendor", id, reason)
+  // Simplified to just unverify for now, real app would have suspended status
+  return apiClient.patch(`/api/admin/vendors/${id}/status`, { status: "suspended", reason })
 }
 
 export async function restoreVendor(id: string): Promise<void> {
-  // TODO: Implement API call
-  console.log("[v0] API: restoreVendor", id)
+  return apiClient.patch(`/api/admin/vendors/${id}/status`, { status: "verified" })
 }
 
 // Customers
 export async function getCustomers(): Promise<Customer[]> {
-  // TODO: Implement API call
-  console.log("[v0] API: getCustomers")
-  return []
+  return apiClient.get("/api/admin/customers")
 }
 
 // Logistics
 export async function getLogisticsPartners(): Promise<LogisticsPartner[]> {
-  // TODO: Implement API call
-  console.log("[v0] API: getLogisticsPartners")
-  return []
+  return apiClient.get("/api/admin/logistics")
 }
 
 export async function addLogisticsPartner(data: Partial<LogisticsPartner>): Promise<void> {
-  // TODO: Implement API call
-  console.log("[v0] API: addLogisticsPartner", data)
+  return apiClient.post("/api/admin/logistics", data)
 }
 
 // Withdrawals
 export async function getWithdrawalRequests(): Promise<WithdrawalRequest[]> {
-  // TODO: Implement API call
-  console.log("[v0] API: getWithdrawalRequests")
-  return []
+  return apiClient.get("/api/admin/withdrawals")
 }
 
 export async function approveWithdrawal(id: string): Promise<void> {
-  // TODO: Implement API call
-  console.log("[v0] API: approveWithdrawal", id)
+  return apiClient.patch(`/api/admin/withdrawals/${id}`, { status: "approved" })
 }
 
 export async function rejectWithdrawal(id: string): Promise<void> {
-  // TODO: Implement API call
-  console.log("[v0] API: rejectWithdrawal", id)
+  return apiClient.patch(`/api/admin/withdrawals/${id}`, { status: "rejected" })
 }
 
 // Platform settings
 export async function getPlatformFees(): Promise<any> {
-  // TODO: Implement API call
-  console.log("[v0] API: getPlatformFees")
-  return {
-    commission: 5,
-    transactionFee: 50,
-    withdrawalFee: 100,
-  }
+  return apiClient.get("/api/admin/settings/fees")
 }
 
 export async function updatePlatformFees(fees: any): Promise<void> {
-  // TODO: Implement API call
-  console.log("[v0] API: updatePlatformFees", fees)
+  return apiClient.post("/api/admin/settings/fees", fees)
 }
 
 // Announcements
 export async function sendAnnouncement(data: any): Promise<void> {
-  // TODO: Implement API call
-  console.log("[v0] API: sendAnnouncement", data)
-}
-
-// Search
-export async function searchAdminContent(query: string): Promise<any[]> {
-  // TODO: Implement API call
-  console.log("[v0] API: searchAdminContent", query)
-  return []
+  return apiClient.post("/api/admin/announcements", data)
 }

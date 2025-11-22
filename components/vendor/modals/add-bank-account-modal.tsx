@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { addBankAccount } from "@/lib/api/vendor"
+import { useToast } from "@/hooks/use-toast"
 
 interface AddBankAccountModalProps {
   open: boolean
@@ -13,16 +15,33 @@ interface AddBankAccountModalProps {
 }
 
 export function AddBankAccountModal({ open, onOpenChange }: AddBankAccountModalProps) {
+  const { toast } = useToast()
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     bankName: "",
     accountNumber: "",
     accountName: "",
   })
 
-  const handleAdd = () => {
-    // TODO: Connect to backend API
-    console.log("[v0] Add bank account:", formData)
-    onOpenChange(false)
+  const handleAdd = async () => {
+    setIsLoading(true)
+    try {
+      await addBankAccount(formData)
+      toast({
+        title: "Success",
+        description: "Bank account added successfully",
+      })
+      onOpenChange(false)
+      setFormData({ bankName: "", accountNumber: "", accountName: "" })
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to add bank account",
+        variant: "destructive",
+      })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -81,9 +100,9 @@ export function AddBankAccountModal({ open, onOpenChange }: AddBankAccountModalP
             type="button"
             className="bg-[#E41F47] hover:bg-[#C11A3D]"
             onClick={handleAdd}
-            disabled={!formData.bankName || !formData.accountNumber || !formData.accountName}
+            disabled={!formData.bankName || !formData.accountNumber || !formData.accountName || isLoading}
           >
-            Add Account
+            {isLoading ? "Adding..." : "Add Account"}
           </Button>
         </DialogFooter>
       </DialogContent>

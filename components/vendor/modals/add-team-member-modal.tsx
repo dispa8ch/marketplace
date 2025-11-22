@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { inviteTeamMember } from "@/lib/api/vendor"
+import { useToast } from "@/hooks/use-toast"
 
 interface AddTeamMemberModalProps {
   open: boolean
@@ -13,16 +15,33 @@ interface AddTeamMemberModalProps {
 }
 
 export function AddTeamMemberModal({ open, onOpenChange }: AddTeamMemberModalProps) {
+  const { toast } = useToast()
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     role: "",
   })
 
-  const handleAdd = () => {
-    // TODO: Connect to backend API
-    console.log("[v0] Add team member:", formData)
-    onOpenChange(false)
+  const handleAdd = async () => {
+    setIsLoading(true)
+    try {
+      await inviteTeamMember(formData)
+      toast({
+        title: "Success",
+        description: "Invitation sent successfully",
+      })
+      onOpenChange(false)
+      setFormData({ name: "", email: "", role: "" })
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send invitation",
+        variant: "destructive",
+      })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -77,9 +96,9 @@ export function AddTeamMemberModal({ open, onOpenChange }: AddTeamMemberModalPro
             type="button"
             className="bg-[#E41F47] hover:bg-[#C11A3D]"
             onClick={handleAdd}
-            disabled={!formData.name || !formData.email || !formData.role}
+            disabled={!formData.name || !formData.email || !formData.role || isLoading}
           >
-            Add Member
+            {isLoading ? "Sending..." : "Add Member"}
           </Button>
         </DialogFooter>
       </DialogContent>

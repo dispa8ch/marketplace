@@ -1,88 +1,75 @@
 "use client"
 
 import { useState } from "react"
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-  DialogDescription,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { AlertTriangle } from "lucide-react"
+import { Label } from "@/components/ui/label"
+import { type Vendor, suspendVendor } from "@/lib/api/admin"
+import { useToast } from "@/hooks/use-toast"
 
 interface SuspendVendorModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  vendorName?: string
-  vendorId?: string
-  isSuspended?: boolean
+  vendor: Vendor
+  onUpdate: () => void
 }
 
-export function SuspendVendorModal({
-  open,
-  onOpenChange,
-  vendorName,
-  vendorId,
-  isSuspended = false,
-}: SuspendVendorModalProps) {
+export function SuspendVendorModal({ open, onOpenChange, vendor, onUpdate }: SuspendVendorModalProps) {
+  const { toast } = useToast()
   const [reason, setReason] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleAction = () => {
-    // TODO: Connect to backend API
-    console.log("[v0] Suspend/Restore vendor:", vendorId, reason)
-    onOpenChange(false)
+  const handleSuspend = async () => {
+    setIsLoading(true)
+    try {
+      await suspendVendor(vendor._id, reason)
+      toast({
+        title: "Success",
+        description: "Vendor suspended successfully",
+      })
+      onUpdate()
+      onOpenChange(false)
+      setReason("")
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to suspend vendor",
+        variant: "destructive",
+      })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <div className="flex items-center gap-3">
-            {!isSuspended && (
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100">
-                <AlertTriangle className="h-5 w-5 text-orange-600" />
-              </div>
-            )}
-            <DialogTitle className="text-xl font-semibold">{isSuspended ? "Restore" : "Suspend"} Vendor</DialogTitle>
-          </div>
-          <DialogDescription className="pt-2">
-            {isSuspended
-              ? `Are you sure you want to restore "${vendorName}"? This will allow them to access their account again.`
-              : `Are you sure you want to suspend "${vendorName}"? They will not be able to access their account.`}
-          </DialogDescription>
+          <DialogTitle className="text-xl font-semibold text-destructive">Suspend Vendor</DialogTitle>
+          <p className="text-sm text-[#757575]">
+            Are you sure you want to suspend <strong>{vendor.businessName}</strong>? This action will prevent them from
+            accessing their dashboard and receiving new orders.
+          </p>
         </DialogHeader>
 
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="reason">Reason {!isSuspended && "*"}</Label>
-            <Textarea
-              id="reason"
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
-              placeholder={
-                isSuspended ? "Optional reason for restoration..." : "Explain why this vendor is being suspended..."
-              }
-              rows={4}
-            />
-          </div>
+        <div className="space-y-2 my-4">
+          <Label htmlFor="reason">Reason for Suspension</Label>
+          <Textarea
+            id="reason"
+            placeholder="Enter reason..."
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            rows={4}
+          />
         </div>
 
         <DialogFooter>
-          <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button
-            type="button"
-            variant={isSuspended ? "default" : "destructive"}
-            onClick={handleAction}
-            disabled={!isSuspended && !reason}
-            className={isSuspended ? "bg-[#E41F47] hover:bg-[#C11A3D]" : ""}
-          >
-            {isSuspended ? "Restore Vendor" : "Suspend Vendor"}
+          <Button variant="destructive" onClick={handleSuspend} disabled={!reason || isLoading}>
+            {isLoading ? "Suspending..." : "Suspend Vendor"}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Users, ShoppingBag, Store, TrendingUp } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { getAdminDashboardStats, type AdminDashboardStats } from "../../../lib/api/admin"
+import { getAdminDashboardStats, type AdminDashboardStats } from "@/lib/api/admin"
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState<AdminDashboardStats | null>(null)

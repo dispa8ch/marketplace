@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { getLogisticsPartners, type LogisticsPartner } from "../../../../lib/api/admin"
+import { getLogisticsPartners, type LogisticsPartner } from "@/lib/api/admin"
 import { useToast } from "@/hooks/use-toast"
 import { AddLogisticsPartnerModal } from "@/components/admin/modals/add-logistics-partner-modal"
 

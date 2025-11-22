@@ -445,7 +445,7 @@ export default function CheckoutPage() {
                 <div className="space-y-4 mb-6">
                   {cartItems.map((item, idx) => (
                     <div key={idx} className="flex gap-3">
-                      <div className="w-16 h-16 bg-gray-200 rounded-lg flex-shrink-0" />
+                      <div className="w-16 h-16 bg-gray-200 rounded-lg shrink-0" />
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-gray-900 text-sm line-clamp-2 mb-1">
                           {item.name}

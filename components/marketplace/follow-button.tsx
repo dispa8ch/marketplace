@@ -1,53 +1,58 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Users } from 'lucide-react'
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Users } from "lucide-react";
+import { Iconex } from "@/components/icons/iconex";
 
 type FollowButtonProps = {
-  vendorId: string
-  initialFollowed?: boolean
-  onChange?: (followed: boolean) => void
-}
+  vendorId: string;
+  initialFollowed?: boolean;
+  onChange?: (followed: boolean) => void;
+};
 
-const STORAGE_KEY = 'dispa8ch_followed_vendors'
+const STORAGE_KEY = "dispa8ch_followed_vendors";
 
-export function FollowButton({ vendorId, initialFollowed = false, onChange }: FollowButtonProps) {
-  const [followed, setFollowed] = useState(initialFollowed)
+export function FollowButton({
+  vendorId,
+  initialFollowed = false,
+  onChange,
+}: FollowButtonProps) {
+  const [followed, setFollowed] = useState(initialFollowed);
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY)
+      const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        const obj = JSON.parse(raw)
+        const obj = JSON.parse(raw);
         if (Array.isArray(obj) && obj.includes(vendorId)) {
-          setFollowed(true)
-          return
+          setFollowed(true);
+          return;
         }
       }
-      setFollowed(initialFollowed)
+      setFollowed(initialFollowed);
     } catch (e) {
-      setFollowed(initialFollowed)
+      setFollowed(initialFollowed);
     }
-  }, [vendorId, initialFollowed])
+  }, [vendorId, initialFollowed]);
 
   function toggle() {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY)
-      let arr: string[] = []
-      if (raw) arr = JSON.parse(raw)
-      if (!Array.isArray(arr)) arr = []
+      const raw = localStorage.getItem(STORAGE_KEY);
+      let arr: string[] = [];
+      if (raw) arr = JSON.parse(raw);
+      if (!Array.isArray(arr)) arr = [];
 
       if (followed) {
-        arr = arr.filter((id) => id !== vendorId)
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(arr))
-        setFollowed(false)
-        onChange && onChange(false)
+        arr = arr.filter((id) => id !== vendorId);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+        setFollowed(false);
+        onChange && onChange(false);
       } else {
-        arr.push(vendorId)
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(arr))
-        setFollowed(true)
-        onChange && onChange(true)
+        arr.push(vendorId);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+        setFollowed(true);
+        onChange && onChange(true);
       }
     } catch (e) {
       // ignore
@@ -55,11 +60,17 @@ export function FollowButton({ vendorId, initialFollowed = false, onChange }: Fo
   }
 
   return (
-    <Button onClick={toggle} className="flex items-center gap-2" variant={followed ? 'destructive' : 'outline'}>
-      <Users className="w-4 h-4" />
-      {followed ? 'Following' : 'Follow'}
+    <Button
+      onClick={toggle}
+      className="flex items-center gap-2"
+      variant={followed ? "destructive" : "outline"}
+    >
+      <Iconex className="h-5 w-5">
+        <Users className="h-5 w-5 text-red-600" />
+      </Iconex>
+      {followed ? "Following" : "Follow"}
     </Button>
-  )
+  );
 }
 
-export default FollowButton
+export default FollowButton;

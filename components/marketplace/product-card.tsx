@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Star } from "lucide-react";
+import { Iconex } from "@/components/icons/iconex";
 import { Badge } from "@/components/ui/badge";
 
 interface ProductCardProps {
@@ -42,44 +43,54 @@ export function ProductCard({
       </div>
       <CardContent className="p-3 space-y-2">
         <p className="text-xs text-muted-foreground">{vendorName}</p>
-        <h3 className="font-medium text-sm line-clamp-2 leading-tight">{name}</h3>
+        <h3 className="font-medium text-sm line-clamp-2 leading-tight">
+          {name}
+        </h3>
         <div className="gap-4">
-          <span className="text-base font-bold text-primary">₦{price.toLocaleString()}</span>
+          <span className="text-base font-bold text-primary">
+            ₦{price.toLocaleString()}
+          </span>
           <div className="flex items-center gap-2">
             {originalPrice && (
-              <span className="text-xs text-muted-foreground line-through">₦{originalPrice.toLocaleString()}</span>
+              <span className="text-xs text-muted-foreground line-through">
+                ₦{originalPrice.toLocaleString()}
+              </span>
             )}
             {discount && (
-              <Badge className="top-2 left-2 text-[10px] bg-accent text-primary">{discount}% Off</Badge>
+              <Badge className="top-2 left-2 text-[10px] bg-accent text-primary">
+                {discount}% Off
+              </Badge>
             )}
           </div>
         </div>
         <div className="flex items-center gap-1 text-xs text-muted-foreground">
-          <MapPin className="h-3 w-3" />
+          <Iconex className="mr-2 h-3 w-3">
+            <MapPin className="h-3 w-3" />
+          </Iconex>
           <span className="line-clamp-1">{location}</span>
         </div>
         <div className="flex items-center gap-1">
-          <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
+          <Iconex className="mr-2 h-3 w-3">
+            <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
+          </Iconex>
           <span className="text-xs font-medium">{rating}</span>
-          <span className="text-xs text-muted-foreground">| {reviews} Reviews</span>
+          <span className="text-xs text-muted-foreground">
+            | {reviews} Reviews
+          </span>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 
   // If id present wrap in Link, otherwise render the content without a link to avoid runtime errors
   if (id) {
-    return (
-      <Link href={`/product/${id}`}>
-        {content}
-      </Link>
-    )
+    return <Link href={`/product/${id}`}>{content}</Link>;
   }
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== "production") {
     // help developers find data issues during development
     // eslint-disable-next-line no-console
-    console.warn('[ProductCard] missing id for product:', { name, vendorName })
+    console.warn("[ProductCard] missing id for product:", { name, vendorName });
   }
 
-  return content
+  return content;
 }

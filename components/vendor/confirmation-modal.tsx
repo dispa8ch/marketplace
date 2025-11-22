@@ -1,6 +1,7 @@
 "use client"
 
 import { AlertTriangle } from "lucide-react"
+import { Iconex } from '@/components/icons/iconex'
 import {
   Dialog,
   DialogContent,
@@ -55,7 +56,7 @@ export function ConfirmationModal({
                 variant === "destructive" ? "bg-destructive/10" : "bg-primary/10"
               }`}
             >
-              <AlertTriangle className={`h-5 w-5 ${variant === "destructive" ? "text-destructive" : "text-primary"}`} />
+              <Iconex as={AlertTriangle} className={`h-5 w-5 ${variant === "destructive" ? "text-destructive" : "text-primary"}`} />
             </div>
             <DialogTitle>{title}</DialogTitle>
           </div>

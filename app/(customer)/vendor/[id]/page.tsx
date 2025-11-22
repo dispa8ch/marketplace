@@ -45,7 +45,7 @@ export default async function VendorPage({ params }: { params: Promise<{ id: str
   return (
     <div className="min-h-screen bg-[#FDFDFD]">
       {/* Vendor Banner */}
-      <div className="relative h-[240px] w-full bg-gray-200">
+      <div className="relative h-60 w-full bg-gray-200">
         <Image src={vendor.banner || "/placeholder.svg"} alt={vendor.name} fill className="object-cover" />
       </div>
 

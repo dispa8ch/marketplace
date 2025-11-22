@@ -3,6 +3,7 @@
 import { NavBar } from '@/components/marketplace/nav-bar'
 import { ProductCard } from '@/components/marketplace/product-card'
 import { ChevronLeft } from 'lucide-react'
+import { Iconex } from '@/components/icons/iconex'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Protected from '@/components/auth/protected'
@@ -30,7 +31,9 @@ export default function WishlistPage() {
         <div className="flex items-center gap-4 mb-6">
           <Button variant="ghost" size="icon" asChild>
             <Link href="/">
-              <ChevronLeft className="h-5 w-5" />
+            <Iconex className="h-5 w-5">
+                <ChevronLeft className="h-5 w-5 text-red-600" />
+              </Iconex>
             </Link>
           </Button>
           <div>

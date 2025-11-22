@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Flag } from 'lucide-react'
+import { Iconex } from '@/components/icons/iconex'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
@@ -54,10 +55,10 @@ ${message}
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="border-[#E41F47] text-[#E41F47] hover:bg-[#FFEDF0]">
-          <Flag className="w-4 h-4 mr-2" />
-          Report Vendor
-        </Button>
+          <Button variant="outline" className="border-[#E41F47] text-[#E41F47] hover:bg-[#FFEDF0]">
+            <Iconex as={Flag} className="w-4 h-4 mr-2" />
+            Report Vendor
+          </Button>
       </DialogTrigger>
       <DialogContent className="max-w-md">
         <DialogHeader>

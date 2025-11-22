@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import { Filter, X } from "lucide-react"
+import { Iconex } from '@/components/icons/iconex'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -72,7 +73,7 @@ export function FiltersPanel({ filters, onApplyFilters, trigger }: FiltersPanelP
       <SheetTrigger asChild>
         {trigger || (
           <Button variant="outline" size="sm">
-            <Filter className="mr-2 h-4 w-4" />
+            <Iconex as={Filter} className="mr-2 h-4 w-4" />
             Filter
           </Button>
         )}
@@ -161,7 +162,7 @@ export function FiltersPanel({ filters, onApplyFilters, trigger }: FiltersPanelP
 
         <SheetFooter className="mt-8">
           <Button variant="outline" onClick={handleReset}>
-            <X className="mr-2 h-4 w-4" />
+            <Iconex as={X} className="mr-2 h-4 w-4" />
             Reset
           </Button>
           <Button onClick={handleApply}>Apply Filters</Button>

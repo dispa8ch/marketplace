@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { estimateDeliveryPrice, type PricingEstimate } from '@/lib/pricing/pricing-engine'
 import { Check } from 'lucide-react'
+import { Iconex } from '@/components/icons/iconex'
 import { cn } from '@/lib/utils'
 
 interface DeliveryEstimateProps {
@@ -76,7 +77,7 @@ export function DeliveryEstimate({
               <div className="flex items-center gap-2">
                 <span className="font-medium text-[#171717]">{estimate.provider}</span>
                 {selectedProvider === estimate.provider && (
-                  <Check className="w-4 h-4 text-[#E41F47]" />
+                  <Iconex as={Check} className="w-4 h-4 text-[#E41F47]" />
                 )}
               </div>
               <div className="mt-1 text-sm text-[#757575]">

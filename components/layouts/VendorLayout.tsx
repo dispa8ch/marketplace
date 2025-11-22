@@ -1,6 +1,7 @@
 import type React from "react"
 import { VendorSidebar } from "@/components/vendor/vendor-sidebar"
 import { VendorHeader } from "@/components/vendor/vendor-header"
+import { VendorBottomNav } from "@/components/vendor/bottom-nav"
 
 interface VendorLayoutProps {
   children: React.ReactNode
@@ -21,6 +22,7 @@ export function VendorLayout({ children }: VendorLayoutProps) {
         <VendorHeader />
         <main className="flex-1 overflow-y-auto bg-muted/20 p-6">{children}</main>
       </div>
+      <VendorBottomNav />
     </div>
   )
 }

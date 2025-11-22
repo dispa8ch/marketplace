@@ -1,4 +1,5 @@
 import { Package, ShoppingBag, DollarSign, TrendingUp } from 'lucide-react';
+import { Iconex } from '@/components/icons/iconex'
 import { StatsCard } from '@/components/vendor/stats-card';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -15,25 +16,25 @@ export default function VendorDashboardPage() {
         <StatsCard
           title="Total Products"
           value="45"
-          icon={Package}
+          icon={<Package className="h-6 w-6 text-primary" />}
           trend={{ value: 12, isPositive: true }}
         />
         <StatsCard
           title="Total Orders"
           value="128"
-          icon={ShoppingBag}
+          icon={<ShoppingBag className="h-6 w-6 text-primary" />}
           trend={{ value: 8, isPositive: true }}
         />
         <StatsCard
           title="Revenue"
           value="₦450,000"
-          icon={DollarSign}
+          icon={<DollarSign className="h-6 w-6 text-primary" />}
           trend={{ value: 15, isPositive: true }}
         />
         <StatsCard
           title="Growth"
           value="23%"
-          icon={TrendingUp}
+          icon={<TrendingUp className="h-6 w-6 text-primary" />}
           trend={{ value: 5, isPositive: true }}
         />
       </div>

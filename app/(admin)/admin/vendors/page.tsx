@@ -14,6 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, CheckCircle, XCircle, Eye } from 'lucide-react';
+import { Iconex } from '@/components/icons/iconex'
 
 export default function AdminVendorsPage() {
   const [vendors] = useState([
@@ -54,7 +55,7 @@ export default function AdminVendorsPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Vendors</h1>
         <div className="relative w-80">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Iconex as={Search} className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input type="search" placeholder="Search vendors..." className="pl-10" />
         </div>
       </div>
@@ -94,7 +95,7 @@ export default function AdminVendorsPage() {
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
                       <Button variant="ghost" size="icon" title="View">
-                        <Eye className="h-4 w-4" />
+                        <Iconex as={Eye} className="h-4 w-4" />
                       </Button>
                       {vendor.status === 'pending' && (
                         <>
@@ -104,7 +105,7 @@ export default function AdminVendorsPage() {
                             title="Approve"
                             className="text-green-600"
                           >
-                            <CheckCircle className="h-4 w-4" />
+                            <Iconex as={CheckCircle} className="h-4 w-4" />
                           </Button>
                           <Button
                             variant="ghost"
@@ -112,7 +113,7 @@ export default function AdminVendorsPage() {
                             title="Reject"
                             className="text-destructive"
                           >
-                            <XCircle className="h-4 w-4" />
+                            <Iconex as={XCircle} className="h-4 w-4" />
                           </Button>
                         </>
                       )}

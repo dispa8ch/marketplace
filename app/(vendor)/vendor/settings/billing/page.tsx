@@ -60,8 +60,8 @@ export default function VendorBillingSettingsPage() {
             </div>
             <div className="border border-[#E6E6E6] rounded-lg p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded flex items-center justify-center text-white text-xs font-bold">
-                  VISA
+                <div className="w-12 h-8 bg-linear-to-r from-blue-500 to-blue-600 rounded flex items-center justify-center text-white text-xs font-bold">
+                        VISA
                 </div>
                 <div>
                   <p className="text-sm font-medium text-[#171717]">4664 **** **** 1678</p>

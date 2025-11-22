@@ -1,5 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Check } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Check } from "lucide-react";
+import { Iconex } from "@/components/icons/iconex";
 
 export default function VendorSubscriptionPage() {
   const plans = [
@@ -21,7 +22,8 @@ export default function VendorSubscriptionPage() {
       name: "Starter Plan",
       price: 17000,
       period: "month",
-      description: "For growing businesses ready to scale visibility & efficiency",
+      description:
+        "For growing businesses ready to scale visibility & efficiency",
       features: [
         "Everything in the Free Plan",
         "Unlimited product listings",
@@ -38,7 +40,8 @@ export default function VendorSubscriptionPage() {
       name: "Growth Plan",
       price: 50000,
       period: "month",
-      description: "For established vendors managing volume & data-driven decisions",
+      description:
+        "For established vendors managing volume & data-driven decisions",
       features: [
         "Everything in Starter Plan",
         "Advanced Analytics Suite: in-depth insights into sales, traffic, delivery speed & customer retention",
@@ -56,7 +59,8 @@ export default function VendorSubscriptionPage() {
       name: "Enterprise Plan",
       price: null,
       period: "Custom Pricing",
-      description: "Tailored for large businesses and partners needing scale, reliability, and custom integrations",
+      description:
+        "Tailored for large businesses and partners needing scale, reliability, and custom integrations",
       features: [
         "Everything in the Growth Plan",
         "Custom contract & invoicing options (monthly/quarterly/annual)",
@@ -67,14 +71,16 @@ export default function VendorSubscriptionPage() {
       ],
       isCurrent: false,
     },
-  ]
+  ];
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-[#171717]">Subscription</h1>
-          <p className="text-[#757575] mt-1">Upgrade and get more out of Dispa8ch</p>
+          <p className="text-[#757575] mt-1">
+            Upgrade and get more out of Dispa8ch
+          </p>
         </div>
         <div className="flex items-center gap-3">
           <button className="border border-[#E6E6E6] px-4 py-2 rounded-md text-sm font-medium hover:bg-[#F5F5F5] transition-colors">
@@ -92,16 +98,25 @@ export default function VendorSubscriptionPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-[#757575]">Current Plan</p>
-              <h2 className="text-2xl font-bold text-[#171717] mt-1">Free Plan</h2>
-              <p className="text-[#757575] mt-2">Get started at no cost and experience the basics of Dispa8ch</p>
+              <h2 className="text-2xl font-bold text-[#171717] mt-1">
+                Free Plan
+              </h2>
+              <p className="text-[#757575] mt-2">
+                Get started at no cost and experience the basics of Dispa8ch
+              </p>
             </div>
             <div className="text-right">
               <p className="text-sm text-[#757575]">Plan Cost</p>
               <p className="text-3xl font-bold text-[#171717] mt-1">
-                ₦0.00<span className="text-base font-normal text-[#757575]">/month</span>
+                ₦0.00
+                <span className="text-base font-normal text-[#757575]">
+                  /month
+                </span>
               </p>
               <p className="text-sm text-[#757575] mt-2">Renewal Date</p>
-              <p className="text-sm font-medium text-[#171717]">Oct 25, 2025 08:20 AM</p>
+              <p className="text-sm font-medium text-[#171717]">
+                Oct 25, 2025 08:20 AM
+              </p>
               <p className="text-sm text-green-600 mt-1">Forever Free</p>
             </div>
           </div>
@@ -111,6 +126,7 @@ export default function VendorSubscriptionPage() {
       {/* Billing Toggle */}
       <div className="flex items-center justify-center gap-4 py-4">
         <span className="text-sm font-medium text-[#171717]">Bill Monthly</span>
+        input
         <button className="relative w-12 h-6 bg-[#E6E6E6] rounded-full transition-colors">
           <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow"></div>
         </button>
@@ -122,22 +138,33 @@ export default function VendorSubscriptionPage() {
       {/* Plans Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {plans.map((plan) => (
-          <Card key={plan.name} className={plan.popular ? "border-2 border-[#E41F47] relative" : ""}>
+          <Card
+            key={plan.name}
+            className={plan.popular ? "border-2 border-[#E41F47] relative" : ""}
+          >
             {plan.popular && (
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <span className="bg-[#E41F47] text-white px-3 py-1 rounded-full text-xs font-medium">Most Popular</span>
+                <span className="bg-[#E41F47] text-white px-3 py-1 rounded-full text-xs font-medium">
+                  Most Popular
+                </span>
               </div>
             )}
             <CardHeader>
-              <CardTitle className="text-lg font-bold text-[#171717]">{plan.name}</CardTitle>
+              <CardTitle className="text-lg font-bold text-[#171717]">
+                {plan.name}
+              </CardTitle>
               <div className="mt-4">
                 {plan.price !== null ? (
                   <>
-                    <span className="text-3xl font-bold text-[#171717]">₦{plan.price.toLocaleString()}</span>
+                    <span className="text-3xl font-bold text-[#171717]">
+                      ₦{plan.price.toLocaleString()}
+                    </span>
                     <span className="text-[#757575]">/{plan.period}</span>
                   </>
                 ) : (
-                  <span className="text-2xl font-bold text-[#171717]">{plan.period}</span>
+                  <span className="text-2xl font-bold text-[#171717]">
+                    {plan.period}
+                  </span>
                 )}
               </div>
               <p className="text-sm text-[#757575] mt-2">{plan.description}</p>
@@ -146,7 +173,9 @@ export default function VendorSubscriptionPage() {
               <ul className="space-y-3">
                 {plan.features.map((feature, index) => (
                   <li key={index} className="flex items-start gap-2 text-sm">
-                    <Check className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                    <Iconex>
+                      <Check className="h-4 w-4 text-green-600 mt-0.5 shrink-0" />
+                    </Iconex>
                     <span className="text-[#171717]">{feature}</span>
                   </li>
                 ))}
@@ -156,15 +185,15 @@ export default function VendorSubscriptionPage() {
                   plan.isCurrent
                     ? "bg-[#F5F5F5] text-[#757575] cursor-not-allowed"
                     : plan.popular
-                      ? "bg-[#E41F47] text-white hover:bg-[#C11A3D]"
-                      : "border border-[#E6E6E6] text-[#171717] hover:bg-[#F5F5F5]"
+                    ? "bg-[#E41F47] text-white hover:bg-[#C11A3D]"
+                    : "border border-[#E6E6E6] text-[#171717] hover:bg-[#F5F5F5]"
                 }`}
               >
                 {plan.isCurrent
                   ? "Current Plan"
                   : plan.price !== null
-                    ? `Upgrade to ${plan.name.split(" ")[0]}`
-                    : "Contact Sales"}
+                  ? `Upgrade to ${plan.name.split(" ")[0]}`
+                  : "Contact Sales"}
               </button>
             </CardContent>
           </Card>
@@ -174,20 +203,36 @@ export default function VendorSubscriptionPage() {
       {/* Billing History */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg font-semibold text-[#171717]">Billing History</CardTitle>
+          <CardTitle className="text-lg font-semibold text-[#171717]">
+            Billing History
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-[#E6E6E6]">
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">Plan Name</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">Card</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">Amount</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">Status</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">Purchase Date</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">End Date</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">Actions</th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">
+                    Plan Name
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">
+                    Card
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">
+                    Amount
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">
+                    Status
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">
+                    Purchase Date
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">
+                    End Date
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -241,27 +286,42 @@ export default function VendorSubscriptionPage() {
                     endDate: "31/05/2025 09:22AM",
                   },
                 ].map((item, index) => (
-                  <tr key={index} className="border-b border-[#E6E6E6] hover:bg-[#FFEDF0]/30">
-                    <td className="py-4 px-4 text-sm text-[#171717]">{item.plan}</td>
-                    <td className="py-4 px-4 text-sm text-[#757575]">{item.card}</td>
-                    <td className="py-4 px-4 text-sm text-[#757575]">{item.amount}</td>
+                  <tr
+                    key={index}
+                    className="border-b border-[#E6E6E6] hover:bg-[#FFEDF0]/30"
+                  >
+                    <td className="py-4 px-4 text-sm text-[#171717]">
+                      {item.plan}
+                    </td>
+                    <td className="py-4 px-4 text-sm text-[#757575]">
+                      {item.card}
+                    </td>
+                    <td className="py-4 px-4 text-sm text-[#757575]">
+                      {item.amount}
+                    </td>
                     <td className="py-4 px-4">
                       <span
                         className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
                           item.status === "Success"
                             ? "bg-green-100 text-green-700"
                             : item.status === "Pending"
-                              ? "bg-yellow-100 text-yellow-700"
-                              : "bg-red-100 text-red-700"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : "bg-red-100 text-red-700"
                         }`}
                       >
                         {item.status}
                       </span>
                     </td>
-                    <td className="py-4 px-4 text-sm text-[#757575]">{item.purchaseDate}</td>
-                    <td className="py-4 px-4 text-sm text-[#757575]">{item.endDate}</td>
+                    <td className="py-4 px-4 text-sm text-[#757575]">
+                      {item.purchaseDate}
+                    </td>
+                    <td className="py-4 px-4 text-sm text-[#757575]">
+                      {item.endDate}
+                    </td>
                     <td className="py-4 px-4">
-                      <button className="text-[#757575] hover:text-[#171717]">•••</button>
+                      <button className="text-[#757575] hover:text-[#171717]">
+                        •••
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -271,15 +331,25 @@ export default function VendorSubscriptionPage() {
           <div className="flex items-center justify-between mt-4 pt-4 border-t border-[#E6E6E6]">
             <p className="text-sm text-[#757575]">6 out of 25 entries</p>
             <div className="flex gap-2">
-              <button className="px-3 py-1 border border-[#E6E6E6] rounded text-sm hover:bg-[#F5F5F5]">&lt;</button>
-              <button className="px-3 py-1 bg-[#E41F47] text-white rounded text-sm">1</button>
-              <button className="px-3 py-1 border border-[#E6E6E6] rounded text-sm hover:bg-[#F5F5F5]">2</button>
-              <button className="px-3 py-1 border border-[#E6E6E6] rounded text-sm hover:bg-[#F5F5F5]">5</button>
-              <button className="px-3 py-1 border border-[#E6E6E6] rounded text-sm hover:bg-[#F5F5F5]">&gt;</button>
+              <button className="px-3 py-1 border border-[#E6E6E6] rounded text-sm hover:bg-[#F5F5F5]">
+                &lt;
+              </button>
+              <button className="px-3 py-1 bg-[#E41F47] text-white rounded text-sm">
+                1
+              </button>
+              <button className="px-3 py-1 border border-[#E6E6E6] rounded text-sm hover:bg-[#F5F5F5]">
+                2
+              </button>
+              <button className="px-3 py-1 border border-[#E6E6E6] rounded text-sm hover:bg-[#F5F5F5]">
+                5
+              </button>
+              <button className="px-3 py-1 border border-[#E6E6E6] rounded text-sm hover:bg-[#F5F5F5]">
+                &gt;
+              </button>
             </div>
           </div>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

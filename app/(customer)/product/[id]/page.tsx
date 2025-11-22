@@ -6,6 +6,7 @@ import { NavBar } from "@/components/marketplace/nav-bar";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/marketplace/product-card";
 import { Star, MapPin, Minus, Plus, Check, Shield } from "lucide-react";
+import { Iconex } from "@/components/icons/iconex";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import { addToCart } from "@/lib/storage";
@@ -109,7 +110,9 @@ export default function ProductDetailPage() {
                 <span className="px-2 py-1 bg-primary/10 text-primary rounded">
                   {mockProduct.category}
                 </span>
-                <MapPin className="h-3 w-3" />
+                <Iconex className="mr-2 h-3 w-3">
+                  <MapPin className="h-3 w-3" />
+                </Iconex>
                 <span>{mockProduct.location}</span>
               </div>
 
@@ -133,7 +136,9 @@ export default function ProductDetailPage() {
 
               <div className="flex items-center gap-4 mb-6">
                 <div className="flex items-center gap-1">
-                  <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  <Iconex className="mr-2 h-5 w-5">
+                    <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  </Iconex>
                   <span className="font-semibold">
                     {mockProduct.rating}/5.0
                   </span>
@@ -150,7 +155,9 @@ export default function ProductDetailPage() {
                     size="icon"
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   >
-                    <Minus className="h-4 w-4" />
+                    <Iconex className="mr-2 h-4 w-4">
+                      <Minus className="h-4 w-4" />
+                    </Iconex>
                   </Button>
                   <span className="text-xl font-semibold w-12 text-center">
                     {quantity}
@@ -162,7 +169,9 @@ export default function ProductDetailPage() {
                       setQuantity(Math.min(mockProduct.stock, quantity + 1))
                     }
                   >
-                    <Plus className="h-4 w-4" />
+                    <Iconex className="mr-2 h-4 w-4">
+                      <Plus className="h-4 w-4" />
+                    </Iconex>
                   </Button>
                 </div>
                 <span className="text-gray-600">
@@ -269,10 +278,12 @@ export default function ProductDetailPage() {
                       </div>
                       <div className="flex items-center gap-1 my-1">
                         {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className="h-4 w-4 fill-yellow-400 text-yellow-400"
-                          />
+                          <Iconex className="mr-2 h-5 w-5">
+                            <Star
+                              key={i}
+                              className="h-4 w-4 fill-yellow-400 text-yellow-400"
+                            />
+                          </Iconex>
                         ))}
                       </div>
                       <div className="text-sm text-gray-600">
@@ -326,10 +337,12 @@ export default function ProductDetailPage() {
                           </div>
                           <div className="flex items-center gap-1 mb-2">
                             {[...Array(review.rating)].map((_, i) => (
-                              <Star
-                                key={i}
-                                className="h-4 w-4 fill-yellow-400 text-yellow-400"
-                              />
+                              <Iconex className="mr-2 h-5 w-5">
+                                <Star
+                                  key={i}
+                                  className="h-5 w-5 fill-amber-400 text-yellow-400"
+                                />
+                              </Iconex>
                             ))}
                           </div>
                           <p className="text-gray-700 mb-3">{review.comment}</p>
@@ -368,7 +381,9 @@ export default function ProductDetailPage() {
                         <h3 className="font-semibold text-lg">
                           Vendor Shop Name
                         </h3>
-                        <Check className="h-5 w-5 text-primary bg-primary/10 rounded-full p-0.5" />
+                        <Iconex className="mr-2 h-5 w-5">
+                          <Check className="h-5 w-5 text-primary bg-primary/10 roundd-full p-0.5" />
+                        </Iconex>
                         <span className="text-xs font-medium text-primary">
                           Verified
                         </span>
@@ -423,7 +438,9 @@ export default function ProductDetailPage() {
 
                   <div className="bg-gray-100 rounded-lg h-64 flex items-center justify-center">
                     <div className="text-center">
-                      <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-2" />
+                      <Iconex>
+                        <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-2" />
+                      </Iconex>
                       <div className="font-semibold">Deluxe Plaza</div>
                       <div className="text-sm text-gray-600">
                         No, 43 Alabaja Road, Lagos Nig.

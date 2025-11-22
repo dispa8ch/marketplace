@@ -42,7 +42,7 @@
           <h3 className="font-semibold mb-3">Shops selling in this category</h3>
           <div className="flex gap-4 overflow-x-auto py-2">
             {shops.map((shop) => (
-              <div key={shop.id} className="min-w-[160px] p-3 bg-gray-50 border rounded-lg">
+              <div key={shop.id} className="min-w-40 p-3 bg-gray-50 border rounded-lg">
                 <div className="font-medium">{shop.name}</div>
                 <div className="text-sm text-muted-foreground">{shop.count} products</div>
               </div>

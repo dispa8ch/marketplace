@@ -3,6 +3,7 @@
 import type React from "react"
 
 import { CheckCircle2, XCircle, AlertTriangle, Info, X } from "lucide-react"
+import { Iconex } from '@/components/icons/iconex'
 import { cn } from "@/lib/utils"
 
 export type ToastType = "success" | "error" | "warning" | "info"
@@ -57,13 +58,13 @@ export function Toast({ type, title, message, onClose }: ToastProps) {
         config.borderColor,
       )}
     >
-      <Icon className={cn("h-5 w-5 flex-shrink-0", config.iconColor)} />
+      <Iconex as={Icon} className={cn("h-5 w-5 shrink-0", config.iconColor)} />
       <div className="flex-1">
         <p className={cn("text-sm font-semibold", config.titleColor)}>{title}</p>
         {message && <p className="mt-1 text-sm text-muted-foreground">{message}</p>}
       </div>
-      <button onClick={onClose} className="flex-shrink-0 text-muted-foreground hover:text-foreground">
-        <X className="h-4 w-4" />
+      <button onClick={onClose} className="shrink-0 text-muted-foreground hover:text-foreground">
+        <Iconex as={X} className="h-4 w-4" />
       </button>
     </div>
   )

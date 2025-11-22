@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
+import { Iconex } from '@/components/icons/iconex'
 import { NavBar } from '@/components/marketplace/nav-bar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -62,7 +63,7 @@ export default function CartPage() {
         {cartItems.length === 0 ? (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-16">
-              <ShoppingBag className="h-16 w-16 text-muted-foreground mb-4" />
+              <Iconex as={ShoppingBag} className="h-16 w-16 text-muted-foreground mb-4" />
               <h2 className="text-xl font-semibold mb-2">Your cart is empty</h2>
               <p className="text-muted-foreground mb-6 text-center">
                 Add some items to get started shopping
@@ -82,7 +83,7 @@ export default function CartPage() {
                 <Card key={item.id}>
                   <CardContent className="p-4">
                     <div className="flex gap-4">
-                      <div className="relative h-24 w-24 flex-shrink-0 rounded-lg overflow-hidden bg-muted">
+                      <div className="relative h-24 w-24 shrink-0 rounded-lg overflow-hidden bg-muted">
                         <Image
                           src={item.image || "/placeholder.svg?height=100&width=100"}
                           alt={item.name}
@@ -104,7 +105,7 @@ export default function CartPage() {
                           className="h-8 w-8"
                           onClick={() => removeItem(item.productId)}
                         >
-                          <Trash2 className="h-4 w-4 text-destructive" />
+                          <Iconex as={Trash2} className="h-4 w-4 text-destructive" />
                         </Button>
                         <div className="flex items-center gap-2 border rounded-md">
                           <Button
@@ -113,7 +114,7 @@ export default function CartPage() {
                             className="h-8 w-8"
                             onClick={() => updateQuantity(item.productId, item.quantity - 1)}
                           >
-                            <Minus className="h-3 w-3" />
+                            <Iconex as={Minus} className="h-3 w-3" />
                           </Button>
                           <span className="w-8 text-center font-medium text-sm">
                             {item.quantity}
@@ -124,7 +125,7 @@ export default function CartPage() {
                             className="h-8 w-8"
                             onClick={() => updateQuantity(item.productId, item.quantity + 1)}
                           >
-                            <Plus className="h-3 w-3" />
+                            <Iconex as={Plus} className="h-3 w-3" />
                           </Button>
                         </div>
                       </div>

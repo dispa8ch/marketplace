@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { User, MapPin, ShoppingBag, LogOut } from 'lucide-react';
+import { Iconex } from '@/components/icons/iconex'
 import { useRouter } from 'next/navigation';
 import { apiClient } from '@/lib/api-client';
 
@@ -27,7 +28,7 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <User className="h-5 w-5" />
+                <Iconex as={User} className="h-5 w-5" />
                 Personal Information
               </CardTitle>
             </CardHeader>
@@ -60,7 +61,7 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <MapPin className="h-5 w-5" />
+                <Iconex as={MapPin} className="h-5 w-5" />
                 Saved Addresses
               </CardTitle>
             </CardHeader>
@@ -82,7 +83,7 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <ShoppingBag className="h-5 w-5" />
+                <Iconex as={ShoppingBag} className="h-5 w-5" />
                 Order History
               </CardTitle>
             </CardHeader>
@@ -98,7 +99,7 @@ export default function ProfilePage() {
             className="w-full"
             onClick={handleLogout}
           >
-            <LogOut className="h-4 w-4 mr-2" />
+            <Iconex as={LogOut} className="h-4 w-4 mr-2" />
             Logout
           </Button>
         </div>

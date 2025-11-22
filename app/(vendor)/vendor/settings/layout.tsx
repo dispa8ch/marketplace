@@ -4,7 +4,8 @@ import type React from "react"
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
+import { cn, isActivePath } from "@/lib/utils"
+import { Iconex } from "@/components/icons/iconex"
 
 const settingsNav = [
   { name: "Profile Settings", href: "/vendor/settings" },
@@ -30,30 +31,59 @@ export default function SettingsLayout({
         <p className="text-[#757575] mt-1">Manage your account settings and preferences</p>
       </div>
 
-      <div className="flex gap-6">
-        {/* Settings Navigation */}
-        <aside className="w-64 flex-shrink-0">
-          <nav className="space-y-1">
-            {settingsNav.map((item) => {
-              const isActive = pathname === item.href
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    "block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors",
-                    isActive ? "bg-[#FFEDF0] text-[#E41F47]" : "text-[#757575] hover:bg-[#F5F5F5] hover:text-[#171717]",
-                  )}
-                >
-                  {item.name}
-                </Link>
-              )
-            })}
+      <div className="flex flex-col gap-6">
+        {/* Mobile horizontal tabs */}
+        <div className="block sm:hidden">
+          <nav role="tablist" aria-label="Settings tabs" className="overflow-x-auto no-scrollbar">
+            <div className="flex gap-2 px-2 py-1">
+              {settingsNav.map((item) => {
+                const isActive = isActivePath(pathname, item.href, { exact: item.href === "/vendor/settings" })
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    role="tab"
+                    aria-selected={isActive}
+                    className={cn(
+                      "whitespace-nowrap px-3 py-2 rounded-md text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+                      isActive
+                        ? "bg-[#FFEDF0] text-[#E41F47] font-medium"
+                        : "text-[#757575] hover:bg-[#F5F5F5]"
+                    )}
+                  >
+                    {item.name}
+                  </Link>
+                )
+              })}
+            </div>
           </nav>
-        </aside>
+        </div>
 
-        {/* Settings Content */}
-        <div className="flex-1">{children}</div>
+        <div className="flex gap-6">
+          {/* Settings Navigation (desktop) */}
+          <aside className="hidden sm:block w-64 shrink-0">
+            <nav className="space-y-1">
+              {settingsNav.map((item) => {
+                const isActive = isActivePath(pathname, item.href)
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      "block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors",
+                      isActive ? "bg-[#FFEDF0] text-[#E41F47]" : "text-[#757575] hover:bg-[#F5F5F5] hover:text-[#171717]",
+                    )}
+                  >
+                    {item.name}
+                  </Link>
+                )
+              })}
+            </nav>
+          </aside>
+
+          {/* Settings Content */}
+          <div className="flex-1">{children}</div>
+        </div>
       </div>
     </div>
   )

@@ -1,6 +1,7 @@
 import type React from "react"
 import { AdminSidebar } from "@/components/admin/admin-sidebar"
 import { AdminHeader } from "@/components/admin/admin-header"
+import { AdminBottomNav } from "@/components/admin/bottom-nav"
 
 interface AdminLayoutProps {
   children: React.ReactNode
@@ -22,6 +23,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         <AdminHeader />
         <main className="flex-1 overflow-y-auto bg-muted/20 p-6">{children}</main>
       </div>
+      <AdminBottomNav />
     </div>
   )
 }

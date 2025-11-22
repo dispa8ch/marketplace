@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Download, FileText, FileSpreadsheet, File } from "lucide-react"
+import { Iconex } from '@/components/icons/iconex'
 import {
   Dialog,
   DialogContent,
@@ -130,7 +131,7 @@ export function ExportModal({ open, onOpenChange, title = "Export Product Data",
                 className="justify-start"
                 onClick={() => setFormat("csv")}
               >
-                <FileSpreadsheet className="mr-2 h-4 w-4" />
+                <Iconex as={FileSpreadsheet} className="mr-2 h-4 w-4" />
                 CSV
               </Button>
               <Button
@@ -138,7 +139,7 @@ export function ExportModal({ open, onOpenChange, title = "Export Product Data",
                 className="justify-start"
                 onClick={() => setFormat("pdf")}
               >
-                <FileText className="mr-2 h-4 w-4" />
+                <Iconex as={FileText} className="mr-2 h-4 w-4" />
                 PDF
               </Button>
               <Button
@@ -146,7 +147,7 @@ export function ExportModal({ open, onOpenChange, title = "Export Product Data",
                 className="justify-start"
                 onClick={() => setFormat("excel")}
               >
-                <File className="mr-2 h-4 w-4" />
+                <Iconex as={File} className="mr-2 h-4 w-4" />
                 Excel
               </Button>
             </div>
@@ -158,7 +159,7 @@ export function ExportModal({ open, onOpenChange, title = "Export Product Data",
             Cancel
           </Button>
           <Button onClick={handleExport} disabled={loading || selectedFields.length === 0}>
-            <Download className="mr-2 h-4 w-4" />
+            <Iconex as={Download} className="mr-2 h-4 w-4" />
             {loading ? "Exporting..." : "Export"}
           </Button>
         </DialogFooter>

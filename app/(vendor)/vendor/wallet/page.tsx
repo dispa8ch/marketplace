@@ -1,7 +1,8 @@
-import { DollarSign, TrendingUp, Download, CreditCard } from 'lucide-react';
-import { StatsCard } from '@/components/vendor/stats-card';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { DollarSign, TrendingUp, Download, CreditCard } from "lucide-react";
+import { Iconex } from "@/components/icons/iconex";
+import { StatsCard } from "@/components/vendor/stats-card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -9,37 +10,37 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 
 export default function VendorWalletPage() {
   const transactions = [
     {
-      id: 'TXN-001',
-      type: 'credit',
-      description: 'Order payment - ORD-1001',
+      id: "TXN-001",
+      type: "credit",
+      description: "Order payment - ORD-1001",
       amount: 60000,
-      date: '2024-01-15',
+      date: "2024-01-15",
     },
     {
-      id: 'TXN-002',
-      type: 'credit',
-      description: 'Order payment - ORD-1002',
+      id: "TXN-002",
+      type: "credit",
+      description: "Order payment - ORD-1002",
       amount: 35000,
-      date: '2024-01-15',
+      date: "2024-01-15",
     },
     {
-      id: 'TXN-003',
-      type: 'debit',
-      description: 'Withdrawal to bank',
+      id: "TXN-003",
+      type: "debit",
+      description: "Withdrawal to bank",
       amount: -50000,
-      date: '2024-01-14',
+      date: "2024-01-14",
     },
     {
-      id: 'TXN-004',
-      type: 'credit',
-      description: 'Order payment - ORD-1003',
+      id: "TXN-004",
+      type: "credit",
+      description: "Order payment - ORD-1003",
       amount: 25000,
-      date: '2024-01-14',
+      date: "2024-01-14",
     },
   ];
 
@@ -48,7 +49,9 @@ export default function VendorWalletPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Wallet</h1>
         <Button>
-          <Download className="mr-2 h-4 w-4" />
+          <Iconex className="mr-2 h-4 w-4">
+            <Download className="h-4 w-4" />
+          </Iconex>
           Withdraw Funds
         </Button>
       </div>
@@ -57,10 +60,18 @@ export default function VendorWalletPage() {
         <StatsCard
           title="Available Balance"
           value="₦450,000"
-          icon={DollarSign}
+          icon={<DollarSign className="h-6 w-6 text-primary" />}
         />
-        <StatsCard title="Total Earnings" value="₦1,250,000" icon={TrendingUp} />
-        <StatsCard title="Pending" value="₦75,000" icon={CreditCard} />
+        <StatsCard
+          title="Total Earnings"
+          value="₦1,250,000"
+          icon={<TrendingUp className="h-6 w-6 text-primary" />}
+        />
+        <StatsCard
+          title="Pending"
+          value="₦75,000"
+          icon={<CreditCard className="h-6 w-6 text-primary" />}
+        />
       </div>
 
       <Card>
@@ -85,11 +96,11 @@ export default function VendorWalletPage() {
                   <TableCell>{txn.date}</TableCell>
                   <TableCell
                     className={`text-right font-medium ${
-                      txn.type === 'credit' ? 'text-green-600' : 'text-red-600'
+                      txn.type === "credit" ? "text-green-600" : "text-red-600"
                     }`}
                   >
-                    {txn.type === 'credit' ? '+' : ''}
-                    ₦{Math.abs(txn.amount).toLocaleString()}
+                    {txn.type === "credit" ? "+" : ""}₦
+                    {Math.abs(txn.amount).toLocaleString()}
                   </TableCell>
                 </TableRow>
               ))}

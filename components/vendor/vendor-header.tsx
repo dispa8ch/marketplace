@@ -1,8 +1,18 @@
-"use client"
+"use client";
 
-import { Bell, Search, Filter, Plus } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import {
+  Bell,
+  Search,
+  Filter,
+  Plus,
+  User,
+  User2,
+  Shield,
+  LogOut,
+} from "lucide-react";
+import { Iconex } from "@/components/icons/iconex";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,30 +20,26 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
 export function VendorHeader() {
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background px-6">
       <div className="flex flex-1 items-center gap-2">
-        <div className="relative w-full max-w-md">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input type="search" placeholder="Search..." className="w-full pl-9 pr-10" />
-          <Button variant="ghost" size="icon" className="absolute right-1 top-1/2 h-7 w-7 -translate-y-1/2">
-            <Filter className="h-4 w-4" />
-          </Button>
+        <div className="flex items-center w-full max-w-md">
+          {/* <Iconex>
+            <Search className="h-4 w-4 text-muted-foreground" />
+          </Iconex> */}
+          <Input type="search" placeholder="Search..." className="w-full" />
         </div>
       </div>
-
-      <Button className="gap-2">
-        <Plus className="h-4 w-4" />
-        Add Product
-      </Button>
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon" className="relative">
-            <Bell className="h-5 w-5" />
+            <Iconex>
+              <Bell className="h-5 w-5" />
+            </Iconex>
             <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
               3
             </span>
@@ -66,29 +72,48 @@ export function VendorHeader() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
               <span className="text-sm font-semibold text-primary">CA</span>
             </div>
             <div className="hidden flex-col items-start md:flex">
               <span className="text-sm font-medium">Caleb Adenuga</span>
-              <span className="text-xs text-muted-foreground">calebadenuga@gmail.com</span>
+              <span className="text-xs text-muted-foreground">
+                calebadenuga@gmail.com
+              </span>
             </div>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuContent align="end" className="w-56 flex flex-col gap-2">
           <DropdownMenuLabel>
             <div className="flex flex-col gap-1">
               <p className="text-sm font-medium">Caleb Adenuga</p>
-              <p className="text-xs text-muted-foreground">calebadenuga@gmail.com</p>
+              <p className="text-xs text-muted-foreground">
+                calebadenuga@gmail.com
+              </p>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile Settings</DropdownMenuItem>
-          <DropdownMenuItem>Account & Security</DropdownMenuItem>
+          <DropdownMenuItem>
+            <Iconex>
+              <User2 className="h-5 w-5" />
+            </Iconex>
+            Profile Settings
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Iconex>
+              <Shield className="h-5 w-5" />
+            </Iconex>
+            Account & Security
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="text-destructive">Logout</DropdownMenuItem>
+          <DropdownMenuItem className="text-destructive">
+            <Iconex>
+              <LogOut className="h-5 w-5 text-destructive" />
+            </Iconex>
+            Logout
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>
-  )
+  );
 }

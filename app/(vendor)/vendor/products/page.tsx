@@ -1,16 +1,24 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Plus, Edit, Trash2, Eye } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useState } from "react";
+import { Plus, Edit, Trash2, Eye } from "lucide-react";
+import { Iconex } from "@/components/icons/iconex";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function VendorProductsPage() {
-  const router = useRouter()
+  const router = useRouter();
   const [products] = useState([
     {
       id: "1",
@@ -44,7 +52,7 @@ export default function VendorProductsPage() {
       stock: 50,
       status: "active",
     },
-  ])
+  ]);
 
   return (
     <div className="space-y-6">
@@ -52,7 +60,9 @@ export default function VendorProductsPage() {
         <h1 className="text-3xl font-bold">Products</h1>
         <Button asChild>
           <Link href="/vendor/products/new">
-            <Plus className="mr-2 h-4 w-4" />
+            <Iconex>
+              <Plus className="mr-2 h-4 w-4" />
+            </Iconex>
             Add Product
           </Link>
         </Button>
@@ -78,23 +88,48 @@ export default function VendorProductsPage() {
                   <TableCell>{product.category}</TableCell>
                   <TableCell>₦{product.price.toLocaleString()}</TableCell>
                   <TableCell>
-                    <span className={product.stock === 0 ? "text-destructive" : "text-foreground"}>
+                    <span
+                      className={
+                        product.stock === 0
+                          ? "text-destructive"
+                          : "text-foreground"
+                      }
+                    >
                       {product.stock}
                     </span>
                   </TableCell>
                   <TableCell>
-                    <Badge variant={product.status === "active" ? "default" : "secondary"}>{product.status}</Badge>
+                    <Badge
+                      variant={
+                        product.status === "active" ? "default" : "secondary"
+                      }
+                    >
+                      {product.status}
+                    </Badge>
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
                       <Button variant="ghost" size="icon">
-                        <Eye className="h-4 w-4" />
+                        <Iconex>
+                          <Eye className="h-4 w-4" />
+                        </Iconex>
                       </Button>
-                      <Button variant="ghost" size="icon" onClick={() => router.push(`/vendor/products/${product.id}`)}>
-                        <Edit className="h-4 w-4" />
+                      <Button
+                        className="flex items-center justify-center"
+                        variant="ghost"
+                        size="icon"
+                        onClick={() =>
+                          router.push(`/vendor/products/${product.id}`)
+                        }
+                      >
+                        <Iconex>
+                          <Edit className="h-4 w-4" />
+                        </Iconex>
                       </Button>
                       <Button variant="ghost" size="icon">
-                        <Trash2 className="h-4 w-4 text-destructive" />
+                        <Iconex>
+                          <Trash2 className="h-4 w-4 text-destructive" />
+                        </Iconex>
                       </Button>
                     </div>
                   </TableCell>
@@ -105,5 +140,5 @@ export default function VendorProductsPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

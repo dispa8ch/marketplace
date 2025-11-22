@@ -1,17 +1,18 @@
-import { Type as type, LucideIcon } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import { Type as type, LucideIcon } from "lucide-react";
+import { Iconex } from "@/components/icons/iconex";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface StatsCardProps {
   title: string;
   value: string | number;
-  icon: LucideIcon;
+  icon: React.ReactNode;
   trend?: {
     value: number;
     isPositive: boolean;
   };
 }
 
-export function StatsCard({ title, value, icon: Icon, trend }: StatsCardProps) {
+export function StatsCard({ title, value, icon: icon, trend }: StatsCardProps) {
   return (
     <Card>
       <CardContent className="p-6">
@@ -22,16 +23,16 @@ export function StatsCard({ title, value, icon: Icon, trend }: StatsCardProps) {
             {trend && (
               <p
                 className={`text-xs mt-2 ${
-                  trend.isPositive ? 'text-green-600' : 'text-red-600'
+                  trend.isPositive ? "text-green-600" : "text-red-600"
                 }`}
               >
-                {trend.isPositive ? '+' : '-'}
+                {trend.isPositive ? "+" : "-"}
                 {Math.abs(trend.value)}% from last month
               </p>
             )}
           </div>
           <div className="h-12 w-12 rounded-full bg-accent flex items-center justify-center">
-            <Icon className="h-6 w-6 text-primary" />
+            {icon}
           </div>
         </div>
       </CardContent>

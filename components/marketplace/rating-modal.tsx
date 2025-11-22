@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Star } from 'lucide-react'
+import { Iconex } from '@/components/icons/iconex'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Textarea } from '@/components/ui/textarea'
@@ -47,9 +48,9 @@ export function RatingModal({ open, onOpenChange, vendorName, orderId }: RatingM
       <DialogContent className="max-w-md">
         <DialogHeader>
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 rounded-full bg-[#FFEDF0] flex items-center justify-center">
-              <Star className="w-8 h-8 text-[#E41F47]" />
-            </div>
+              <div className="w-16 h-16 rounded-full bg-[#FFEDF0] flex items-center justify-center">
+                <Iconex as={Star} className="w-8 h-8 text-[#E41F47]" />
+              </div>
           </div>
           <DialogTitle className="text-center">Rate This Vendor</DialogTitle>
           <DialogDescription className="text-center">
@@ -69,7 +70,8 @@ export function RatingModal({ open, onOpenChange, vendorName, orderId }: RatingM
                 onMouseLeave={() => setHoveredRating(0)}
                 className="transition-transform hover:scale-110"
               >
-                <Star
+                <Iconex
+                  as={Star}
                   className={`w-10 h-10 ${
                     star <= (hoveredRating || rating)
                       ? 'fill-[#FFA500] text-[#FFA500]'

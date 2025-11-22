@@ -1,22 +1,15 @@
-import { Store, Users, ShoppingBag, TrendingUp } from 'lucide-react';
-import { StatsCard } from '@/components/vendor/stats-card';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
+import { Store, Users, ShoppingBag, TrendingUp } from "lucide-react"
+import { StatsCard } from "@/components/vendor/stats-card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
 
 export default function AdminDashboardPage() {
   const recentVendors = [
-    { name: 'Fresh Market Store', status: 'pending', date: '2024-01-15' },
-    { name: 'Tech Hub Electronics', status: 'verified', date: '2024-01-14' },
-    { name: 'Fashion Forward', status: 'verified', date: '2024-01-13' },
-  ];
+    { name: "Fresh Market Store", status: "pending", date: "2024-01-15" },
+    { name: "Tech Hub Electronics", status: "verified", date: "2024-01-14" },
+    { name: "Fashion Forward", status: "verified", date: "2024-01-13" },
+  ]
 
   return (
     <div className="space-y-6">
@@ -26,25 +19,25 @@ export default function AdminDashboardPage() {
         <StatsCard
           title="Total Vendors"
           value="156"
-          icon={Store}
+          icon={<Store className="h-6 w-6 text-primary" />}
           trend={{ value: 12, isPositive: true }}
         />
         <StatsCard
           title="Total Customers"
           value="2,341"
-          icon={Users}
+          icon={<Users className="h-6 w-6 text-primary" />}
           trend={{ value: 18, isPositive: true }}
         />
         <StatsCard
           title="Total Orders"
           value="5,678"
-          icon={ShoppingBag}
+          icon={<ShoppingBag className="h-6 w-6 text-primary" />}
           trend={{ value: 15, isPositive: true }}
         />
         <StatsCard
           title="Platform Revenue"
           value="₦12.5M"
-          icon={TrendingUp}
+          icon={<TrendingUp className="h-6 w-6 text-primary" />}
           trend={{ value: 22, isPositive: true }}
         />
       </div>
@@ -69,13 +62,7 @@ export default function AdminDashboardPage() {
                     <TableCell className="font-medium">{vendor.name}</TableCell>
                     <TableCell>{vendor.date}</TableCell>
                     <TableCell>
-                      <Badge
-                        variant={
-                          vendor.status === 'verified' ? 'default' : 'secondary'
-                        }
-                      >
-                        {vendor.status}
-                      </Badge>
+                      <Badge variant={vendor.status === "verified" ? "default" : "secondary"}>{vendor.status}</Badge>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -116,5 +103,5 @@ export default function AdminDashboardPage() {
         </Card>
       </div>
     </div>
-  );
+  )
 }

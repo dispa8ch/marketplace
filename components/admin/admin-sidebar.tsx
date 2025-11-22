@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { LayoutDashboard, Store, Users, Truck, Settings, BarChart3, LogOut } from "lucide-react"
-import { cn, isActivePath } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { Iconex } from "@/components/icons/iconex"
 import { Button } from "@/components/ui/button"
 
@@ -34,7 +34,7 @@ export function AdminSidebar() {
       <nav className="flex flex-col gap-1 p-4">
         {navItems.map((item) => {
           const Icon = item.icon
-          const isActive = isActivePath(pathname, item.href)
+          const isActive = pathname === item.href || pathname.startsWith(item.href + "/")
           return (
             <Link
               key={item.href}
@@ -43,14 +43,11 @@ export function AdminSidebar() {
                 "flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors",
                 isActive
                   ? "bg-[#FFEDF0] text-[#E41F47] shadow-sm"
-                  : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                  : "text-muted-foreground hover:bg-accent hover:text-foreground",
               )}
             >
-
-              <Iconex
-                className={cn(isActive ? "text-[#E41F47]" : "text-[#757575]")}
-              >
-                <item.icon className="h-5 w-5" />
+              <Iconex className={cn(isActive ? "text-[#E41F47]" : "text-[#757575]")}>
+                <Icon className="h-5 w-5" />
               </Iconex>
               <span className="truncate">{item.name}</span>
             </Link>
@@ -68,4 +65,4 @@ export function AdminSidebar() {
       </div>
     </aside>
   )
-};
+}

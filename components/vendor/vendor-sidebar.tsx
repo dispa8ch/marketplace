@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import {
   LayoutDashboard,
   Package,
@@ -12,10 +12,10 @@ import {
   CreditCard,
   Settings,
   LogOut,
-} from "lucide-react";
-import { cn, isActivePath } from "@/lib/utils";
-import { Iconex } from "@/components/icons/iconex";
-import { Button } from "@/components/ui/button";
+} from "lucide-react"
+import { cn } from "@/lib/utils"
+import { Iconex } from "@/components/icons/iconex"
+import { Button } from "@/components/ui/button"
 
 const navItems = [
   { name: "Overview", href: "/vendor", icon: LayoutDashboard },
@@ -26,10 +26,10 @@ const navItems = [
   { name: "Promotions", href: "/vendor/promotions", icon: Megaphone },
   { name: "Subscription", href: "/vendor/subscription", icon: CreditCard },
   { name: "Settings", href: "/vendor/settings", icon: Settings },
-];
+]
 
 export function VendorSidebar() {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
     <aside className="hidden sm:block fixed left-0 top-0 z-40 h-screen w-64 border-r bg-card">
@@ -39,16 +39,14 @@ export function VendorSidebar() {
         </div>
         <div className="flex flex-col">
           <span className="text-sm font-bold text-foreground">Dispa8ch</span>
-          <span className="text-xs text-muted-foreground">
-            Vendor Application
-          </span>
+          <span className="text-xs text-muted-foreground">Vendor Application</span>
         </div>
       </div>
 
       <nav className="flex flex-col gap-1 p-4">
         {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = isActivePath(pathname, item.href);
+          const Icon = item.icon
+          const isActive = pathname === item.href || pathname.startsWith(item.href + "/")
           return (
             <Link
               key={item.href}
@@ -57,18 +55,16 @@ export function VendorSidebar() {
                 "flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors",
                 isActive
                   ? "bg-[#FFEDF0] text-[#E41F47] shadow-sm"
-                  : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                  : "text-muted-foreground hover:bg-accent hover:text-foreground",
               )}
             >
-              <Iconex
-                className={cn(isActive ? "text-[#E41F47]" : "text-[#757575]")}
-              >
-                <item.icon className="h-5 w-5" />
+              <Iconex className={cn(isActive ? "text-[#E41F47]" : "text-[#757575]")}>
+                <Icon className="h-5 w-5" />
               </Iconex>
 
               <span className="truncate">{item.name}</span>
             </Link>
-          );
+          )
         })}
       </nav>
 
@@ -81,5 +77,5 @@ export function VendorSidebar() {
         </Button>
       </div>
     </aside>
-  );
+  )
 }

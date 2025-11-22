@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import {
   LayoutDashboard,
   Package,
@@ -10,9 +10,12 @@ import {
   Wallet,
   Megaphone,
   Settings,
-} from "lucide-react";
-import { cn, isActivePath } from "@/lib/utils";
-import { Iconex } from "@/components/icons/iconex";
+  MoreHorizontal,
+} from "lucide-react"
+import { cn } from "@/lib/utils"
+import { Iconex } from "@/components/icons/iconex"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { useState } from "react"
 
 const navItems = [
   { name: "Overview", href: "/vendor", icon: LayoutDashboard },
@@ -22,10 +25,14 @@ const navItems = [
   { name: "Wallet", href: "/vendor/wallet", icon: Wallet },
   { name: "Promotions", href: "/vendor/promotions", icon: Megaphone },
   { name: "Settings", href: "/vendor/settings", icon: Settings },
-];
+]
 
 export function VendorBottomNav() {
-  const pathname = usePathname();
+  const pathname = usePathname()
+  const [isMoreOpen, setIsMoreOpen] = useState(false)
+
+  const visibleItems = navItems.slice(0, 4)
+  const moreItems = navItems.slice(4)
 
   return (
     <nav
@@ -35,29 +42,65 @@ export function VendorBottomNav() {
     >
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between gap-2 py-2">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = isActivePath(pathname, item.href);
+          {visibleItems.map((item) => {
+            const Icon = item.icon
+            const isActive = pathname === item.href || pathname.startsWith(item.href + "/")
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex flex-col items-center gap-3 px-3 py-2 rounded-lg transition-colors text-sm",
-                  isActive ? "bg-[#FFEDF0] text-[#E41F47]" : "hover:bg-gray-50"
+                  "flex-1 flex flex-col items-center justify-center gap-1 py-2 rounded-md text-xs transition-colors",
+                  isActive ? "bg-[#FFEDF0] text-[#E41F47] font-medium" : "text-[#757575]",
                 )}
               >
-                <Iconex
-                  className={cn(isActive ? "text-[#E41F47]" : "text-gray-500")}
-                >
-                  <item.icon className="h-5 w-5" />
+                <Iconex className={cn(isActive ? "text-[#E41F47]" : "text-[#757575]")}>
+                  <Icon className="h-5 w-5" />
                 </Iconex>
                 <span className="text-[11px]">{item.name}</span>
               </Link>
-            );
+            )
           })}
+
+          <Sheet open={isMoreOpen} onOpenChange={setIsMoreOpen}>
+            <SheetTrigger asChild>
+              <button className="flex-1 flex flex-col items-center justify-center gap-1 py-2 rounded-md text-xs text-[#757575]">
+                <Iconex>
+                  <MoreHorizontal className="h-5 w-5" />
+                </Iconex>
+                <span className="text-[11px]">More</span>
+              </button>
+            </SheetTrigger>
+            <SheetContent side="bottom" className="h-auto">
+              <SheetHeader>
+                <SheetTitle>More Options</SheetTitle>
+              </SheetHeader>
+              <div className="grid gap-2 py-4">
+                {moreItems.map((item) => {
+                  const Icon = item.icon
+                  const isActive = pathname === item.href || pathname.startsWith(item.href + "/")
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setIsMoreOpen(false)}
+                      className={cn(
+                        "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors",
+                        isActive ? "bg-[#FFEDF0] text-[#E41F47] font-medium" : "text-[#757575] hover:bg-muted",
+                      )}
+                    >
+                      <Iconex className={cn(isActive ? "text-[#E41F47]" : "text-[#757575]")}>
+                        <Icon className="h-5 w-5" />
+                      </Iconex>
+                      <span>{item.name}</span>
+                    </Link>
+                  )
+                })}
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </nav>
-  );
+  )
 }

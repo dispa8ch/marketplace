@@ -31,7 +31,7 @@ export default function AdminDashboard() {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-[#171717]">Dashboard Overview</h1>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-[#757575]">Total Vendors</CardTitle>
@@ -78,7 +78,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Recent Activity Section - Placeholder for now */}
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle className="text-lg font-semibold text-[#171717]">Recent Signups</CardTitle>

@@ -76,7 +76,7 @@ export function VendorSidebar() {
           className="w-full justify-start text-muted-foreground hover:text-destructive hover:bg-destructive/10"
           asChild
         >
-          <Link href="/auth/login">
+          <Link href="/vendor/auth/login">
             <LogOut className="mr-3 h-5 w-5" />
             Logout
           </Link>

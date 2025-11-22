@@ -9,12 +9,15 @@ import { Button } from "@/components/ui/button"
 import { getLogisticsPartners, type LogisticsPartner } from "@/lib/api/admin"
 import { useToast } from "@/hooks/use-toast"
 import { AddLogisticsPartnerModal } from "@/components/admin/modals/add-logistics-partner-modal"
+import { EditLogisticsPartnerModal } from "@/components/admin/modals/edit-logistics-partner-modal"
 
 export default function AdminLogisticsPage() {
   const { toast } = useToast()
   const [partners, setPartners] = useState<LogisticsPartner[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [selectedPartner, setSelectedPartner] = useState<LogisticsPartner | null>(null)
 
   const loadPartners = async () => {
     try {
@@ -35,18 +38,23 @@ export default function AdminLogisticsPage() {
     loadPartners()
   }, [])
 
+  const handleEdit = (partner: LogisticsPartner) => {
+    setSelectedPartner(partner)
+    setIsEditModalOpen(true)
+  }
+
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <h1 className="text-3xl font-bold">Logistics Partners</h1>
-        <Button onClick={() => setIsModalOpen(true)}>
+        <Button onClick={() => setIsAddModalOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
           Add Partner
         </Button>
       </div>
 
       <Card>
-        <CardContent className="p-0">
+        <CardContent className="p-0 overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
@@ -88,7 +96,7 @@ export default function AdminLogisticsPage() {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
-                        <Button variant="ghost" size="icon">
+                        <Button variant="ghost" size="icon" onClick={() => handleEdit(partner)}>
                           <Edit className="h-4 w-4" />
                         </Button>
                         <Button variant="ghost" size="icon">
@@ -104,7 +112,14 @@ export default function AdminLogisticsPage() {
         </CardContent>
       </Card>
 
-      <AddLogisticsPartnerModal open={isModalOpen} onOpenChange={setIsModalOpen} onSuccess={loadPartners} />
+      <AddLogisticsPartnerModal open={isAddModalOpen} onOpenChange={setIsAddModalOpen} onSuccess={loadPartners} />
+
+      <EditLogisticsPartnerModal
+        open={isEditModalOpen}
+        onOpenChange={setIsEditModalOpen}
+        partner={selectedPartner}
+        onSuccess={loadPartners}
+      />
     </div>
   )
 }

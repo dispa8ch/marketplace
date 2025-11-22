@@ -1,32 +1,32 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
-/* Updated to Dispa8ch brand colors */
+/* Theme inspired by Casa Portufornia - refined earthy tones with elegant typography */
 :root {
-  --background: #FDFDFD;
-  --foreground: #171717;
-  --card: #FFFFFF;
-  --card-foreground: #171717;
-  --popover: #FFFFFF;
-  --popover-foreground: #171717;
-  --primary: #E41F47;
-  --primary-foreground: #FFFFFF;
-  --secondary: #757575;
-  --secondary-foreground: #171717;
-  --muted: #F5F5F5;
-  --muted-foreground: #757575;
-  --accent: #FFEDF0;
-  --accent-foreground: #E41F47;
-  --destructive: #DC2626;
-  --destructive-foreground: #FFFFFF;
-  --border: #E6E6E6;
-  --input: #E6E6E6;
-  --ring: rgba(228, 31, 71, 0.12);
-  --radius: 8px;
-  
-  /* Add exact spacing tokens from requirements */
+  --background: #ebe1dc;
+  --foreground: #2a402d; /* Deep forest green text */
+  --card: #f2ecea;
+  --card-foreground: #2a402d;
+  --popover: #f2ecea;
+  --popover-foreground: #2a402d;
+  --primary: #2a402d; /* Deep forest green */
+  --primary-foreground: #ebe1dc;
+  --secondary: #d4c5be;
+  --secondary-foreground: #2a402d;
+  --muted: #dbcfca;
+  --muted-foreground: #5c6b5e;
+  --accent: #e41f47; /* Keeping Dispa8ch red as accent */
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #8a968b; /* Subtle green-grey border */
+  --input: #ebe1dc; /* Transparent/blend input bg */
+  --ring: #2a402d;
+  --radius: 0px; /* Sharp corners for elegant feel */
+
+  /* Add exact spacing tokens */
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 12px;
@@ -36,29 +36,30 @@
 }
 
 .dark {
-  --background: #171717;
-  --foreground: #FDFDFD;
-  --card: #1F1F1F;
-  --card-foreground: #FDFDFD;
-  --popover: #1F1F1F;
-  --popover-foreground: #FDFDFD;
-  --primary: #E41F47;
-  --primary-foreground: #FFFFFF;
-  --secondary: #757575;
-  --secondary-foreground: #FDFDFD;
-  --muted: #2A2A2A;
-  --muted-foreground: #A3A3A3;
-  --accent: #3D1F27;
-  --accent-foreground: #E41F47;
-  --destructive: #EF4444;
-  --destructive-foreground: #FFFFFF;
-  --border: #2A2A2A;
-  --input: #2A2A2A;
-  --ring: #E41F47;
+  --background: #1a261c;
+  --foreground: #ebe1dc;
+  --card: #233025;
+  --card-foreground: #ebe1dc;
+  --popover: #233025;
+  --popover-foreground: #ebe1dc;
+  --primary: #ebe1dc;
+  --primary-foreground: #2a402d;
+  --secondary: #2a402d;
+  --secondary-foreground: #ebe1dc;
+  --muted: #2a402d;
+  --muted-foreground: #8a968b;
+  --accent: #e41f47;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #4a594c;
+  --input: #233025;
+  --ring: #ebe1dc;
 }
 
 @theme inline {
-  --font-sans: var(--font-sans), system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-sans), "Inter", system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-serif), "Playfair Display", serif; /* Added serif font */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -88,12 +89,22 @@
   * {
     @apply border-border;
   }
-  
+
   body {
     @apply bg-background text-foreground font-sans antialiased;
   }
-  
-  /* Input styling - no shadows, exact border, focus ring */
+
+  /* Elegant headings */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif tracking-tight font-normal;
+  }
+
+  /* Minimal input styling inspired by the contact form */
   input[type="text"],
   input[type="email"],
   input[type="password"],
@@ -102,20 +113,19 @@
   input[type="number"],
   textarea,
   select {
-    @apply border border-input bg-background px-3 py-2 rounded-md;
-    @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring;
-    @apply transition-all duration-150;
+    @apply border-b border-t-0 border-l-0 border-r-0 border-primary/40 bg-transparent px-0 py-3 rounded-none;
+    @apply focus-visible:outline-none focus-visible:border-primary focus-visible:ring-0;
+    @apply transition-colors duration-200 placeholder:text-muted-foreground/60;
     box-shadow: none !important;
   }
-  
-  /* Label spacing - 8px above inputs */
+
+  /* Uppercase refined labels */
   label {
-    @apply block mb-2 text-sm font-medium;
+    @apply block mb-1 text-[10px] uppercase tracking-widest font-medium text-foreground/80;
   }
-  
-  /* Button radius - 6px for buttons */
-  button {
-    @apply rounded-md;
-    border-radius: 6px;
+
+  /* Rounded, pill-shaped buttons for primary actions */
+  .btn-primary {
+    @apply rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300;
   }
 }

@@ -31,7 +31,7 @@ export function AdminSidebar() {
         </div>
       </div>
 
-      <nav className="flex flex-col gap-1 p-4">
+      <nav className="flex-1 flex flex-col gap-1 p-4 overflow-y-auto">
         {navItems.map((item) => {
           const Icon = item.icon
           const isActive = pathname === item.href || pathname.startsWith(item.href + "/")
@@ -55,10 +55,14 @@ export function AdminSidebar() {
         })}
       </nav>
 
-      <div className="absolute bottom-4 left-4 right-4">
-        <Button variant="soft" className="w-full justify-start" asChild>
-          <Link href="/auth/login">
-            <LogOut className="mr-3 h-5 w-5 text-[#E41F47]" />
+      <div className="p-4 border-t bg-muted/10">
+        <Button
+          variant="ghost"
+          className="w-full justify-start text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+          asChild
+        >
+          <Link href="/admin/auth/login">
+            <LogOut className="mr-3 h-5 w-5" />
             Logout
           </Link>
         </Button>

@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useToast } from "@/hooks/use-toast"
-import { createProduct } from "@/lib/api/vendor"
+import { createProduct } from "../../../../../lib/api/vendor"
 
 export default function NewProductPage() {
   const router = useRouter()
@@ -59,12 +59,12 @@ export default function NewProductPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Add New Product</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold">Add New Product</h1>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Product Details</CardTitle>
+          <CardTitle className="text-lg sm:text-xl">Product Details</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -91,7 +91,7 @@ export default function NewProductPage() {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="price">Price (₦)</Label>
                 <Input
@@ -136,11 +136,11 @@ export default function NewProductPage() {
               </Select>
             </div>
 
-            <div className="flex gap-4 pt-4">
-              <Button type="submit" disabled={isLoading}>
+            <div className="flex flex-col-reverse sm:flex-row gap-4 pt-4">
+              <Button type="submit" disabled={isLoading} className="w-full sm:w-auto">
                 {isLoading ? "Creating..." : "Create Product"}
               </Button>
-              <Button type="button" variant="outline" onClick={() => router.back()}>
+              <Button type="button" variant="outline" onClick={() => router.back()} className="w-full sm:w-auto">
                 Cancel
               </Button>
             </div>

@@ -46,12 +46,12 @@ export function AddTeamMemberModal({ open, onOpenChange }: AddTeamMemberModalPro
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-[95vw] w-full sm:max-w-md p-4 sm:p-6">
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold">Add Team Member</DialogTitle>
+          <DialogTitle className="text-lg sm:text-xl font-semibold">Add Team Member</DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-4">
+        <div className="space-y-4 py-2">
           <div className="space-y-2">
             <Label htmlFor="name">Full Name *</Label>
             <Input
@@ -88,13 +88,13 @@ export function AddTeamMemberModal({ open, onOpenChange }: AddTeamMemberModalPro
           </div>
         </div>
 
-        <DialogFooter>
-          <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+        <DialogFooter className="flex-col-reverse sm:flex-row gap-2 sm:gap-0 mt-4">
+          <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="w-full sm:w-auto">
             Cancel
           </Button>
           <Button
             type="button"
-            className="bg-[#E41F47] hover:bg-[#C11A3D]"
+            className="bg-[#E41F47] hover:bg-[#C11A3D] w-full sm:w-auto"
             onClick={handleAdd}
             disabled={!formData.name || !formData.email || !formData.role || isLoading}
           >

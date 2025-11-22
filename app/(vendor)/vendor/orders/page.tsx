@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { getOrders, type Order } from "@/lib/api/vendor"
+import { getOrders, type Order } from "../../../../lib/api/vendor"
 import { useToast } from "@/hooks/use-toast"
 
 export default function VendorOrdersPage() {

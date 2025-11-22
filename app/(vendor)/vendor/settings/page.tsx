@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { getVendorProfile, updateVendorProfile, type VendorProfile } from "@/lib/api/vendor"
+import { getVendorProfile, updateVendorProfile, type VendorProfile } from "../../../../lib/api/vendor"
 import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"

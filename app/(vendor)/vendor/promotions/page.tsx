@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Plus } from "lucide-react"
 import { Iconex } from "@/components/icons/iconex"
 import { getPromotions } from "@/lib/api/vendor"
@@ -40,6 +40,9 @@ export default function VendorPromotionsPage() {
 
       {/* Promotions Table */}
       <Card>
+        <CardHeader>
+          <CardTitle>Promotions</CardTitle>
+        </CardHeader>
         <CardContent className="p-6">
           <div className="overflow-x-auto">
             <table className="w-full">

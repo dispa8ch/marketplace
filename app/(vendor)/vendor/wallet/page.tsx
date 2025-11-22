@@ -7,7 +7,7 @@ import { StatsCard } from "@/components/vendor/stats-card"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { getWalletBalance, getBankAccounts, type Transaction } from "@/lib/api/vendor"
+import { getWalletBalance, getBankAccounts, type Transaction } from "../../../../lib/api/vendor"
 import { useToast } from "@/hooks/use-toast"
 import { AddBankAccountModal } from "@/components/vendor/modals/add-bank-account-modal"
 

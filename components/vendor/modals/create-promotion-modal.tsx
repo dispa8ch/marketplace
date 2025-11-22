@@ -34,12 +34,12 @@ export function CreatePromotionModal({ open, onOpenChange }: CreatePromotionModa
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-[95vw] w-full sm:max-w-2xl max-h-[90vh] overflow-y-auto p-4 sm:p-6">
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold">Create Promotion</DialogTitle>
+          <DialogTitle className="text-lg sm:text-xl font-semibold">Create Promotion</DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-4">
+        <div className="space-y-4 py-2">
           <div className="space-y-2">
             <Label htmlFor="name">Promotion Name *</Label>
             <Input
@@ -50,7 +50,7 @@ export function CreatePromotionModal({ open, onOpenChange }: CreatePromotionModa
             />
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="discountType">Discount Type *</Label>
               <Select
@@ -79,7 +79,7 @@ export function CreatePromotionModal({ open, onOpenChange }: CreatePromotionModa
             </div>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
             <div className="space-y-2">
               <Label>Start Date *</Label>
               <Popover>
@@ -126,11 +126,11 @@ export function CreatePromotionModal({ open, onOpenChange }: CreatePromotionModa
           </div>
         </div>
 
-        <DialogFooter>
-          <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+        <DialogFooter className="flex-col-reverse sm:flex-row gap-2 sm:gap-0 mt-4">
+          <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="w-full sm:w-auto">
             Cancel
           </Button>
-          <Button type="button" className="bg-[#E41F47] hover:bg-[#C11A3D]" onClick={handleCreate}>
+          <Button type="button" className="bg-[#E41F47] hover:bg-[#C11A3D] w-full sm:w-auto" onClick={handleCreate}>
             Create Promotion
           </Button>
         </DialogFooter>

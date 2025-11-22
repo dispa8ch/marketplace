@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Plus } from "lucide-react"
 import { Iconex } from "@/components/icons/iconex"
-import { getTeamMembers, inviteTeamMember } from "@/lib/api/vendor"
+import { getTeamMembers, inviteTeamMember } from "../../../../../lib/api/vendor"
 import { useToast } from "@/hooks/use-toast"
 import { AddTeamMemberModal } from "@/components/vendor/modals/add-team-member-modal"
 

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { useToast } from "@/hooks/use-toast"
-import { getPlatformFees, updatePlatformFees } from "@/lib/api/admin"
+import { getPlatformFees, updatePlatformFees } from "../../../../lib/api/admin"
 
 export default function AdminSettingsPage() {
   const { toast } = useToast()

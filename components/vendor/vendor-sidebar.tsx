@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
@@ -14,8 +15,8 @@ import {
   LogOut,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Iconex } from "@/components/icons/iconex"
 import { Button } from "@/components/ui/button"
+import { LogoutModal } from "@/components/ui/logout-modal"
 
 const navItems = [
   { name: "Overview", href: "/vendor", icon: LayoutDashboard },
@@ -30,58 +31,60 @@ const navItems = [
 
 export function VendorSidebar() {
   const pathname = usePathname()
+  const [showLogout, setShowLogout] = useState(false)
 
   return (
-    <aside className="hidden sm:flex fixed left-0 top-0 z-40 h-screen w-64 flex-col border-r bg-card">
-      <div className="flex h-16 items-center gap-2 border-b px-6">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#E41F47]">
-          <span className="text-lg font-bold text-white">D</span>
+    <>
+      <aside className="hidden sm:flex fixed left-0 top-0 z-40 h-screen w-64 flex-col border-r border-[#333] bg-[#000000]">
+        <div className="flex h-16 items-center gap-3 border-b border-[#333] px-6">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white">
+            <span className="text-lg font-bold text-black">D</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-bold text-white tracking-wide">Dispa8ch</span>
+            <span className="text-[10px] text-gray-400 font-mono uppercase tracking-wider">Vendor</span>
+          </div>
         </div>
-        <div className="flex flex-col">
-          <span className="text-sm font-bold text-foreground">Dispa8ch</span>
-          <span className="text-xs text-muted-foreground">Vendor Portal</span>
-        </div>
-      </div>
 
-      <nav className="flex-1 flex flex-col gap-1 p-4 overflow-y-auto">
-        {navItems.map((item) => {
-          const Icon = item.icon
-          // Exact match for root, prefix match for others
-          const isActive = item.href === "/vendor" ? pathname === "/vendor" : pathname.startsWith(item.href)
+        <nav className="flex-1 flex flex-col gap-1 p-4 overflow-y-auto">
+          {navItems.map((item) => {
+            const Icon = item.icon
+            // Exact match for root, prefix match for others
+            const isActive = item.href === "/vendor" ? pathname === "/vendor" : pathname.startsWith(item.href)
 
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200",
-                isActive
-                  ? "bg-[#FFEDF0] text-[#E41F47] shadow-sm"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground",
-              )}
-            >
-              <Iconex className={cn(isActive ? "text-[#E41F47]" : "text-[#757575]")}>
-                <Icon className="h-5 w-5" />
-              </Iconex>
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex items-center gap-3 rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 group",
+                  isActive
+                    ? "bg-[#ededed] text-black shadow-sm"
+                    : "text-[#a1a1a1] hover:bg-[#1f1f1f] hover:text-[#ededed]",
+                )}
+              >
+                <Icon
+                  className={cn("h-4 w-4", isActive ? "text-black" : "text-[#a1a1a1] group-hover:text-[#ededed]")}
+                />
+                <span className="truncate">{item.name}</span>
+              </Link>
+            )
+          })}
+        </nav>
 
-              <span className="truncate">{item.name}</span>
-            </Link>
-          )
-        })}
-      </nav>
-
-      <div className="p-4 border-t bg-muted/10">
-        <Button
-          variant="ghost"
-          className="w-full justify-start text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-          asChild
-        >
-          <Link href="/vendor/auth/login">
-            <LogOut className="mr-3 h-5 w-5" />
+        <div className="p-4 border-t border-[#333]">
+          <Button
+            variant="ghost"
+            className="w-full justify-start text-[#a1a1a1] hover:text-[#ededed] hover:bg-[#1f1f1f]"
+            onClick={() => setShowLogout(true)}
+          >
+            <LogOut className="mr-3 h-4 w-4" />
             Logout
-          </Link>
-        </Button>
-      </div>
-    </aside>
+          </Button>
+        </div>
+      </aside>
+
+      <LogoutModal open={showLogout} onOpenChange={setShowLogout} />
+    </>
   )
 }

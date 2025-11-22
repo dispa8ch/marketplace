@@ -3,63 +3,70 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Theme inspired by Casa Portufornia - refined earthy tones with elegant typography */
 :root {
-  --background: #ebe1dc;
-  --foreground: #2a402d; /* Deep forest green text */
-  --card: #f2ecea;
-  --card-foreground: #2a402d;
-  --popover: #f2ecea;
-  --popover-foreground: #2a402d;
-  --primary: #2a402d; /* Deep forest green */
-  --primary-foreground: #ebe1dc;
-  --secondary: #d4c5be;
-  --secondary-foreground: #2a402d;
-  --muted: #dbcfca;
-  --muted-foreground: #5c6b5e;
-  --accent: #e41f47; /* Keeping Dispa8ch red as accent */
-  --accent-foreground: #ffffff;
-  --destructive: #dc2626;
-  --destructive-foreground: #ffffff;
-  --border: #8a968b; /* Subtle green-grey border */
-  --input: #ebe1dc; /* Transparent/blend input bg */
-  --ring: #2a402d;
-  --radius: 0px; /* Sharp corners for elegant feel */
-
-  /* Add exact spacing tokens */
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 12px;
-  --space-lg: 16px;
-  --space-xl: 24px;
-  --space-xxl: 32px;
+  --background: #000000;
+  --foreground: #ededed;
+  --card: #0a0a0a;
+  --card-foreground: #ededed;
+  --popover: #0a0a0a;
+  --popover-foreground: #ededed;
+  --primary: #ededed;
+  --primary-foreground: #000000;
+  --secondary: #1f1f1f;
+  --secondary-foreground: #ededed;
+  --muted: #1f1f1f;
+  --muted-foreground: #a1a1a1;
+  --accent: #1f1f1f;
+  --accent-foreground: #ededed;
+  --destructive: #7f1d1d;
+  --destructive-foreground: #ededed;
+  --border: #333333;
+  --input: #1f1f1f;
+  --ring: #ededed;
+  --radius: 0.625rem;
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #ededed;
+  --sidebar-primary: #ededed;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #1f1f1f;
+  --sidebar-accent-foreground: #ededed;
+  --sidebar-border: #333333;
+  --sidebar-ring: #ededed;
 }
 
 .dark {
-  --background: #1a261c;
-  --foreground: #ebe1dc;
-  --card: #233025;
-  --card-foreground: #ebe1dc;
-  --popover: #233025;
-  --popover-foreground: #ebe1dc;
-  --primary: #ebe1dc;
-  --primary-foreground: #2a402d;
-  --secondary: #2a402d;
-  --secondary-foreground: #ebe1dc;
-  --muted: #2a402d;
-  --muted-foreground: #8a968b;
-  --accent: #e41f47;
-  --accent-foreground: #ffffff;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #4a594c;
-  --input: #233025;
-  --ring: #ebe1dc;
+  --background: #000000;
+  --foreground: #ededed;
+  --card: #0a0a0a;
+  --card-foreground: #ededed;
+  --popover: #0a0a0a;
+  --popover-foreground: #ededed;
+  --primary: #ededed;
+  --primary-foreground: #000000;
+  --secondary: #1f1f1f;
+  --secondary-foreground: #ededed;
+  --muted: #1f1f1f;
+  --muted-foreground: #a1a1a1;
+  --accent: #1f1f1f;
+  --accent-foreground: #ededed;
+  --destructive: #7f1d1d;
+  --destructive-foreground: #ededed;
+  --border: #333333;
+  --input: #1f1f1f;
+  --ring: #ededed;
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #ededed;
+  --sidebar-primary: #ededed;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #1f1f1f;
+  --sidebar-accent-foreground: #ededed;
+  --sidebar-border: #333333;
+  --sidebar-ring: #ededed;
 }
 
 @theme inline {
-  --font-sans: var(--font-sans), "Inter", system-ui, -apple-system, sans-serif;
-  --font-serif: var(--font-serif), "Playfair Display", serif; /* Added serif font */
+  --font-sans: var(--font-sans), "Geist", "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-mono), "Geist Mono", "Inter", monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -79,53 +86,30 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
-
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-  }
-
-  /* Elegant headings */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-serif tracking-tight font-normal;
-  }
-
-  /* Minimal input styling inspired by the contact form */
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  input[type="search"],
-  input[type="tel"],
-  input[type="number"],
-  textarea,
-  select {
-    @apply border-b border-t-0 border-l-0 border-r-0 border-primary/40 bg-transparent px-0 py-3 rounded-none;
-    @apply focus-visible:outline-none focus-visible:border-primary focus-visible:ring-0;
-    @apply transition-colors duration-200 placeholder:text-muted-foreground/60;
-    box-shadow: none !important;
-  }
-
-  /* Uppercase refined labels */
-  label {
-    @apply block mb-1 text-[10px] uppercase tracking-widest font-medium text-foreground/80;
-  }
-
-  /* Rounded, pill-shaped buttons for primary actions */
-  .btn-primary {
-    @apply rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300;
+    @apply bg-background text-foreground;
   }
 }

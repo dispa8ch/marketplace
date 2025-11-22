@@ -10,8 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useToast } from "@/hooks/use-toast"
 import { useAuth } from "@/lib/contexts/auth-context"
-import { Loader2 } from "lucide-react"
-import Image from "next/image"
+import { Loader2, ArrowRight, Zap } from "lucide-react"
 
 export default function VendorRegisterPage() {
   const router = useRouter()
@@ -30,15 +29,11 @@ export default function VendorRegisterPage() {
     setIsLoading(true)
 
     try {
-      // Create account
       await signup(formData.companyName, formData.email, formData.password)
-
       toast({
         title: "Account Created",
         description: "Starting onboarding process...",
       })
-
-      // Redirect to onboarding flow
       router.push("/onboarding")
     } catch (error: any) {
       toast({
@@ -52,81 +47,55 @@ export default function VendorRegisterPage() {
   }
 
   return (
-    <div className="min-h-screen grid lg:grid-cols-2 bg-[#F5F5F0]">
-      {/* Visual Section - Left Side */}
-      <div className="hidden lg:flex flex-col relative bg-[#E41F47] text-white p-12 overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-20 mix-blend-multiply">
-          <Image
-            src="/placeholder.svg?key=vendor-register"
-            alt="Business growth"
-            fill
-            className="object-cover"
-            priority
-          />
+    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-4 relative overflow-hidden">
+      {/* Abstract Background Elements */}
+      <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-blue-500/10 rounded-full blur-[120px]" />
+      <div className="absolute bottom-[-20%] left-[-10%] w-[50%] h-[50%] bg-purple-500/10 rounded-full blur-[120px]" />
+
+      <div className="w-full max-w-md z-10 space-y-8">
+        <div className="text-center space-y-2">
+          <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white text-black mb-6">
+            <Zap className="h-6 w-6" />
+          </div>
+          <h1 className="text-3xl font-semibold tracking-tight">Join the Network</h1>
+          <p className="text-muted-foreground text-sm">Start selling on the modern commerce platform.</p>
         </div>
 
-        <div className="relative z-10 flex flex-col h-full justify-between">
-          <div>
-            <h1 className="font-serif text-[56px] leading-tight mb-4">
-              Expand
-              <br />
-              Your Reach
-            </h1>
-            <p className="text-white/80 max-w-sm text-lg font-light">
-              Join thousands of curated brands reaching new customers through Dispa8ch.
-            </p>
-          </div>
-
-          <div className="flex gap-12 font-mono text-xs tracking-widest opacity-80">
-            <div>
-              <span className="block text-2xl font-serif mb-1">10k+</span>
-              CUSTOMERS
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="companyName" className="text-xs uppercase text-muted-foreground font-mono">
+                Company Name
+              </Label>
+              <Input
+                id="companyName"
+                placeholder="Acme Inc."
+                value={formData.companyName}
+                onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                required
+                className="bg-[#0a0a0a] border-[#333] focus:border-white focus:ring-0 h-11 transition-colors"
+              />
             </div>
-            <div>
-              <span className="block text-2xl font-serif mb-1">24h</span>
-              FULFILLMENT
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Form Section - Right Side */}
-      <div className="flex flex-col justify-center items-center p-6 lg:p-24 relative">
-        <div className="w-full max-w-[400px] space-y-12">
-          <div className="space-y-2">
-            <h2 className="text-3xl font-serif text-[#2A402D]">Partner Application</h2>
-            <p className="text-[#5C6B5E] text-sm tracking-wide">Start your journey with Dispa8ch Marketplace.</p>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-8">
-            <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="companyName">COMPANY / BRAND NAME</Label>
-                <Input
-                  id="companyName"
-                  placeholder="e.g. Acme Co."
-                  value={formData.companyName}
-                  onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                  required
-                  className="bg-transparent border-b border-[#2A402D]/30 px-0 rounded-none focus-visible:ring-0 focus-visible:border-[#2A402D]"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="email">BUSINESS EMAIL</Label>
+                <Label htmlFor="email" className="text-xs uppercase text-muted-foreground font-mono">
+                  Email
+                </Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="contact@brand.com"
+                  placeholder="name@company.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
-                  className="bg-transparent border-b border-[#2A402D]/30 px-0 rounded-none focus-visible:ring-0 focus-visible:border-[#2A402D]"
+                  className="bg-[#0a0a0a] border-[#333] focus:border-white focus:ring-0 h-11 transition-colors"
                 />
               </div>
-
               <div className="space-y-2">
-                <Label htmlFor="phone">CONTACT PHONE</Label>
+                <Label htmlFor="phone" className="text-xs uppercase text-muted-foreground font-mono">
+                  Phone
+                </Label>
                 <Input
                   id="phone"
                   type="tel"
@@ -134,49 +103,47 @@ export default function VendorRegisterPage() {
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   required
-                  className="bg-transparent border-b border-[#2A402D]/30 px-0 rounded-none focus-visible:ring-0 focus-visible:border-[#2A402D]"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password">PASSWORD</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="Create a strong password"
-                  value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  required
-                  className="bg-transparent border-b border-[#2A402D]/30 px-0 rounded-none focus-visible:ring-0 focus-visible:border-[#2A402D]"
+                  className="bg-[#0a0a0a] border-[#333] focus:border-white focus:ring-0 h-11 transition-colors"
                 />
               </div>
             </div>
 
-            <div className="space-y-4 pt-4">
-              <Button
-                type="submit"
-                className="w-full rounded-full h-12 text-xs uppercase tracking-widest font-medium bg-[#2A402D] hover:bg-[#2A402D]/90 text-[#EBE1DC]"
-                disabled={isLoading}
-              >
-                {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Start Application"}
-              </Button>
-
-              <div className="text-center pt-4 border-t border-[#2A402D]/10">
-                <span className="text-xs text-[#5C6B5E]">Already a partner? </span>
-                <Link
-                  href="/vendor-auth/login"
-                  className="text-xs font-bold text-[#2A402D] hover:underline transition-colors"
-                >
-                  Sign in here
-                </Link>
-              </div>
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-xs uppercase text-muted-foreground font-mono">
+                Password
+              </Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Create a strong password"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                required
+                className="bg-[#0a0a0a] border-[#333] focus:border-white focus:ring-0 h-11 transition-colors"
+              />
             </div>
-          </form>
-        </div>
+          </div>
 
-        {/* Mobile branding */}
-        <div className="absolute top-6 left-6 lg:hidden">
-          <span className="font-serif font-bold text-xl tracking-tight text-[#2A402D]">DISPA8CH</span>
+          <Button
+            type="submit"
+            className="w-full h-11 bg-white text-black hover:bg-white/90 font-medium group"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <span className="flex items-center">
+                Start Application <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </span>
+            )}
+          </Button>
+        </form>
+
+        <div className="text-center text-sm text-muted-foreground">
+          Already have an account?{" "}
+          <Link href="/vendor-auth/login" className="text-white hover:underline underline-offset-4">
+            Sign in
+          </Link>
         </div>
       </div>
     </div>

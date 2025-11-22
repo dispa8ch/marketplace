@@ -1,20 +1,24 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/next"
-import { Inter } from "next/font/google"
+import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { AuthProvider } from "@/lib/contexts/auth-context"
 import { Toaster } from "@/components/ui/toaster"
 
-const inter = Inter({
-  subsets: ["latin"],
+const geistSans = Geist({
   variable: "--font-sans",
-  display: "swap",
+  subsets: ["latin"],
+})
+
+const geistMono = Geist_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
 })
 
 export const metadata: Metadata = {
-  title: "dispa8ch - Shop from trusted local businesses near you",
-  description: "Discover, order, and get your items delivered seamlessly from trusted local vendors.",
+  title: "Dispa8ch Marketplace",
+  description: "The modern platform for local commerce.",
   icons: {
     icon: "/favicon.ico",
   },
@@ -27,8 +31,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={inter.variable}>
-      <body className="font-sans antialiased">
+    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className="font-sans antialiased bg-background text-foreground">
         <AuthProvider>
           {children}
           <Toaster />

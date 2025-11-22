@@ -46,7 +46,12 @@ export function AdminSidebar() {
                   : "text-muted-foreground hover:bg-accent hover:text-foreground"
               )}
             >
-              <Iconex as={Icon} className={cn(isActive ? "text-[#E41F47]" : "text-[#757575]")} />
+
+              <Iconex
+                className={cn(isActive ? "text-[#E41F47]" : "text-[#757575]")}
+              >
+                <item.icon className="h-5 w-5" />
+              </Iconex>
               <span className="truncate">{item.name}</span>
             </Link>
           )
@@ -63,3 +68,4 @@ export function AdminSidebar() {
       </div>
     </aside>
   )
+};

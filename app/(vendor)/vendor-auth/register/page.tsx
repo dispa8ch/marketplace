@@ -163,7 +163,10 @@ export default function VendorRegisterPage() {
 
               <div className="text-center pt-4 border-t border-[#2A402D]/10">
                 <span className="text-xs text-[#5C6B5E]">Already a partner? </span>
-                <Link href="/auth/login" className="text-xs font-bold text-[#2A402D] hover:underline transition-colors">
+                <Link
+                  href="/vendor-auth/login"
+                  className="text-xs font-bold text-[#2A402D] hover:underline transition-colors"
+                >
                   Sign in here
                 </Link>
               </div>

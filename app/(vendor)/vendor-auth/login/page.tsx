@@ -107,7 +107,7 @@ export default function VendorLoginPage() {
               <div className="text-center pt-4 border-t border-[#2A402D]/10">
                 <span className="text-xs text-[#5C6B5E]">Interested in selling? </span>
                 <Link
-                  href="/vendor/auth/register"
+                  href="/vendor-auth/register"
                   className="text-xs font-bold text-[#2A402D] hover:underline transition-colors"
                 >
                   Apply to become a vendor

@@ -26,9 +26,11 @@ export default function Protected({ children }: Props) {
 
       // Determine correct login page based on section
       if (pathname?.startsWith("/admin")) {
-        router.push("/admin/auth/login")
+        // Updated redirect path to new admin login route
+        router.push("/admin-auth/login")
       } else if (pathname?.startsWith("/vendor")) {
-        router.push("/vendor/auth/login")
+        // Updated redirect path to new vendor login route
+        router.push("/vendor-auth/login")
       } else {
         router.push("/auth/login")
       }

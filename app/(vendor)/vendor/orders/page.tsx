@@ -1,15 +1,31 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Card, CardContent } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import OrderDetailsModal from "@/components/vendor/order-details-modal";
 
 export default function VendorOrdersPage() {
-  const router = useRouter()
+  const router = useRouter();
+  const [selectedOrder, setSelectedOrder] = useState<any | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
   const [orders] = useState([
     {
       id: "ORD-1001",
@@ -43,22 +59,22 @@ export default function VendorOrdersPage() {
       status: "delivered",
       items: 2,
     },
-  ])
+  ]);
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "paid":
-        return "default"
+        return "default";
       case "assigned":
-        return "secondary"
+        return "secondary";
       case "in_transit":
-        return "default"
+        return "default";
       case "delivered":
-        return "default"
+        return "default";
       default:
-        return "secondary"
+        return "secondary";
     }
-  }
+  };
 
   return (
     <div className="space-y-6">
@@ -101,10 +117,19 @@ export default function VendorOrdersPage() {
                   <TableCell>{order.items}</TableCell>
                   <TableCell>₦{order.total.toLocaleString()}</TableCell>
                   <TableCell>
-                    <Badge variant={getStatusColor(order.status)}>{order.status.replace("_", " ")}</Badge>
+                    <Badge variant={getStatusColor(order.status)}>
+                      {order.status.replace("_", " ")}
+                    </Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button variant="outline" size="sm" onClick={() => router.push(`/vendor/orders/${order.id}`)}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setSelectedOrder(order);
+                        setModalOpen(true);
+                      }}
+                    >
                       View Details
                     </Button>
                   </TableCell>
@@ -114,6 +139,7 @@ export default function VendorOrdersPage() {
           </Table>
         </CardContent>
       </Card>
+      <OrderDetailsModal open={modalOpen} order={selectedOrder} onClose={() => { setModalOpen(false); setSelectedOrder(null); }} />
     </div>
-  )
+  );
 }

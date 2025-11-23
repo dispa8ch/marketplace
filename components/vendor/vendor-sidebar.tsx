@@ -13,7 +13,7 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
-import { cn, isActivePath } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Iconex } from "@/components/icons/iconex";
 import { Button } from "@/components/ui/button";
 
@@ -28,7 +28,14 @@ const navItems = [
   { name: "Settings", href: "/vendor/settings", icon: Settings },
 ];
 
-export function VendorSidebar() {
+function isActivePath(pathname: string, href: string) {
+  // exact match or startsWith for nested routes; adjust as needed
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(href + "/");
+}
+
+
+export function VendorSidebar({ menuItems }: { menuItems: { href: string; icon: any; label: string }[] }) {
   const pathname = usePathname();
 
   return (
@@ -48,7 +55,7 @@ export function VendorSidebar() {
       <nav className="flex flex-col gap-1 p-4">
         {navItems.map((item) => {
           const Icon = item.icon;
-          const isActive = isActivePath(pathname, item.href);
+          const isActive = isActivePath(pathname || "", item.href);
           return (
             <Link
               key={item.href}
@@ -56,7 +63,7 @@ export function VendorSidebar() {
               className={cn(
                 "flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors",
                 isActive
-                  ? "bg-[#FFEDF0] text-[#E41F47] shadow-sm"
+                  ? "bg-[#FFEDF0] text-[#E41F47]"
                   : "text-muted-foreground hover:bg-accent hover:text-foreground"
               )}
             >
@@ -66,7 +73,7 @@ export function VendorSidebar() {
                 <item.icon className="h-5 w-5" />
               </Iconex>
 
-              <span className="truncate">{item.name}</span>
+              <span className="truncate flex-1 text-sm">{item.name}</span>
             </Link>
           );
         })}

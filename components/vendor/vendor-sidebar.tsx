@@ -35,14 +35,14 @@ export function VendorSidebar() {
 
   return (
     <>
-      <aside className="hidden sm:flex fixed left-0 top-0 z-40 h-screen w-64 flex-col border-r border-[#333] bg-[#000000]">
-        <div className="flex h-16 items-center gap-3 border-b border-[#333] px-6">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white">
-            <span className="text-lg font-bold text-black">D</span>
+      <aside className="hidden sm:flex fixed left-0 top-0 z-40 h-screen w-64 flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground">
+        <div className="flex h-16 items-center gap-3 border-b border-sidebar-border px-6">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
+            <span className="text-lg font-bold">D</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-bold text-white tracking-wide">Dispa8ch</span>
-            <span className="text-[10px] text-gray-400 font-mono uppercase tracking-wider">Vendor</span>
+            <span className="text-sm font-bold tracking-wide">Dispa8ch</span>
+            <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider">Vendor</span>
           </div>
         </div>
 
@@ -59,12 +59,15 @@ export function VendorSidebar() {
                 className={cn(
                   "flex items-center gap-3 rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 group",
                   isActive
-                    ? "bg-[#ededed] text-black shadow-sm"
-                    : "text-[#a1a1a1] hover:bg-[#1f1f1f] hover:text-[#ededed]",
+                    ? "bg-sidebar-accent text-primary"
+                    : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground",
                 )}
               >
                 <Icon
-                  className={cn("h-4 w-4", isActive ? "text-black" : "text-[#a1a1a1] group-hover:text-[#ededed]")}
+                  className={cn(
+                    "h-4 w-4 transition-colors",
+                    isActive ? "text-primary" : "text-muted-foreground group-hover:text-sidebar-foreground",
+                  )}
                 />
                 <span className="truncate">{item.name}</span>
               </Link>
@@ -72,10 +75,10 @@ export function VendorSidebar() {
           })}
         </nav>
 
-        <div className="p-4 border-t border-[#333]">
+        <div className="p-4 border-t border-sidebar-border">
           <Button
             variant="ghost"
-            className="w-full justify-start text-[#a1a1a1] hover:text-[#ededed] hover:bg-[#1f1f1f]"
+            className="w-full justify-start text-muted-foreground hover:text-destructive hover:bg-destructive/10"
             onClick={() => setShowLogout(true)}
           >
             <LogOut className="mr-3 h-4 w-4" />

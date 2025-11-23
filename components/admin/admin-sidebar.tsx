@@ -4,7 +4,6 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { LayoutDashboard, Store, Users, Truck, Settings, BarChart3, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Iconex } from "@/components/icons/iconex"
 import { Button } from "@/components/ui/button"
 
 const navItems = [
@@ -20,49 +19,53 @@ export function AdminSidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="hidden sm:block fixed left-0 top-0 z-40 h-screen w-64 border-r bg-card">
-      <div className="flex h-16 items-center gap-2 border-b px-4">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
-          <span className="text-lg font-bold text-primary-foreground">D</span>
+    <aside className="hidden sm:block fixed left-0 top-0 z-40 h-screen w-64 border-r border-sidebar-border bg-sidebar text-sidebar-foreground">
+      <div className="flex h-16 items-center gap-3 border-b border-sidebar-border px-6">
+        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
+          <span className="text-lg font-bold">D</span>
         </div>
         <div className="flex flex-col">
-          <span className="text-sm font-bold text-foreground">Dispa8ch</span>
-          <span className="text-xs text-muted-foreground">Admin Console</span>
+          <span className="text-sm font-bold">Dispa8ch</span>
+          <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider">Admin Console</span>
         </div>
       </div>
 
       <nav className="flex-1 flex flex-col gap-1 p-4 overflow-y-auto">
         {navItems.map((item) => {
           const Icon = item.icon
-          const isActive = pathname === item.href || pathname.startsWith(item.href + "/")
+          const isActive = item.href === "/admin" ? pathname === "/admin" : pathname.startsWith(item.href)
+
           return (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors",
+                "flex items-center gap-3 rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 group",
                 isActive
-                  ? "bg-[#FFEDF0] text-[#E41F47] shadow-sm"
-                  : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                  ? "bg-sidebar-accent text-primary"
+                  : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground",
               )}
             >
-              <Iconex className={cn(isActive ? "text-[#E41F47]" : "text-[#757575]")}>
-                <Icon className="h-5 w-5" />
-              </Iconex>
+              <Icon
+                className={cn(
+                  "h-4 w-4 transition-colors",
+                  isActive ? "text-primary" : "text-muted-foreground group-hover:text-sidebar-foreground",
+                )}
+              />
               <span className="truncate">{item.name}</span>
             </Link>
           )
         })}
       </nav>
 
-      <div className="p-4 border-t bg-muted/10">
+      <div className="p-4 border-t border-sidebar-border">
         <Button
           variant="ghost"
           className="w-full justify-start text-muted-foreground hover:text-destructive hover:bg-destructive/10"
           asChild
         >
           <Link href="/admin/auth/login">
-            <LogOut className="mr-3 h-5 w-5" />
+            <LogOut className="mr-3 h-4 w-4" />
             Logout
           </Link>
         </Button>

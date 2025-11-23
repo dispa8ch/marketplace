@@ -17,13 +17,19 @@ interface AdminLayoutProps {
  */
 export function AdminLayout({ children }: AdminLayoutProps) {
   return (
-    <div className="flex h-screen overflow-hidden">
-      <AdminSidebar />
-      <div className="flex flex-1 flex-col overflow-hidden ml-64">
-        <AdminHeader />
-        <main className="flex-1 overflow-y-auto bg-muted/20 p-6">{children}</main>
+    <div className="flex h-screen overflow-hidden bg-muted/20">
+      <div className="hidden sm:block">
+        <AdminSidebar />
       </div>
-      <AdminBottomNav />
+
+      <div className="flex flex-1 flex-col overflow-hidden sm:ml-64 pb-16 sm:pb-0">
+        <AdminHeader />
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6">{children}</main>
+      </div>
+
+      <div className="sm:hidden">
+        <AdminBottomNav />
+      </div>
     </div>
   )
 }

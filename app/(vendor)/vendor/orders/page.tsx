@@ -1,31 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import OrderDetailsModal from "@/components/vendor/order-details-modal";
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { Card, CardContent } from "@/components/ui/card"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function VendorOrdersPage() {
-  const router = useRouter();
-  const [selectedOrder, setSelectedOrder] = useState<any | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
+  const router = useRouter()
   const [orders] = useState([
     {
       id: "ORD-1001",
@@ -59,7 +43,7 @@ export default function VendorOrdersPage() {
       status: "delivered",
       items: 2,
     },
-  ]);
+  ])
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -117,19 +101,10 @@ export default function VendorOrdersPage() {
                   <TableCell>{order.items}</TableCell>
                   <TableCell>₦{order.total.toLocaleString()}</TableCell>
                   <TableCell>
-                    <Badge variant={getStatusColor(order.status)}>
-                      {order.status.replace("_", " ")}
-                    </Badge>
+                    <Badge variant={getStatusColor(order.status)}>{order.status.replace("_", " ")}</Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        setSelectedOrder(order);
-                        setModalOpen(true);
-                      }}
-                    >
+                    <Button variant="outline" size="sm" onClick={() => router.push(`/vendor/orders/${order.id}`)}>
                       View Details
                     </Button>
                   </TableCell>

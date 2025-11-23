@@ -7,58 +7,37 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { ArrowLeft, Package, MapPin, User, Phone, Mail } from "lucide-react"
+import { getOrder, updateOrderStatus, type Order } from "@/lib/api/vendor"
+import { useToast } from "@/hooks/use-toast"
 
 export default function OrderDetailsPage() {
   const router = useRouter()
   const params = useParams()
-  const [order, setOrder] = useState<any>(null)
+  const { toast } = useToast()
+  const [order, setOrder] = useState<Order | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
-  // Mock: Load order data
   useEffect(() => {
-    // In real app, fetch order by params.id
-    setOrder({
-      id: "ORD-1001",
-      customer: {
-        name: "John Doe",
-        email: "john.doe@example.com",
-        phone: "+234 801 234 5678",
-      },
-      date: "2024-01-15",
-      time: "10:30 AM",
-      status: "paid",
-      items: [
-        {
-          id: "1",
-          name: "Premium Wireless Headphones",
-          quantity: 1,
-          price: 25000,
-        },
-        {
-          id: "2",
-          name: "Designer Handbag",
-          quantity: 1,
-          price: 35000,
-        },
-      ],
-      subtotal: 60000,
-      deliveryFee: 2000,
-      total: 62000,
-      deliveryAddress: {
-        street: "123 Main Street",
-        city: "Lagos",
-        state: "Lagos State",
-        country: "Nigeria",
-      },
-    })
-  }, [params.id])
+    const loadOrder = async () => {
+      try {
+        const data = await getOrder(params.id as string)
+        setOrder(data)
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to load order details",
+          variant: "destructive",
+        })
+        router.push("/vendor/orders")
+      } finally {
+        setIsLoading(false)
+      }
+    }
 
-  if (!order) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <p className="text-muted-foreground">Loading order details...</p>
-      </div>
-    )
-  }
+    if (params.id) {
+      loadOrder()
+    }
+  }, [params.id, router, toast])
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -75,6 +54,14 @@ export default function OrderDetailsPage() {
     }
   }
 
+  if (isLoading || !order) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <p className="text-muted-foreground">Loading order details...</p>
+      </div>
+    )
+  }
+
   return (
     <div className="max-w-4xl space-y-6">
       <div className="flex items-center gap-4">
@@ -83,7 +70,7 @@ export default function OrderDetailsPage() {
         </Button>
         <div className="flex-1">
           <h1 className="text-3xl font-bold">Order Details</h1>
-          <p className="text-muted-foreground">Order #{order.id}</p>
+          <p className="text-muted-foreground">Order #{order._id}</p>
         </div>
         <Badge variant={getStatusColor(order.status)}>{order.status.replace("_", " ")}</Badge>
       </div>
@@ -129,10 +116,10 @@ export default function OrderDetailsPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-1">
-              <p className="font-medium">{order.deliveryAddress.street}</p>
-              <p className="text-muted-foreground">{order.deliveryAddress.city}</p>
-              <p className="text-muted-foreground">{order.deliveryAddress.state}</p>
-              <p className="text-muted-foreground">{order.deliveryAddress.country}</p>
+              <p className="font-medium">{order.address?.street}</p>
+              <p className="text-muted-foreground">
+                {order.address?.lga}, {order.address?.state}
+              </p>
             </div>
           </CardContent>
         </Card>
@@ -149,7 +136,7 @@ export default function OrderDetailsPage() {
         <CardContent>
           <div className="space-y-4">
             {order.items.map((item: any, index: number) => (
-              <div key={item.id}>
+              <div key={item.productId || index}>
                 {index > 0 && <Separator className="my-4" />}
                 <div className="flex justify-between items-start">
                   <div>
@@ -164,15 +151,6 @@ export default function OrderDetailsPage() {
             <Separator className="my-4" />
 
             <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Subtotal</span>
-                <span>₦{order.subtotal.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Delivery Fee</span>
-                <span>₦{order.deliveryFee.toLocaleString()}</span>
-              </div>
-              <Separator />
               <div className="flex justify-between font-bold text-lg">
                 <span>Total</span>
                 <span>₦{order.total.toLocaleString()}</span>
@@ -182,25 +160,31 @@ export default function OrderDetailsPage() {
         </CardContent>
       </Card>
 
-      {/* Order Timeline */}
+      {/* Order Actions */}
       <Card>
         <CardHeader>
-          <CardTitle>Order Timeline</CardTitle>
+          <CardTitle>Update Status</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            <div className="flex gap-4">
-              <div className="flex flex-col items-center">
-                <div className="rounded-full bg-primary h-3 w-3" />
-                <div className="h-full w-px bg-border" />
-              </div>
-              <div className="pb-4">
-                <p className="font-medium">Order Placed</p>
-                <p className="text-sm text-muted-foreground">
-                  {order.date} at {order.time}
-                </p>
-              </div>
-            </div>
+          <div className="flex gap-2">
+            {["processing", "ready_for_pickup", "completed"].map((status) => (
+              <Button
+                key={status}
+                variant="outline"
+                onClick={async () => {
+                  try {
+                    await updateOrderStatus(order._id, status)
+                    toast({ title: "Status updated" })
+                    setOrder({ ...order, status })
+                  } catch (e) {
+                    toast({ title: "Failed to update", variant: "destructive" })
+                  }
+                }}
+                disabled={order.status === status}
+              >
+                Mark as {status.replace(/_/g, " ")}
+              </Button>
+            ))}
           </div>
         </CardContent>
       </Card>

@@ -1,130 +1,142 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Search, CheckCircle, XCircle, Eye } from 'lucide-react';
-import { Iconex } from '@/components/icons/iconex'
+import { useState, useEffect } from "react"
+import { Card, CardContent } from "@/components/ui/card"
+import { getVendors, type Vendor } from "@/lib/api/admin"
+import { useToast } from "@/hooks/use-toast"
+import { VendorDetailsModal } from "@/components/admin/modals/vendor-details-modal"
+import { SuspendVendorModal } from "@/components/admin/modals/suspend-vendor-modal"
 
 export default function AdminVendorsPage() {
-  const [vendors] = useState([
-    {
-      id: '1',
-      name: 'Tech Hub Electronics',
-      email: 'contact@techhub.ng',
-      phone: '+234 800 000 0000',
-      location: 'Ikeja, Lagos',
-      status: 'verified',
-      products: 128,
-      joinDate: '2023-12-01',
-    },
-    {
-      id: '2',
-      name: 'Fresh Market Store',
-      email: 'hello@freshmarket.ng',
-      phone: '+234 800 111 1111',
-      location: 'Surulere, Lagos',
-      status: 'pending',
-      products: 45,
-      joinDate: '2024-01-15',
-    },
-    {
-      id: '3',
-      name: 'Fashion Forward',
-      email: 'info@fashionforward.ng',
-      phone: '+234 800 222 2222',
-      location: 'Lekki, Lagos',
-      status: 'verified',
-      products: 89,
-      joinDate: '2023-11-15',
-    },
-  ]);
+  const { toast } = useToast()
+  const [vendors, setVendors] = useState<Vendor[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null)
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false)
+  const [isSuspendOpen, setIsSuspendOpen] = useState(false)
+
+  const loadVendors = async () => {
+    try {
+      const data = await getVendors()
+      setVendors(data)
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to load vendors",
+        variant: "destructive",
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    loadVendors()
+  }, [])
+
+  const handleViewDetails = (vendor: Vendor) => {
+    setSelectedVendor(vendor)
+    setIsDetailsOpen(true)
+  }
+
+  const handleSuspend = (vendor: Vendor) => {
+    setSelectedVendor(vendor)
+    setIsSuspendOpen(true)
+  }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Vendors</h1>
-        <div className="relative w-80">
-          <Iconex as={Search} className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input type="search" placeholder="Search vendors..." className="pl-10" />
-        </div>
+        <h1 className="text-3xl font-bold text-[#171717]">Vendors</h1>
+        <button className="border border-[#E6E6E6] px-4 py-2 rounded-md text-sm font-medium hover:bg-[#F5F5F5] transition-colors">
+          Export List
+        </button>
       </div>
 
       <Card>
         <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Vendor</TableHead>
-                <TableHead>Contact</TableHead>
-                <TableHead>Location</TableHead>
-                <TableHead>Products</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {vendors.map((vendor) => (
-                <TableRow key={vendor.id}>
-                  <TableCell>
-                    <div>
-                      <p className="font-medium">{vendor.name}</p>
-                      <p className="text-xs text-muted-foreground">{vendor.email}</p>
-                    </div>
-                  </TableCell>
-                  <TableCell>{vendor.phone}</TableCell>
-                  <TableCell>{vendor.location}</TableCell>
-                  <TableCell>{vendor.products}</TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={vendor.status === 'verified' ? 'default' : 'secondary'}
-                    >
-                      {vendor.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-2">
-                      <Button variant="ghost" size="icon" title="View">
-                        <Iconex as={Eye} className="h-4 w-4" />
-                      </Button>
-                      {vendor.status === 'pending' && (
-                        <>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            title="Approve"
-                            className="text-green-600"
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-[#E6E6E6]">
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">Business Name</th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">Email</th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">Location</th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">Status</th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {isLoading ? (
+                  <tr>
+                    <td colSpan={5} className="text-center py-8">
+                      Loading vendors...
+                    </td>
+                  </tr>
+                ) : vendors.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="text-center py-8">
+                      No vendors found
+                    </td>
+                  </tr>
+                ) : (
+                  vendors.map((vendor) => (
+                    <tr key={vendor._id} className="border-b border-[#E6E6E6] hover:bg-[#FFEDF0]/30">
+                      <td className="py-4 px-4 text-sm font-medium text-[#171717]">{vendor.businessName}</td>
+                      <td className="py-4 px-4 text-sm text-[#757575]">{vendor.email}</td>
+                      <td className="py-4 px-4 text-sm text-[#757575]">
+                        {vendor.address?.city}, {vendor.address?.state}
+                      </td>
+                      <td className="py-4 px-4">
+                        <span
+                          className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
+                            vendor.verified ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"
+                          }`}
+                        >
+                          {vendor.verified ? "Verified" : "Pending"}
+                        </span>
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleViewDetails(vendor)}
+                            className="text-sm text-[#E41F47] hover:underline"
                           >
-                            <Iconex as={CheckCircle} className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            title="Reject"
-                            className="text-destructive"
+                            View
+                          </button>
+                          <button
+                            onClick={() => handleSuspend(vendor)}
+                            className="text-sm text-[#757575] hover:text-[#171717]"
                           >
-                            <Iconex as={XCircle} className="h-4 w-4" />
-                          </Button>
-                        </>
-                      )}
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                            Suspend
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </CardContent>
       </Card>
+
+      {selectedVendor && (
+        <>
+          <VendorDetailsModal
+            open={isDetailsOpen}
+            onOpenChange={setIsDetailsOpen}
+            vendor={selectedVendor}
+            onUpdate={loadVendors}
+          />
+          <SuspendVendorModal
+            open={isSuspendOpen}
+            onOpenChange={setIsSuspendOpen}
+            vendor={selectedVendor}
+            onUpdate={loadVendors}
+          />
+        </>
+      )}
     </div>
-  );
+  )
 }

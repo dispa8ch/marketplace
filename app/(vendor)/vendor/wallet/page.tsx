@@ -1,78 +1,101 @@
-import { DollarSign, TrendingUp, Download, CreditCard } from "lucide-react";
-import { Iconex } from "@/components/icons/iconex";
-import { StatsCard } from "@/components/vendor/stats-card";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+"use client"
+
+import { useState, useEffect } from "react"
+import { DollarSign, TrendingUp, Download, CreditCard, Plus } from "lucide-react"
+import { Iconex } from "@/components/icons/iconex"
+import { StatsCard } from "@/components/vendor/stats-card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { getWalletBalance, getBankAccounts, type Transaction } from "@/lib/api/vendor"
+import { useToast } from "@/hooks/use-toast"
+import { AddBankAccountModal } from "@/components/vendor/modals/add-bank-account-modal"
 
 export default function VendorWalletPage() {
-  const transactions = [
-    {
-      id: "TXN-001",
-      type: "credit",
-      description: "Order payment - ORD-1001",
-      amount: 60000,
-      date: "2024-01-15",
-    },
-    {
-      id: "TXN-002",
-      type: "credit",
-      description: "Order payment - ORD-1002",
-      amount: 35000,
-      date: "2024-01-15",
-    },
-    {
-      id: "TXN-003",
-      type: "debit",
-      description: "Withdrawal to bank",
-      amount: -50000,
-      date: "2024-01-14",
-    },
-    {
-      id: "TXN-004",
-      type: "credit",
-      description: "Order payment - ORD-1003",
-      amount: 25000,
-      date: "2024-01-14",
-    },
-  ];
+  const { toast } = useToast()
+  const [balance, setBalance] = useState(0)
+  const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [bankAccounts, setBankAccounts] = useState<any[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const loadData = async () => {
+    try {
+      const [walletData, accountsData] = await Promise.all([getWalletBalance(), getBankAccounts()])
+      setBalance(walletData.balance)
+      setTransactions(walletData.transactions)
+      setBankAccounts(accountsData)
+    } catch (error) {
+      console.error("Failed to load wallet", error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    loadData()
+  }, [])
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Wallet</h1>
-        <Button>
-          <Iconex className="mr-2 h-4 w-4">
-            <Download className="h-4 w-4" />
-          </Iconex>
-          Withdraw Funds
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => setIsModalOpen(true)}>
+            <Iconex className="mr-2 h-4 w-4">
+              <Plus className="h-4 w-4" />
+            </Iconex>
+            Add Bank Account
+          </Button>
+          <Button>
+            <Iconex className="mr-2 h-4 w-4">
+              <Download className="h-4 w-4" />
+            </Iconex>
+            Withdraw Funds
+          </Button>
+        </div>
       </div>
 
       <div className="grid gap-6 md:grid-cols-3">
         <StatsCard
           title="Available Balance"
-          value="₦450,000"
+          value={`₦${balance.toLocaleString()}`}
           icon={<DollarSign className="h-6 w-6 text-primary" />}
         />
         <StatsCard
           title="Total Earnings"
-          value="₦1,250,000"
+          value={`₦${balance.toLocaleString()}`}
           icon={<TrendingUp className="h-6 w-6 text-primary" />}
         />
-        <StatsCard
-          title="Pending"
-          value="₦75,000"
-          icon={<CreditCard className="h-6 w-6 text-primary" />}
-        />
+        <StatsCard title="Pending" value="₦0" icon={<CreditCard className="h-6 w-6 text-primary" />} />
       </div>
+
+      {/* Bank Accounts */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Bank Accounts</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {bankAccounts.length > 0 ? (
+            <div className="grid gap-4 md:grid-cols-2">
+              {bankAccounts.map((account) => (
+                <div key={account.id} className="p-4 border rounded-lg flex justify-between items-center">
+                  <div>
+                    <p className="font-medium">{account.bankName}</p>
+                    <p className="text-sm text-muted-foreground">{account.accountNumber}</p>
+                    <p className="text-xs text-muted-foreground">{account.accountName}</p>
+                  </div>
+                  {account.isDefault && (
+                    <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">Default</span>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-muted-foreground text-sm">No bank accounts added.</p>
+          )}
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader>
@@ -89,25 +112,38 @@ export default function VendorWalletPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {transactions.map((txn) => (
-                <TableRow key={txn.id}>
-                  <TableCell className="font-medium">{txn.id}</TableCell>
-                  <TableCell>{txn.description}</TableCell>
-                  <TableCell>{txn.date}</TableCell>
-                  <TableCell
-                    className={`text-right font-medium ${
-                      txn.type === "credit" ? "text-green-600" : "text-red-600"
-                    }`}
-                  >
-                    {txn.type === "credit" ? "+" : ""}₦
-                    {Math.abs(txn.amount).toLocaleString()}
+              {isLoading ? (
+                <TableRow>
+                  <TableCell colSpan={4} className="text-center py-8">
+                    Loading transactions...
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : transactions.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={4} className="text-center py-8">
+                    No transactions found
+                  </TableCell>
+                </TableRow>
+              ) : (
+                transactions.map((txn) => (
+                  <TableRow key={txn.id}>
+                    <TableCell className="font-medium">{txn.id}</TableCell>
+                    <TableCell>{txn.description}</TableCell>
+                    <TableCell>{new Date(txn.date).toLocaleDateString()}</TableCell>
+                    <TableCell
+                      className={`text-right font-medium ${txn.type === "credit" ? "text-green-600" : "text-red-600"}`}
+                    >
+                      {txn.type === "credit" ? "+" : ""}₦{Math.abs(txn.amount).toLocaleString()}
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </CardContent>
       </Card>
+
+      <AddBankAccountModal open={isModalOpen} onOpenChange={setIsModalOpen} />
     </div>
-  );
+  )
 }

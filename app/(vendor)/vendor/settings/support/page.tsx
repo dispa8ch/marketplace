@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Plus, Minus } from "lucide-react"
-import { Iconex } from '@/components/icons/iconex'
+import { Iconex } from "@/components/icons/iconex"
 
 export default function VendorSupportSettingsPage() {
   return (
@@ -42,9 +42,13 @@ export default function VendorSupportSettingsPage() {
                   <button className="w-full flex items-center justify-between p-4 text-left hover:bg-[#F5F5F5]">
                     <span className="text-sm font-medium text-[#171717]">{faq.question}</span>
                     {faq.isOpen ? (
-                      <Iconex as={Minus} className="h-4 w-4 text-[#757575]" />
+                      <Iconex className="h-4 w-4 text-[#757575]">
+                        <Minus className="w-full h-full" />
+                      </Iconex>
                     ) : (
-                      <Iconex as={Plus} className="h-4 w-4 text-[#757575]" />
+                      <Iconex className="h-4 w-4 text-[#757575]">
+                        <Plus className="w-full h-full" />
+                      </Iconex>
                     )}
                   </button>
                   {faq.isOpen && <div className="px-4 pb-4 text-sm text-[#757575]">{faq.answer}</div>}

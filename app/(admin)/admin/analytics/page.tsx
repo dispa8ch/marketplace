@@ -11,7 +11,7 @@ export default function AdminAnalyticsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Analytics</h1>
+        <h1 className="text-2xl font-semibold">Analytics</h1>
         <Select defaultValue="7d">
           <SelectTrigger className="w-40">
             <SelectValue />

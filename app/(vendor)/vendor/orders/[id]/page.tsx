@@ -1,65 +1,65 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useRouter, useParams } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { ArrowLeft, Package, MapPin, User, Phone, Mail } from "lucide-react"
-import { getOrder, updateOrderStatus, type Order } from "@/lib/api/vendor"
-import { useToast } from "@/hooks/use-toast"
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { ArrowLeft, Package, MapPin, User, Phone, Mail } from "lucide-react";
+import { getOrder, updateOrderStatus, type Order } from "@/lib/api/vendor";
+import { useToast } from "@/hooks/use-toast";
 
 export default function OrderDetailsPage() {
-  const router = useRouter()
-  const params = useParams()
-  const { toast } = useToast()
-  const [order, setOrder] = useState<Order | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const router = useRouter();
+  const params = useParams();
+  const { toast } = useToast();
+  const [order, setOrder] = useState<Order | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadOrder = async () => {
       try {
-        const data = await getOrder(params.id as string)
-        setOrder(data)
+        const data = await getOrder(params.id as string);
+        setOrder(data);
       } catch (error) {
         toast({
           title: "Error",
           description: "Failed to load order details",
           variant: "destructive",
-        })
-        router.push("/vendor/orders")
+        });
+        router.push("/vendor/orders");
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
+    };
 
     if (params.id) {
-      loadOrder()
+      loadOrder();
     }
-  }, [params.id, router, toast])
+  }, [params.id, router, toast]);
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "paid":
-        return "default"
+        return "default";
       case "assigned":
-        return "secondary"
+        return "secondary";
       case "in_transit":
-        return "default"
+        return "default";
       case "delivered":
-        return "default"
+        return "default";
       default:
-        return "secondary"
+        return "secondary";
     }
-  }
+  };
 
   if (isLoading || !order) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <p className="text-muted-foreground">Loading order details...</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -72,7 +72,9 @@ export default function OrderDetailsPage() {
           <h1 className="text-3xl font-bold">Order Details</h1>
           <p className="text-muted-foreground">Order #{order._id}</p>
         </div>
-        <Badge variant={getStatusColor(order.status)}>{order.status.replace("_", " ")}</Badge>
+        <Badge variant={getStatusColor(order.status)}>
+          {order.status.replace("_", " ")}
+        </Badge>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -87,21 +89,21 @@ export default function OrderDetailsPage() {
           <CardContent className="space-y-4">
             <div>
               <p className="text-sm text-muted-foreground">Name</p>
-              <p className="font-medium">{order.customer.name}</p>
+              <p className="font-medium">{order.customer?.name || "N/A"}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground flex items-center gap-2">
                 <Mail className="h-4 w-4" />
                 Email
               </p>
-              <p className="font-medium">{order.customer.email}</p>
+              <p className="font-medium">{order.customer?.email || "N/A"}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground flex items-center gap-2">
                 <Phone className="h-4 w-4" />
                 Phone
               </p>
-              <p className="font-medium">{order.customer.phone}</p>
+              <p className="font-medium">{order.customer?.phone || "N/A"}</p>
             </div>
           </CardContent>
         </Card>
@@ -141,7 +143,9 @@ export default function OrderDetailsPage() {
                 <div className="flex justify-between items-start">
                   <div>
                     <p className="font-medium">{item.name}</p>
-                    <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+                    <p className="text-sm text-muted-foreground">
+                      Qty: {item.quantity}
+                    </p>
                   </div>
                   <p className="font-medium">₦{item.price.toLocaleString()}</p>
                 </div>
@@ -173,11 +177,14 @@ export default function OrderDetailsPage() {
                 variant="outline"
                 onClick={async () => {
                   try {
-                    await updateOrderStatus(order._id, status)
-                    toast({ title: "Status updated" })
-                    setOrder({ ...order, status })
+                    await updateOrderStatus(order._id, status);
+                    toast({ title: "Status updated" });
+                    setOrder({ ...order, status });
                   } catch (e) {
-                    toast({ title: "Failed to update", variant: "destructive" })
+                    toast({
+                      title: "Failed to update",
+                      variant: "destructive",
+                    });
                   }
                 }}
                 disabled={order.status === status}
@@ -189,5 +196,5 @@ export default function OrderDetailsPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

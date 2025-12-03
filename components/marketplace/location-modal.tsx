@@ -1,9 +1,17 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "../ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import Iconex from "../icons/iconex";
+import { Info } from "lucide-react";
 
 type Location = {
   label: string;
@@ -13,16 +21,25 @@ type Location = {
 
 const STORAGE_KEY = "dispa8ch_location";
 
-export default function LocationModal({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void; }) {
+export default function LocationModal({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+}) {
   const [useCurrent, setUseCurrent] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(
+    null
+  );
   const [address, setAddress] = useState("");
   const [savedLocation, setSavedLocation] = useState<Location | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const raw = typeof window !== "undefined" ? localStorage.getItem(STORAGE_KEY) : null;
+    const raw =
+      typeof window !== "undefined" ? localStorage.getItem(STORAGE_KEY) : null;
     if (raw) {
       try {
         setSavedLocation(JSON.parse(raw));
@@ -58,7 +75,9 @@ export default function LocationModal({ open, onOpenChange }: { open: boolean; o
           const lng = position.coords.longitude;
           setCoords({ lat, lng });
           // Mock reverse-geocode: in production replace this with a real API call to a geocoding service
-          setAddress(`Current location (lat: ${lat.toFixed(4)}, lng: ${lng.toFixed(4)})`);
+          setAddress(
+            `Current location (lat: ${lat.toFixed(4)}, lng: ${lng.toFixed(4)})`
+          );
           setLoading(false);
           setUseCurrent(true);
         },
@@ -106,31 +125,51 @@ export default function LocationModal({ open, onOpenChange }: { open: boolean; o
 
         <div className="space-y-4">
           {savedLocation ? (
-            <div className="p-2 border rounded">
-              <div className="text-sm text-muted-foreground">Saved location</div>
-              <div className="mt-1 font-medium">{savedLocation.label}</div>
+            <div className="flex flex-col gap-1">
+              <div className="text-sm text-muted-foreground">
+                Saved location
+              </div>
+              <div className="font-medium p-2 border rounded">
+                {savedLocation.label}
+              </div>
             </div>
           ) : null}
 
           <div className="flex items-center gap-2">
-            <Button variant="secondary" onClick={requestGeolocation} disabled={loading}>
+            <Button
+              variant="outline"
+              onClick={requestGeolocation}
+              disabled={loading}
+            >
               {loading ? "Locating…" : "Use current location"}
             </Button>
-            <Button variant="ghost" onClick={handleClear}>Clear</Button>
+            <Button variant="ghost" onClick={handleClear}>
+              Clear
+            </Button>
           </div>
 
-          <div>
-            <div className="text-sm text-muted-foreground">Or enter an address</div>
-            <Input placeholder="Street, city, state, postcode" value={address} onChange={(e) => setAddress(e.target.value)} />
+          <div className="flex flex-col gap-1">
+            <div className="text-sm text-muted-foreground">
+              Or enter an address
+            </div>
+            <Input
+              placeholder="Street, city, state, postcode"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
           </div>
 
-          {error ? <div className="text-sm text-red-600">{error}</div> : null}
+          {error ? <div className="flex items-center gap-1 text-sm text-red-600"><Iconex icon={Info} className="fill-red-600 text-background"/>{error}</div> : null}
         </div>
 
         <DialogFooter>
           <div className="flex gap-2">
-            <Button variant="secondary" onClick={() => onOpenChange(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={!address && !coords}>Save location</Button>
+            <Button variant="ghost" onClick={() => onOpenChange(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleSave} disabled={!address && !coords}>
+              Save location
+            </Button>
           </div>
         </DialogFooter>
       </DialogContent>

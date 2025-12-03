@@ -12,16 +12,16 @@
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Language & Currency</h1>
-        <p className="text-gray-600">Manage your notification alerts and preferences</p>
+      <div className="mb-6 flex flex-col gap-1">
+        <h1 className="text-xl font-semibold text-white">Language & Currency</h1>
+        <p className="text-sm text-muted-foreground">Manage your notification alerts and preferences</p>
       </div>
 
       <Card className="p-6">
         <div className="space-y-8">
           {/* Preferred Language */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+            <label className="block text-sm font-medium text-[#757575] mb-3">
               Preferred Language
             </label>
             <Select value={language} onValueChange={setLanguage}>
@@ -44,7 +44,7 @@
 
           {/* Preferred Currency */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+            <label className="block text-sm font-medium text-[#757575] mb-3">
               Preferred Currency
             </label>
             <Select value={currency} onValueChange={setCurrency}>
@@ -67,7 +67,7 @@
 
           {/* Timezone */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+            <label className="block text-sm font-medium text-[#757575] mb-3">
               Time zone
             </label>
             <Select value={timezone} onValueChange={setTimezone}>

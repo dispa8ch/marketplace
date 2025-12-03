@@ -65,14 +65,14 @@ export default function CheckoutPage() {
 
   return (
     <Protected>
-      <div className="min-h-screen bg-gray-50">
-        <div className="bg-white border-b">
+      <div className="min-h-screen bg-background">
+        <div className="bg-background border-b">
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center gap-4">
-              <Link href="/cart" className="text-gray-600 hover:text-gray-900">
+              <Link href="/cart" className="text-muted-foreground hover:text-gray-900">
                 <ChevronLeft className="w-6 h-6" />
               </Link>
-              <h1 className="text-2xl font-bold text-gray-900">Checkout</h1>
+              <h1 className="text-2xl font-semibold text-white">Checkout</h1>
             </div>
           </div>
         </div>
@@ -82,17 +82,17 @@ export default function CheckoutPage() {
             {/* Left Column - Steps */}
             <div className="lg:col-span-2">
               {/* Stepper */}
-              <div className="flex items-center justify-between mb-8">
+              <div className="w-full flex items-center mb-8">
                 {steps.map((s, index) => (
-                  <div key={s.number} className="flex items-center flex-1">
-                    <div className="flex items-center">
+                  <div key={s.number} className="flex items-center flex-auto">
+                    <div className="w-full flex items-center gap-2">
                       <div
                         className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
                           step > s.number
                             ? "bg-green-500 text-white"
                             : step === s.number
                             ? "bg-primary text-white"
-                            : "bg-gray-200 text-gray-600"
+                            : "bg-[#1e1e1e] text-muted-foreground"
                         }`}
                       >
                         {step > s.number ? (
@@ -101,10 +101,10 @@ export default function CheckoutPage() {
                           s.number
                         )}
                       </div>
-                      <div className="ml-3 hidden md:block">
+                      <div className=" hidden md:block">
                         <p
-                          className={`text-sm font-medium ${
-                            step >= s.number ? "text-gray-900" : "text-gray-500"
+                          className={`w-max text-sm font-medium ${
+                            step >= s.number ? "text-white" : "text-muted-foreground"
                           }`}
                         >
                           {s.label}
@@ -113,8 +113,8 @@ export default function CheckoutPage() {
                     </div>
                     {index < steps.length - 1 && (
                       <div
-                        className={`flex-1 h-0.5 mx-4 ${
-                          step > s.number ? "bg-green-500" : "bg-gray-200"
+                        className={`w-full h-0.5 mx-2 rounded-full ${
+                          step > s.number ? "bg-green-500" : "bg-[#1e1e1e]"
                         }`}
                       />
                     )}
@@ -125,18 +125,18 @@ export default function CheckoutPage() {
               {/* Step 1: Personal Details */}
               {step === 1 && (
                 <Card className="p-6">
-                  <div className="mb-6">
-                    <h2 className="text-xl font-bold text-gray-900 mb-2">
+                  <div className="mb-6 flex flex-col gap-1">
+                    <h2 className="text-xl font-medium text-white">
                       Personal Details
                     </h2>
-                    <p className="text-gray-600 text-sm">
+                    <p className="text-muted-foreground text-sm">
                       Set your location and delivery preferences
                     </p>
                   </div>
 
                   <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
-                      <div>
+                      <div className="flex flex-col gap-2">
                         <Label htmlFor="firstName">First Name</Label>
                         <Input
                           id="firstName"
@@ -150,7 +150,7 @@ export default function CheckoutPage() {
                           className="w-full"
                         />
                       </div>
-                      <div>
+                      <div className="flex flex-col gap-2">
                         <Label htmlFor="lastName">Last Name</Label>
                         <Input
                           id="lastName"
@@ -166,7 +166,7 @@ export default function CheckoutPage() {
                       </div>
                     </div>
 
-                    <div>
+                    <div className="flex flex-col gap-2">
                       <Label htmlFor="email">Email Address</Label>
                       <Input
                         id="email"
@@ -179,7 +179,7 @@ export default function CheckoutPage() {
                       />
                     </div>
 
-                    <div>
+                    <div className="flex flex-col gap-2">
                       <Label htmlFor="phone">Phone Number</Label>
                       <div className="flex gap-2">
                         <Input value="+234" className="w-20" readOnly />
@@ -219,11 +219,11 @@ export default function CheckoutPage() {
               {/* Step 2: Shipping */}
               {step === 2 && (
                 <Card className="p-6">
-                  <div className="mb-6">
-                    <h2 className="text-xl font-bold text-gray-900 mb-2">
+                  <div className="mb-6 flex flex-col gap-2">
+                    <h2 className="text-xl font-medium text-white">
                       Shipping Settings
                     </h2>
-                    <p className="text-gray-600 text-sm">
+                    <p className="text-muted-foreground text-sm">
                       Set your location and delivery preferences
                     </p>
                   </div>
@@ -232,7 +232,7 @@ export default function CheckoutPage() {
                     <div>
                       <LocationPermissionPrompt />
                     </div>
-                    <div>
+                    <div className="flex flex-col gap-2">
                       <Label htmlFor="country">Country</Label>
                       <Select
                         value={formData.country}
@@ -249,7 +249,7 @@ export default function CheckoutPage() {
                       </Select>
                     </div>
 
-                    <div>
+                    <div className="fex flex-col gap-2">
                       <Label htmlFor="state">State</Label>
                       <Select
                         value={formData.state}
@@ -267,7 +267,7 @@ export default function CheckoutPage() {
                       </Select>
                     </div>
 
-                    <div>
+                    <div className="flex flex-col gap-2">
                       <Label htmlFor="lga">Local Government Area (LGA)</Label>
                       <Select
                         value={formData.lga}
@@ -285,7 +285,7 @@ export default function CheckoutPage() {
                       </Select>
                     </div>
 
-                    <div>
+                    <div className="flex flex-col gap-2">
                       <Label htmlFor="address">Street Address</Label>
                       <Input
                         id="address"
@@ -297,7 +297,7 @@ export default function CheckoutPage() {
                       />
                     </div>
 
-                    <div>
+                    <div className="flex flex-col gap-2">
                       <Label htmlFor="address2">
                         Street Address 2 (Optional)
                       </Label>
@@ -312,7 +312,7 @@ export default function CheckoutPage() {
                       />
                     </div>
 
-                    <div>
+                    <div className="flex flex-col gap-2">
                       <Label htmlFor="postalCode">Postal Code (Optional)</Label>
                       <Input
                         id="postalCode"
@@ -352,60 +352,60 @@ export default function CheckoutPage() {
               {/* Step 3: Payment */}
               {step === 3 && (
                 <Card className="p-6">
-                  <div className="mb-6">
-                    <h2 className="text-xl font-bold text-gray-900 mb-2">
+                  <div className="mb-6 flex flex-col gap-1">
+                    <h2 className="text-xl font-medium text-white">
                       Payment
                     </h2>
-                    <p className="text-gray-600 text-sm">
+                    <p className="text-muted-foreground text-sm">
                       Review your order and complete payment
                     </p>
                   </div>
 
                   {/* Shipping Info Summary */}
-                  <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-                    <h3 className="font-semibold text-gray-900 mb-3">
+                  <div className="mb-6 p-4 bg-accent rounded-lg">
+                    <h3 className="font-medium text-white mb-3">
                       Shipping
                     </h3>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Name</span>
-                        <span className="text-gray-900 font-medium">
+                        <span className="text-muted-foreground">Name</span>
+                        <span className="text-white font-normal">
                           {formData.firstName} {formData.lastName}
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Phone Number</span>
-                        <span className="text-gray-900 font-medium">
+                        <span className="text-muted-foreground">Phone Number</span>
+                        <span className="text-white font-normal">
                           +234 {formData.phone}
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Email</span>
-                        <span className="text-gray-900 font-medium">
+                        <span className="text-muted-foreground">Email</span>
+                        <span className="text-white font-normal">
                           {formData.email}
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Country</span>
-                        <span className="text-gray-900 font-medium">
+                        <span className="text-muted-foreground">Country</span>
+                        <span className="text-white font-normal">
                           {formData.country}
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600">State & LGA</span>
-                        <span className="text-gray-900 font-medium">
+                        <span className="text-muted-foreground">State & LGA</span>
+                        <span className="text-white font-normal">
                           {formData.state}, {formData.lga}
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Street Address</span>
-                        <span className="text-gray-900 font-medium text-right">
+                        <span className="text-muted-foreground">Street Address</span>
+                        <span className="text-white font-normal text-right">
                           {formData.address.slice(0, 40)}...
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Postal Code</span>
-                        <span className="text-gray-900 font-medium">
+                        <span className="text-muted-foreground">Postal Code</span>
+                        <span className="text-white font-normal">
                           {formData.postalCode}
                         </span>
                       </div>
@@ -436,7 +436,7 @@ export default function CheckoutPage() {
             <div>
               <Card className="p-6 sticky top-4">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-bold text-gray-900">Summary</h3>
+                  <h3 className="text-lg font-medium text-white">Summary</h3>
                   <Button variant="ghost" size="sm">
                     Edit
                   </Button>
@@ -445,17 +445,17 @@ export default function CheckoutPage() {
                 <div className="space-y-4 mb-6">
                   {cartItems.map((item, idx) => (
                     <div key={idx} className="flex gap-3">
-                      <div className="w-16 h-16 bg-gray-200 rounded-lg shrink-0" />
+                      <div className="w-10 h-10 bg-gray-200 rounded-lg shrink-0" />
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-gray-900 text-sm line-clamp-2 mb-1">
+                        <p className="font-medium text-white text-sm line-clamp-1 mb-1">
                           {item.name}
                         </p>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-muted-foreground">
                           Quantity: {item.quantity}
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold text-gray-900">
+                        <p className=" text-sm font-medium text-white">
                           ${item.price.toLocaleString()}
                         </p>
                       </div>
@@ -465,32 +465,32 @@ export default function CheckoutPage() {
 
                 <div className="flex gap-2">
                   <Input placeholder="Discount Code" className="flex-1" />
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" className="">
                     Apply
                   </Button>
                 </div>
 
                 <div className="space-y-3 border-t pt-4">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Subtotal</span>
-                    <span className="text-gray-900">
+                    <span className="text-muted-foreground">Subtotal</span>
+                    <span className="text-foreground">
                       ${subtotal.toLocaleString()}
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Shipping</span>
-                    <span className="text-gray-900">${shipping}</span>
+                    <span className="text-muted-foreground">Shipping</span>
+                    <span className="text-foreground">${shipping}</span>
                   </div>
 
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Shipping Fee</span>
-                    <span className="text-gray-900">${shipping}</span>
+                    <span className="text-muted-foreground">Shipping Fee</span>
+                    <span className="text-foreground">${shipping}</span>
                   </div>
 
                   <div className="flex items-center justify-between font-bold text-lg pt-3 border-t">
-                    <span>Total</span>
-                    <span className="text-primary">
+                    <span className="font-semibold">Total</span>
+                    <span className="text-primary font-semibold">
                       ${total.toLocaleString()}
                     </span>
                   </div>

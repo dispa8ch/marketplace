@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Check } from "lucide-react"
-import { Iconex } from "@/components/icons/iconex"
+import Iconex from "@/components/icons/iconex"
 import { getSubscriptionPlans, getCurrentSubscription } from "@/lib/api/vendor"
 import { useToast } from "@/hooks/use-toast"
 
@@ -99,9 +99,7 @@ export default function VendorSubscriptionPage() {
               <ul className="space-y-3">
                 {plan.features.map((feature: string, index: number) => (
                   <li key={index} className="flex items-start gap-2 text-sm">
-                    <Iconex>
-                      <Check className="h-4 w-4 text-green-600 mt-0.5 shrink-0" />
-                    </Iconex>
+                    <Iconex icon={Check} className="h-4 w-4 text-green-600 mt-0.5 shrink-0"/>
                     <span className="text-[#171717]">{feature}</span>
                   </li>
                 ))}

@@ -3,7 +3,7 @@
 import { NavBar } from '@/components/marketplace/nav-bar'
 import { ProductCard } from '@/components/marketplace/product-card'
 import { ChevronLeft } from 'lucide-react'
-import { Iconex } from '@/components/icons/iconex'
+import Iconex from '@/components/icons/iconex'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Protected from '@/components/auth/protected'
@@ -22,18 +22,22 @@ export default function WishlistPage() {
     vendorName: 'Amazing Brand'
   }))
 
+  const customer = {
+    id: 'cust-001',
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+  }
+
   return (
     <Protected>
       <div className="min-h-screen bg-background">
-        <NavBar />
+        <NavBar customer={customer} />
 
         <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="flex items-center gap-4 mb-6">
           <Button variant="ghost" size="icon" asChild>
             <Link href="/">
-            <Iconex className="h-5 w-5">
-                <ChevronLeft className="h-5 w-5 text-red-600" />
-              </Iconex>
+            <Iconex icon={ChevronLeft} className="h-5 w-5 text-red-500"/>
             </Link>
           </Button>
           <div>

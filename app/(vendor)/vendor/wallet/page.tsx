@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { DollarSign, TrendingUp, Download, CreditCard, Plus } from "lucide-react"
-import { Iconex } from "@/components/icons/iconex"
+import Iconex from "@/components/icons/iconex"
 import { StatsCard } from "@/components/vendor/stats-card"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -42,15 +42,11 @@ export default function VendorWalletPage() {
         <h1 className="text-3xl font-bold">Wallet</h1>
         <div className="flex gap-2">
           <Button variant="outline" onClick={() => setIsModalOpen(true)}>
-            <Iconex className="mr-2 h-4 w-4">
-              <Plus className="h-4 w-4" />
-            </Iconex>
+            <Iconex icon={Plus} className="mr-2 h-4 w-4"/>
             Add Bank Account
           </Button>
           <Button>
-            <Iconex className="mr-2 h-4 w-4">
-              <Download className="h-4 w-4" />
-            </Iconex>
+            <Iconex icon={Download} className="mr-2 h-4 w-4"/>
             Withdraw Funds
           </Button>
         </div>

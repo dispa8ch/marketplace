@@ -24,8 +24,8 @@ export default function AdminSettingsLayout({
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-[#171717]">Platform Settings</h1>
-        <p className="text-[#757575] mt-1">Configure global platform parameters and security</p>
+        <h1 className="text-3xl font-seimbold text-white">Platform Settings</h1>
+        <p className="text-[#757575] mt-1 text-sm">Configure global platform parameters and security</p>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6">
@@ -48,8 +48,8 @@ export default function AdminSettingsLayout({
                     className={cn(
                       "whitespace-nowrap px-3 py-2 rounded-md text-sm transition-colors border",
                       isActive
-                        ? "bg-[#FFEDF0] text-[#E41F47] border-[#FFEDF0] font-medium"
-                        : "bg-white text-[#757575] border-[#E6E6E6] hover:bg-[#F5F5F5]",
+                        ? "bg-[#260e13] text-[#E41F47] font-medium"
+                        : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground",
                     )}
                   >
                     {item.name}
@@ -71,7 +71,7 @@ export default function AdminSettingsLayout({
                   href={item.href}
                   className={cn(
                     "block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors",
-                    isActive ? "bg-[#FFEDF0] text-[#E41F47]" : "text-[#757575] hover:bg-[#F5F5F5] hover:text-[#171717]",
+                    isActive ? "bg-[#260e13] text-[#E41F47]" : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground",
                   )}
                 >
                   {item.name}

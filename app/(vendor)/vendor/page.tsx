@@ -42,7 +42,7 @@ export default function VendorDashboardPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
+        <h1 className="text-3xl font-semibold">Dashboard</h1>
         <Button asChild>
           <Link href="/vendor/products/new">Add Product</Link>
         </Button>
@@ -128,7 +128,7 @@ export default function VendorDashboardPage() {
                 { name: "Laptop Stand", sales: 25 },
               ].map((product) => (
                 <div key={product.name} className="flex items-center justify-between border-b pb-4 last:border-0">
-                  <p className="font-medium">{product.name}</p>
+                  <p className="font-normal">{product.name}</p>
                   <p className="text-sm text-muted-foreground">{product.sales} sales</p>
                 </div>
               ))}

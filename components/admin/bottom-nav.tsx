@@ -2,9 +2,9 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, Store, Users, Truck, BarChart3, Settings, MoreHorizontal } from "lucide-react"
+import { LayoutDashboard, Store, Users, Truck, BarChart3, Settings, MoreHorizontal, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Iconex } from "@/components/icons/iconex"
+import Iconex from "@/components/icons/iconex"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { useState } from "react"
 
@@ -15,6 +15,7 @@ const navItems = [
   { name: "Logistics", href: "/admin/logistics", icon: Truck },
   { name: "Analytics", href: "/admin/analytics", icon: BarChart3 },
   { name: "Settings", href: "/admin/settings", icon: Settings },
+  { name: "Logout", href: "/admin-auth/login", icon: LogOut },
 ]
 
 export function AdminBottomNav() {
@@ -41,12 +42,10 @@ export function AdminBottomNav() {
                 href={item.href}
                 className={cn(
                   "flex-1 flex flex-col items-center justify-center gap-1 py-2 rounded-md text-xs transition-colors",
-                  isActive ? "bg-[#FFEDF0] text-[#E41F47] font-medium" : "text-[#757575]",
+                  isActive ? "bg-[#260e13] text-[#E41F47] font-medium" : "text-muted-foreground",
                 )}
               >
-                <Iconex className={cn(isActive ? "text-[#E41F47]" : "text-[#757575]")}>
-                  <Icon className="h-5 w-5" />
-                </Iconex>
+                <Iconex icon={Icon} className={cn(isActive ? "text-[#E41F47] h-5 w-5" : "text-muted-foreground h-5 w-5")}/>
                 <span className="text-[11px]">{item.name}</span>
               </Link>
             )
@@ -55,9 +54,7 @@ export function AdminBottomNav() {
           <Sheet open={isMoreOpen} onOpenChange={setIsMoreOpen}>
             <SheetTrigger asChild>
               <button className="flex-1 flex flex-col items-center justify-center gap-1 py-2 rounded-md text-xs text-[#757575]">
-                <Iconex>
-                  <MoreHorizontal className="h-5 w-5" />
-                </Iconex>
+                <Iconex icon={MoreHorizontal} className="h-5 w-5"/>
                 <span className="text-[11px]">More</span>
               </button>
             </SheetTrigger>
@@ -65,7 +62,7 @@ export function AdminBottomNav() {
               <SheetHeader>
                 <SheetTitle>More Options</SheetTitle>
               </SheetHeader>
-              <div className="grid gap-2 py-4">
+              <div className="grid gap-2 p-4">
                 {moreItems.map((item) => {
                   const Icon = item.icon
                   const isActive = pathname === item.href || pathname.startsWith(item.href + "/")
@@ -76,12 +73,10 @@ export function AdminBottomNav() {
                       onClick={() => setIsMoreOpen(false)}
                       className={cn(
                         "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors",
-                        isActive ? "bg-[#FFEDF0] text-[#E41F47] font-medium" : "text-[#757575] hover:bg-muted",
+                        isActive ? "bg-[#260e13] text-[#E41F47] font-medium" : "text-muted-foreground hover:bg-muted",
                       )}
                     >
-                      <Iconex className={cn(isActive ? "text-[#E41F47]" : "text-[#757575]")}>
-                        <Icon className="h-5 w-5" />
-                      </Iconex>
+                      <Iconex icon={Icon} className={cn(isActive ? "text-[#E41F47] h-5 w-5" : "text-muted-foreground h-5 w-5")}/>
                       <span>{item.name}</span>
                     </Link>
                   )

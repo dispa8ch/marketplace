@@ -47,8 +47,8 @@ export default function AdminVendorsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-[#171717]">Vendors</h1>
-        <button className="border border-[#E6E6E6] px-4 py-2 rounded-md text-sm font-medium hover:bg-[#F5F5F5] transition-colors">
+        <h1 className="text-2xl font-semibold text-white">Vendors</h1>
+        <button className="border border-input px-4 py-2 rounded-md text-sm font-medium hover:bg-[#F5F5F5]/10 transition-colors">
           Export List
         </button>
       </div>
@@ -58,12 +58,12 @@ export default function AdminVendorsPage() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-[#E6E6E6]">
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">Business Name</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">Email</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">Location</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">Status</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-[#171717]">Actions</th>
+                <tr className="border-b border-input">
+                  <th className="text-left py-3 px-4 text-sm font-medium text-white">Business Name</th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-white">Email</th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-white">Location</th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-white">Status</th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-white">Actions</th>
                 </tr>
               </thead>
               <tbody>

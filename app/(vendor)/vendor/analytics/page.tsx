@@ -5,9 +5,9 @@ export default function VendorAnalyticsPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <h1 className="text-3xl font-bold text-[#171717]">Analytics</h1>
+        <h1 className="text-3xl font-semibold text-white">Analytics</h1>
         <div className="flex items-center gap-3">
-          <select className="border border-[#E6E6E6] rounded-md px-4 py-2 text-sm bg-transparent">
+          <select className="border border-[#3c3c3c] rounded-md px-2 py-2 text-sm bg-transparent">
             <option>Last 30 Days</option>
             <option>Last 7 Days</option>
             <option>Last 90 Days</option>
@@ -25,7 +25,7 @@ export default function VendorAnalyticsPage() {
             <CardTitle className="text-sm font-medium text-[#757575]">Total Revenue</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-[#171717]">₦19.0M</div>
+            <div className="text-2xl font-medium text-white">₦19.0M</div>
             <p className="text-xs text-green-600 mt-1">+12.5%</p>
           </CardContent>
         </Card>
@@ -35,7 +35,7 @@ export default function VendorAnalyticsPage() {
             <CardTitle className="text-sm font-medium text-[#757575]">Orders</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-[#171717]">2,948</div>
+            <div className="text-2xl font-medium text-white">2,948</div>
             <p className="text-xs text-green-600 mt-1">+17.2%</p>
           </CardContent>
         </Card>
@@ -45,7 +45,7 @@ export default function VendorAnalyticsPage() {
             <CardTitle className="text-sm font-medium text-[#757575]">Pending</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-[#171717]">124</div>
+            <div className="text-2xl font-medium text-white">124</div>
             <p className="text-xs text-yellow-600 mt-1">Processing</p>
           </CardContent>
         </Card>
@@ -55,7 +55,7 @@ export default function VendorAnalyticsPage() {
             <CardTitle className="text-sm font-medium text-[#757575]">Avg. Value</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-[#171717]">₦23k</div>
+            <div className="text-2xl font-medium text-white">₦23k</div>
             <p className="text-xs text-green-600 mt-1">+12.5%</p>
           </CardContent>
         </Card>
@@ -65,7 +65,7 @@ export default function VendorAnalyticsPage() {
             <CardTitle className="text-sm font-medium text-[#757575]">Customers</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-[#171717]">38.9k</div>
+            <div className="text-2xl font-medium text-white">38.9k</div>
             <p className="text-xs text-red-600 mt-1">-14.2%</p>
           </CardContent>
         </Card>
@@ -75,7 +75,7 @@ export default function VendorAnalyticsPage() {
             <CardTitle className="text-sm font-medium text-[#757575]">Sales</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-[#171717]">450</div>
+            <div className="text-2xl font-medium text-white">450</div>
             <p className="text-xs text-green-600 mt-1">+12.5%</p>
           </CardContent>
         </Card>
@@ -153,7 +153,7 @@ export default function VendorAnalyticsPage() {
       <div className="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg font-semibold text-[#171717]">Withdrawals vs Refunds</CardTitle>
+            <CardTitle className="text-lg font-medium text-white">Withdrawals vs Refunds</CardTitle>
             <p className="text-sm text-[#757575]">An overview of your withdraw count and refund count.</p>
           </CardHeader>
           <CardContent>
@@ -175,7 +175,7 @@ export default function VendorAnalyticsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg font-semibold text-[#171717]">Customer Insights</CardTitle>
+            <CardTitle className="text-lg font-medium text-white">Customer Insights</CardTitle>
             <p className="text-sm text-[#757575]">Distribution of your customer base</p>
           </CardHeader>
           <CardContent>

@@ -122,17 +122,23 @@ export default function SearchPage() {
     );
   }, [searchQuery]);
 
+  const customer = {
+    id: 'cust-001',
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+  }
+
   return (
     <div className="min-h-screen bg-background">
-      <NavBar />
+      <NavBar customer={customer} />
 
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="flex gap-6">
           {/* Filters Sidebar (desktop) and Filter Drawer (mobile) */}
           <aside className="w-80 shrink-0 hidden sm:block">
-            <div className="bg-white rounded-lg border p-6 sticky top-6">
+            <div className="bg-background rounded-lg border p-6 sticky top-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold">Custom Filter</h2>
+                <h2 className="text-lg font-semibold text-white">Custom Filter</h2>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -153,7 +159,7 @@ export default function SearchPage() {
 
               {/* Location Filter */}
               <div className="mb-6">
-                <h3 className="font-medium mb-3">Location</h3>
+                <h3 className="font-medium text-sm text-muted-foreground mb-3">Location</h3>
                 <div className="space-y-2">
                   {["Lagos, Nigeria", "Port Harcourt, Nigeria"].map(
                     (location) => (
@@ -176,7 +182,7 @@ export default function SearchPage() {
                         />
                         <Label
                           htmlFor={location}
-                          className="text-sm cursor-pointer"
+                          className="text-sm font-normal cursor-pointer"
                         >
                           {location}
                         </Label>
@@ -188,7 +194,7 @@ export default function SearchPage() {
 
               {/* Category Filter */}
               <div className="mb-6">
-                <h3 className="font-medium mb-3">Category</h3>
+                <h3 className="font-medium text-sm text-muted-foreground mb-3">Category</h3>
                 <div className="space-y-2">
                   {["Electronics", "Fashion"].map((category) => (
                     <div key={category} className="flex items-center gap-2">
@@ -210,7 +216,7 @@ export default function SearchPage() {
                       />
                       <Label
                         htmlFor={category}
-                        className="text-sm cursor-pointer"
+                        className="text-sm font-normal cursor-pointer"
                       >
                         {category}
                       </Label>
@@ -221,7 +227,7 @@ export default function SearchPage() {
 
               {/* Price Range */}
               <div className="mb-6">
-                <h3 className="font-medium mb-3">Price Range</h3>
+                <h3 className="font-medium text-sm text-muted-foreground mb-3">Price Range</h3>
                 <div className="space-y-2 mb-4">
                   {[
                     "Under 499,999",
@@ -231,16 +237,16 @@ export default function SearchPage() {
                   ].map((range) => (
                     <div key={range} className="flex items-center gap-2">
                       <Checkbox id={range} />
-                      <Label htmlFor={range} className="text-sm cursor-pointer">
+                      <Label htmlFor={range} className="text-sm font-normal cursor-pointer">
                         {range}
                       </Label>
                     </div>
                   ))}
                 </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="bg-background p-4 rounded-lg">
                   <div className="flex items-center justify-between mb-3 text-sm">
-                    <span>$10K</span>
-                    <span>$50K</span>
+                    <span className="font-medium">$10K</span>
+                    <span className="font-medium">$50K</span>
                   </div>
                   <Slider
                     value={priceRange}
@@ -259,16 +265,16 @@ export default function SearchPage() {
 
               {/* Quantity */}
               <div className="mb-6">
-                <h3 className="font-medium mb-3">Quantity</h3>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <Input placeholder="Min" type="number" className="mb-2" />
+                <h3 className="font-medium text-sm text-muted-foreground mb-3">Quantity</h3>
+                <div className="bg-background rounded-lg flex items-center gap-2">
+                  <Input placeholder="Min" type="number" />
                   <Input placeholder="Max" type="number" />
                 </div>
               </div>
 
               {/* Ratings */}
               <div className="mb-6">
-                <h3 className="font-medium mb-3">Ratings</h3>
+                <h3 className="font-medium text-sm text-muted-foreground mb-3">Ratings</h3>
                 <div className="space-y-2">
                   {[
                     "Under 3 stars",
@@ -291,7 +297,7 @@ export default function SearchPage() {
                       />
                       <Label
                         htmlFor={rating}
-                        className="text-sm cursor-pointer"
+                        className="text-sm font-normal cursor-pointer"
                       >
                         {rating}
                       </Label>
@@ -302,7 +308,7 @@ export default function SearchPage() {
 
               {/* Reviews */}
               <div className="mb-6">
-                <h3 className="font-medium mb-3">Reviews</h3>
+                <h3 className="font-medium text-sm text-muted-foreground mb-3">Reviews</h3>
                 <div className="space-y-2 mb-4">
                   {["Under 100", "100-500", "More Than 500", "Custom"].map(
                     (review) => (
@@ -310,7 +316,7 @@ export default function SearchPage() {
                         <Checkbox id={review} />
                         <Label
                           htmlFor={review}
-                          className="text-sm cursor-pointer"
+                          className="text-sm font-normal cursor-pointer"
                         >
                           {review}
                         </Label>
@@ -326,7 +332,7 @@ export default function SearchPage() {
 
               {/* Verification Status */}
               <div>
-                <h3 className="font-medium mb-3">Verification Status</h3>
+                <h3 className="font-medium text-sm text-muted-foreground mb-3">Verification Status</h3>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <Checkbox
@@ -336,7 +342,7 @@ export default function SearchPage() {
                     />
                     <Label
                       htmlFor="verified"
-                      className="text-sm cursor-pointer"
+                      className="text-sm font-normal cursor-pointer"
                     >
                       Verified Vendors
                     </Label>
@@ -365,11 +371,11 @@ export default function SearchPage() {
                 <DialogHeader>
                   <DialogTitle>Custom Filter</DialogTitle>
                 </DialogHeader>
-                <div className="mt-4">
+                <div className="mt-4 h-auto">
                   {/* Mobile: ClearAll is in footer so we remove top clear button */}
                   {/* Location Filter */}
                   <div className="mb-6">
-                    <h3 className="font-medium mb-3">Location</h3>
+                    <h3 className="font-medium text-sm text-muted-foreground mb-3">Location</h3>
                     <div className="space-y-2">
                       {["Lagos, Nigeria", "Port Harcourt, Nigeria"].map(
                         (location) => (
@@ -397,7 +403,7 @@ export default function SearchPage() {
                             />
                             <Label
                               htmlFor={location}
-                              className="text-sm cursor-pointer"
+                              className="text-sm font-normal cursor-pointer"
                             >
                               {location}
                             </Label>
@@ -409,7 +415,7 @@ export default function SearchPage() {
 
                   {/* Category Filter */}
                   <div className="mb-6">
-                    <h3 className="font-medium mb-3">Category</h3>
+                    <h3 className="font-medium text-sm text-muted-foreground mb-3">Category</h3>
                     <div className="space-y-2">
                       {["Electronics", "Fashion"].map((category) => (
                         <div key={category} className="flex items-center gap-2">
@@ -433,7 +439,7 @@ export default function SearchPage() {
                           />
                           <Label
                             htmlFor={category}
-                            className="text-sm cursor-pointer"
+                            className="text-sm font-normal cursor-pointer"
                           >
                             {category}
                           </Label>
@@ -444,7 +450,7 @@ export default function SearchPage() {
 
                   {/* Price Range, Quantity, Ratings, Reviews, Verification sections: reuse desktop markup but in mobile flow */}
                   <div className="mb-6">
-                    <h3 className="font-medium mb-3">Price Range</h3>
+                    <h3 className="font-medium text-sm text-muted-foreground mb-3">Price Range</h3>
                     <div className="space-y-2 mb-4">
                       {[
                         "Under 499,999",
@@ -456,14 +462,14 @@ export default function SearchPage() {
                           <Checkbox id={range} />
                           <Label
                             htmlFor={range}
-                            className="text-sm cursor-pointer"
+                            className="text-sm font-normal cursor-pointer"
                           >
                             {range}
                           </Label>
                         </div>
                       ))}
                     </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="bg-background p-4 rounded-lg">
                       <div className="flex items-center justify-between mb-3 text-sm">
                         <span>$10K</span>
                         <span>$50K</span>
@@ -484,15 +490,15 @@ export default function SearchPage() {
                   </div>
 
                   <div className="mb-6">
-                    <h3 className="font-medium mb-3">Quantity</h3>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <Input placeholder="Min" type="number" className="mb-2" />
+                    <h3 className="font-medium text-sm text-muted-foreground mb-3">Quantity</h3>
+                    <div className="flex items-center gap-2 rounded-lg">
+                      <Input placeholder="Min" type="number" />
                       <Input placeholder="Max" type="number" />
                     </div>
                   </div>
 
                   <div className="mb-6">
-                    <h3 className="font-medium mb-3">Ratings</h3>
+                    <h3 className="font-medium text-sm text-muted-foreground mb-3">Ratings</h3>
                     <div className="space-y-2">
                       {[
                         "Under 3 stars",
@@ -518,7 +524,7 @@ export default function SearchPage() {
                           />
                           <Label
                             htmlFor={rating}
-                            className="text-sm cursor-pointer"
+                            className="text-sm font-normal cursor-pointer"
                           >
                             {rating}
                           </Label>
@@ -528,7 +534,7 @@ export default function SearchPage() {
                   </div>
 
                   <div className="mb-6">
-                    <h3 className="font-medium mb-3">Reviews</h3>
+                    <h3 className="font-medium text-sm text-muted-foreground mb-3">Reviews</h3>
                     <div className="space-y-2 mb-4">
                       {["Under 100", "100-500", "More Than 500", "Custom"].map(
                         (review) => (
@@ -536,7 +542,7 @@ export default function SearchPage() {
                             <Checkbox id={review} />
                             <Label
                               htmlFor={review}
-                              className="text-sm cursor-pointer"
+                              className="text-sm font-normal cursor-pointer"
                             >
                               {review}
                             </Label>
@@ -551,7 +557,7 @@ export default function SearchPage() {
                   </div>
 
                   <div>
-                    <h3 className="font-medium mb-3">Verification Status</h3>
+                    <h3 className="font-medium text-sm text-muted-foreground mb-3">Verification Status</h3>
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <Checkbox
@@ -563,7 +569,7 @@ export default function SearchPage() {
                         />
                         <Label
                           htmlFor="verified"
-                          className="text-sm cursor-pointer"
+                          className="text-sm font-normal cursor-pointer"
                         >
                           Verified Vendors
                         </Label>
@@ -572,7 +578,7 @@ export default function SearchPage() {
                         <Checkbox id="unverified" />
                         <Label
                           htmlFor="unverified"
-                          className="text-sm cursor-pointer"
+                          className="text-sm font-normal cursor-pointer"
                         >
                           Unverified Vendors
                         </Label>
@@ -629,7 +635,7 @@ export default function SearchPage() {
                     Filters
                   </Button>
                 </div>
-                <h1 className="text-2xl font-semibold mb-2">
+                <h1 className="text-xl font-medium mb-2">
                   Found {filtered.length} results from this search "
                   {searchQuery}"
                 </h1>
@@ -637,70 +643,70 @@ export default function SearchPage() {
                   {selectedCategories.map((cat) => (
                     <span
                       key={cat}
-                      className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 rounded-full text-sm"
+                      className="inline-flex items-center gap-1 px-3 py-1 bg-accent border border-input rounded-full text-xs text-muted-foreground"
                     >
                       {cat}
                       <button
                         onClick={() => removeCategory(cat)}
                         aria-label={`Remove category ${cat}`}
                       >
-                        <X className="h-3 w-3 cursor-pointer" />
+                        <X className="h-3 w-3 cursor-pointer text-white" />
                       </button>
                     </span>
                   ))}
                   {selectedLocations.slice(0, 1).map((loc) => (
                     <span
                       key={loc}
-                      className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 rounded-full text-sm"
+                      className="inline-flex items-center gap-1 px-3 py-1 bg-accent border border-input rounded-full text-xs text-muted-foreground"
                     >
                       {loc}
                       <button
                         onClick={() => removeLocation(loc)}
                         aria-label={`Remove location ${loc}`}
                       >
-                        <X className="h-3 w-3 cursor-pointer" />
+                        <X className="h-3 w-3 cursor-pointer text-white" />
                       </button>
                     </span>
                   ))}
                   {selectedLocations.length > 1 && (
-                    <span className="px-3 py-1 bg-gray-100 rounded-full text-sm">
+                    <span className="px-3 py-1 bg-accent border border-input rounded-full text-xs">
                       +{selectedLocations.length - 1}
                     </span>
                   )}
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 rounded-full text-sm">
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-accent border border-input rounded-full text-xs text-muted-foreground">
                     $10K - $50K
                     <button
                       onClick={clearPriceRange}
                       aria-label="Clear price range"
                     >
-                      <X className="h-3 w-3 cursor-pointer" />
+                      <X className="h-3 w-3 cursor-pointer text-white" />
                     </button>
                   </span>
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 rounded-full text-sm">
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-accent border border-input rounded-full text-xs text-muted-foreground">
                     20-60 pcs
                     <button
                       onClick={clearQuantityRange}
                       aria-label="Clear quantity range"
                     >
-                      <X className="h-3 w-3 cursor-pointer" />
+                      <X className="h-3 w-3 cursor-pointer text-white" />
                     </button>
                   </span>
                   {selectedRatings.map((rating) => (
                     <span
                       key={rating}
-                      className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 rounded-full text-sm"
+                      className="inline-flex items-center gap-1 px-3 py-1 bg-accent border border-input rounded-full text-xs text-muted-foreground"
                     >
                       {rating}
                       <button
                         onClick={() => removeRating(rating)}
                         aria-label={`Remove rating ${rating}`}
                       >
-                        <X className="h-3 w-3 cursor-pointer" />
+                        <X className="h-3 w-3 cursor-pointer text-white" />
                       </button>
                     </span>
                   ))}
                   {verifiedOnly && (
-                    <span className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 rounded-full text-sm">
+                    <span className="inline-flex items-center gap-1 px-3 py-1 bg-accent border border-input rounded-full text-xs text-muted-foreground">
                       Unverified Vendors
                       <button
                         onClick={toggleVerifiedOnly}

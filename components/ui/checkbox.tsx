@@ -3,7 +3,7 @@
 import * as React from 'react'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import { CheckIcon } from 'lucide-react'
-import { Iconex } from '@/components/icons/iconex'
+import Iconex from '@/components/icons/iconex'
 
 import { cn } from '@/lib/utils'
 
@@ -24,7 +24,7 @@ function Checkbox({
         data-slot="checkbox-indicator"
         className="flex items-center justify-center text-current transition-none"
       >
-        <Iconex as={CheckIcon} className="size-3.5" />
+        <Iconex icon={CheckIcon} className="size-3.5" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   )

@@ -1,8 +1,11 @@
+"use client";
+
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Star } from "lucide-react";
-import { Iconex } from "@/components/icons/iconex";
+import Iconex from "@/components/icons/iconex";
 import { Badge } from "@/components/ui/badge";
 
 interface ProductCardProps {
@@ -64,15 +67,11 @@ export function ProductCard({
           </div>
         </div>
         <div className="flex items-center gap-1 text-xs text-muted-foreground">
-          <Iconex className="mr-2 h-3 w-3">
-            <MapPin className="h-3 w-3" />
-          </Iconex>
+          <Iconex icon={MapPin} className="mr-2 h-3 w-3"/>
           <span className="line-clamp-1">{location}</span>
         </div>
         <div className="flex items-center gap-1">
-          <Iconex className="mr-2 h-3 w-3">
-            <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
-          </Iconex>
+          <Iconex icon={Star} className="mr-2 h-3 w-3"/>
           <span className="text-xs font-medium">{rating}</span>
           <span className="text-xs text-muted-foreground">
             | {reviews} Reviews

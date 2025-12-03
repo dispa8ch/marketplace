@@ -29,6 +29,13 @@ export interface Order {
   total: number
   status: string
   paymentStatus: string
+  deliveryStatus: string
+  deliveryFee: number
+  customer?: {
+    name: string
+    email: string
+    phone: string
+  }
   items: Array<{
     productId: string
     name: string
@@ -159,6 +166,11 @@ export async function getPromotions(): Promise<any[]> {
 export async function createPromotion(data: any): Promise<void> {
   return apiClient.post("/api/promotions", data)
 }
+
+export async function deletePromotion(id: string): Promise<void> {
+  return apiClient.delete(`/api/promotions/${id}`);
+}
+
 
 // Subscriptions
 export async function getSubscriptionPlans(): Promise<any[]> {

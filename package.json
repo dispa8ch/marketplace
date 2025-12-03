@@ -49,7 +49,7 @@
     "crypto": "latest",
     "date-fns": "latest",
     "embla-carousel-react": "8.5.1",
-    "express": "latest",
+    "express": "^5.2.1",
     "helmet": "latest",
     "input-otp": "1.4.1",
     "jsonwebtoken": "latest",

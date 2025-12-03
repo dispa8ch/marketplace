@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Plus, Edit, Trash2, Eye } from "lucide-react"
-import { Iconex } from "@/components/icons/iconex"
+import Iconex from "@/components/icons/iconex"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
@@ -60,12 +60,10 @@ export default function VendorProductsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Products</h1>
+        <h1 className="text-3xl font-semibold">Products</h1>
         <Button asChild>
           <Link href="/vendor/products/new">
-            <Iconex>
-              <Plus className="mr-2 h-4 w-4" />
-            </Iconex>
+            <Iconex icon={Plus} className="mr-2 w-4 h-4"/>
             Add Product
           </Link>
         </Button>
@@ -114,9 +112,7 @@ export default function VendorProductsPage() {
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
                         <Button variant="ghost" size="icon">
-                          <Iconex>
-                            <Eye className="h-4 w-4" />
-                          </Iconex>
+                          <Iconex icon={Eye} className="h-4 w-4"/>
                         </Button>
                         <Button
                           className="flex items-center justify-center"
@@ -124,14 +120,10 @@ export default function VendorProductsPage() {
                           size="icon"
                           onClick={() => router.push(`/vendor/products/${product._id}`)}
                         >
-                          <Iconex>
-                            <Edit className="h-4 w-4" />
-                          </Iconex>
+                          <Iconex icon={Edit} className="h-4 w-4"/>
                         </Button>
                         <Button variant="ghost" size="icon" onClick={() => handleDelete(product._id)}>
-                          <Iconex>
-                            <Trash2 className="h-4 w-4 text-destructive" />
-                          </Iconex>
+                          <Iconex icon={Trash2} className="h-4 w-4 text-destructive"/>
                         </Button>
                       </div>
                     </TableCell>

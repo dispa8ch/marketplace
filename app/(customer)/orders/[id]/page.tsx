@@ -19,8 +19,8 @@ export default function OrderDetailPage() {
     total: 275.90,
     date: '10/07/2025 10:26:22 AM',
     products: [
-      { name: 'Elegant Yellow Ankara Gown', price: 15, quantity: 2 },
-      { name: 'Elegant Yellow Ankara Gown', price: 15, quantity: 2 },
+      { name: 'Elegant Yellow Ankara Gown', price: 15, quantity: 2, remanant: 10 },
+      { name: 'Elegant Yellow Ankara Gown', price: 15, quantity: 2, remanant: 20 },
     ],
     shipping: {
       name: 'John Doe',
@@ -43,7 +43,7 @@ export default function OrderDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-6">
           <Link href="/settings/orders" className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-4">
@@ -54,37 +54,37 @@ export default function OrderDetailPage() {
 
         <div className="max-w-4xl mx-auto">
           <Card className="p-8">
-            <div className="mb-8">
-              <h1 className="text-2xl font-bold text-gray-900 mb-2">Order Details</h1>
-              <p className="text-gray-600">View complete information about this order</p>
+            <div className="mb-8 flex flex-col gap-1">
+              <h1 className="text-2xl font-semibold text-white">Order Details</h1>
+              <p className="text-muted-foreground text-sm">View complete information about this order</p>
             </div>
 
             <div className="space-y-8">
               {/* Tracking Number */}
               <div>
-                <label className="text-sm font-medium text-gray-700 block mb-2">Tracking Number:</label>
-                <div className="text-2xl font-bold text-gray-900">{order.trackingNumber}</div>
+                <label className="text-sm font-mormal text-muted-foreground block mb-2">Tracking Number:</label>
+                <div className="text-2xl font-medium text-primary">{order.trackingNumber}</div>
               </div>
 
               {/* Order Items */}
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-gray-900">{order.id}</h3>
-                  <div className="text-lg font-bold text-gray-900">${order.total}</div>
+                  <h3 className="font-semibold text-muted-foreground">{order.id}</h3>
+                  <div className="text-lg font-bold text-white">${order.total}</div>
                 </div>
-                <p className="text-sm text-gray-500 mb-4">{order.items} items in this order</p>
+                <p className="text-sm text-muted-foreground mb-4">{order.items} items in this order</p>
 
                 <div className="space-y-3">
                   {order.products.map((product, idx) => (
-                    <div key={idx} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                    <div key={idx} className="flex items-center gap-4 p-4 bg-accent rounded-lg">
                       <div className="w-16 h-16 bg-gray-200 rounded-lg" />
                       <div className="flex-1">
-                        <p className="font-medium text-gray-900">{product.name}</p>
-                        <p className="text-sm text-gray-500">Quantity: {product.quantity} units</p>
+                        <p className="font-medium text-white">{product.name}</p>
+                        <p className="text-sm text-muted-foreground">Quantity: {product.quantity} units</p>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold text-gray-900">${product.price}</p>
-                        <p className="text-xs text-gray-500">Quantity: {product.quantity} units</p>
+                        <p className="font-semibold text-white">${product.price}</p>
+                        <p className="text-xs text-muted-foreground">Remaining: {product.remanant} units</p>
                       </div>
                     </div>
                   ))}
@@ -93,54 +93,54 @@ export default function OrderDetailPage() {
 
               {/* Order Metadata */}
               <div className="border-t pt-6">
-                <h3 className="font-semibold text-gray-900 mb-4">Order Metadata</h3>
+                <h3 className="font-semibold text-white mb-4">Order Metadata</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-gray-600">Order Placed</p>
-                    <p className="font-medium text-gray-900">{order.date}</p>
+                    <p className="text-sm text-muted-foreground">Order Placed</p>
+                    <p className="font-normal text-white">{order.date}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Order ID</p>
-                    <p className="font-medium text-gray-900">{order.id}</p>
+                    <p className="text-sm text-muted-foreground">Order ID</p>
+                    <p className="font-normal text-white">{order.id}</p>
                   </div>
                 </div>
               </div>
 
               {/* Shipping Information */}
               <div className="border-t pt-6">
-                <h3 className="font-semibold text-gray-900 mb-4">Shipping Information</h3>
+                <h3 className="font-semibold text-white mb-4">Shipping Information</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-gray-600">Recipient Name</p>
-                    <p className="font-medium text-gray-900">{order.shipping.name}</p>
+                    <p className="text-sm text-muted-foreground">Recipient Name</p>
+                    <p className="font-normal text-white">{order.shipping.name}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Recipient Email</p>
-                    <p className="font-medium text-gray-900">{order.shipping.email}</p>
+                    <p className="text-sm text-muted-foreground">Recipient Email</p>
+                    <p className="font-normal text-white">{order.shipping.email}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Recipient Phone Number</p>
-                    <p className="font-medium text-gray-900">{order.shipping.phone}</p>
+                    <p className="text-sm text-muted-foreground">Recipient Phone Number</p>
+                    <p className="font-normal text-white">{order.shipping.phone}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Country</p>
-                    <p className="font-medium text-gray-900">{order.shipping.country}</p>
+                    <p className="text-sm text-muted-foreground">Country</p>
+                    <p className="font-normal text-white">{order.shipping.country}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">State</p>
-                    <p className="font-medium text-gray-900">{order.shipping.state}</p>
+                    <p className="text-sm text-muted-foreground">State</p>
+                    <p className="font-normal text-white">{order.shipping.state}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Local Government Area</p>
-                    <p className="font-medium text-gray-900">{order.shipping.lga}</p>
+                    <p className="text-sm text-muted-foreground">Local Government Area</p>
+                    <p className="font-normal text-white">{order.shipping.lga}</p>
                   </div>
                   <div className="md:col-span-2">
-                    <p className="text-sm text-gray-600">Street Address</p>
-                    <p className="font-medium text-gray-900">{order.shipping.address}</p>
+                    <p className="text-sm text-muted-foreground">Street Address</p>
+                    <p className="font-normal text-white">{order.shipping.address}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Postal Code</p>
-                    <p className="font-medium text-gray-900">{order.shipping.postalCode}</p>
+                    <p className="text-sm text-muted-foreground">Postal Code</p>
+                    <p className="font-normal text-white">{order.shipping.postalCode}</p>
                   </div>
                 </div>
               </div>

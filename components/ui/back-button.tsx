@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import React from "react";
-import { Iconex } from "@/components/icons/iconex";
+import Iconex from "@/components/icons/iconex";
 import { ChevronLeft } from "lucide-react";
 
 export default function BackButton({ className }: { className?: string }) {
@@ -10,13 +10,11 @@ export default function BackButton({ className }: { className?: string }) {
   return (
     <button
       onClick={() => router.back()}
-      className={`inline-flex items-center gap-2 text-sm text-gray-700 ${
+      className={`inline-flex items-center gap-2 text-sm text-[#757575] ${
         className || ""
       }`}
     >
-      <Iconex>
-        <ChevronLeft />
-      </Iconex>
+      <Iconex icon={ChevronLeft} />
       Back
     </button>
   );

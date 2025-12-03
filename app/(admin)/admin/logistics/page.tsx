@@ -46,7 +46,7 @@ export default function AdminLogisticsPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <h1 className="text-3xl font-bold">Logistics Partners</h1>
+        <h1 className="text-2xl font-semibold">Logistics Partners</h1>
         <Button onClick={() => setIsAddModalOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
           Add Partner

@@ -22,10 +22,15 @@ export default function HomePage() {
   const allProducts = productsData.slice(0, 18)
   const verifiedShops = shopsData.filter((s) => s.verified).slice(0, 7)
 
+  const customer = {
+    id: 'cust-001',
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+  }
+
   return (
     <div className="min-h-screen bg-background">
-      <NavBar />
-
+      <NavBar customer={customer} />
       <main className="container mx-auto px-4 py-6 space-y-10">
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <Card className="md:col-span-2 bg-gradient-to-r from-primary/10 to-accent overflow-hidden">

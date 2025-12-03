@@ -22,7 +22,7 @@ export function LogoutModal({ open, onOpenChange }: { open: boolean; onOpenChang
     setLoading(false)
     onOpenChange(false)
 
-    router.push("/vendor-auth/login")
+    router.push("/auth/login")
   }
 
   return (

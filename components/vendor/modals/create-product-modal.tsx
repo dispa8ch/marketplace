@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Iconex } from "@/components/icons/iconex"
+import Iconex from "@/components/icons/iconex"
 import { Upload } from "lucide-react"
 
 interface CreateProductModalProps {
@@ -43,9 +43,7 @@ export function CreateProductModal({ open, onOpenChange }: CreateProductModalPro
           <div className="space-y-2">
             <Label>Product Images</Label>
             <div className="border-2 border-dashed border-[#E6E6E6] rounded-lg p-8 text-center hover:border-[#E41F47] transition-colors cursor-pointer bg-gray-50">
-              <Iconex className="mx-auto h-10 w-10 text-gray-400 mb-2">
-                <Upload className="h-10 w-10" />
-              </Iconex>
+              <Iconex icon={Upload} className="mx-auto h-10 w-10 text-gray-400 mb-2" />
               <p className="text-sm text-[#757575]">Click to upload or drag and drop</p>
               <p className="text-xs text-[#757575] mt-1">PNG, JPG up to 10MB</p>
             </div>

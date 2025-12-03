@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
-import { Iconex } from '@/components/icons/iconex'
+import Iconex from '@/components/icons/iconex'
 import { NavBar } from '@/components/marketplace/nav-bar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -46,9 +46,15 @@ export default function CartPage() {
     router.push('/checkout');
   };
 
+  const customer = {
+    id: 'cust-001',
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+  }
+
   return (
     <div className="min-h-screen bg-background">
-      <NavBar />
+      <NavBar customer={customer} />
 
       <main className="container px-4 py-6 max-w-6xl mx-auto">
         <div className="flex items-center gap-2 mb-6">
@@ -57,13 +63,13 @@ export default function CartPage() {
               <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </Button>
-          <h1 className="text-2xl font-bold">Cart Items</h1>
+          <h1 className="text-xl font-semibold">Cart Items</h1>
         </div>
 
         {cartItems.length === 0 ? (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-16">
-              <Iconex as={ShoppingBag} className="h-16 w-16 text-muted-foreground mb-4" />
+              <Iconex icon={ShoppingBag} className="h-16 w-16 text-muted-foreground mb-4" />
               <h2 className="text-xl font-semibold mb-2">Your cart is empty</h2>
               <p className="text-muted-foreground mb-6 text-center">
                 Add some items to get started shopping
@@ -94,7 +100,7 @@ export default function CartPage() {
                       <div className="flex-1 min-w-0">
                         <h3 className="font-medium line-clamp-2 mb-1">{item.name}</h3>
                         <p className="text-sm text-muted-foreground mb-2">{item.vendorName}</p>
-                        <p className="text-lg font-bold text-foreground">
+                        <p className="text-lg font-semibold text-foreground">
                           ${item.price.toLocaleString()}
                         </p>
                       </div>
@@ -105,7 +111,7 @@ export default function CartPage() {
                           className="h-8 w-8"
                           onClick={() => removeItem(item.productId)}
                         >
-                          <Iconex as={Trash2} className="h-4 w-4 text-destructive" />
+                          <Iconex icon={Trash2} className="h-4 w-4 text-destructive" />
                         </Button>
                         <div className="flex items-center gap-2 border rounded-md">
                           <Button
@@ -114,7 +120,7 @@ export default function CartPage() {
                             className="h-8 w-8"
                             onClick={() => updateQuantity(item.productId, item.quantity - 1)}
                           >
-                            <Iconex as={Minus} className="h-3 w-3" />
+                            <Iconex icon={Minus} className="h-3 w-3" />
                           </Button>
                           <span className="w-8 text-center font-medium text-sm">
                             {item.quantity}
@@ -125,7 +131,7 @@ export default function CartPage() {
                             className="h-8 w-8"
                             onClick={() => updateQuantity(item.productId, item.quantity + 1)}
                           >
-                            <Iconex as={Plus} className="h-3 w-3" />
+                            <Iconex icon={Plus} className="h-3 w-3" />
                           </Button>
                         </div>
                       </div>

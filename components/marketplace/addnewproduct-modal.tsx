@@ -1,27 +1,34 @@
 "use client";
 
-import type React from "react";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+  DialogOverlay,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Label } from "../ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Checkbox } from "../ui/checkbox";
+import { Input } from "../ui/input";
+import { PlusSquare, Upload, X } from "lucide-react";
+import { Textarea } from "../ui/textarea";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
 import { createProduct } from "@/lib/api/vendor";
-import { PlusSquare, Upload } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+import { useToast } from "@/hooks/use-toast";
 
-export default function NewProductPage() {
+export function NewProductDialog({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -41,6 +48,30 @@ export default function NewProductPage() {
     colorName: "",
   });
 
+  const [images, setImages] = useState<File[]>([]); // Store uploaded images
+
+  // Handle image upload and limit to 5
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedImages = e.target.files ? Array.from(e.target.files) : [];
+    if (selectedImages.length + images.length > 5) {
+      toast({
+        title: "Image limit reached",
+        description: "You can only upload up to 5 images.",
+        variant: "destructive",
+      });
+      // Only show the first 5 images
+      const newImages = selectedImages.slice(0, 5 - images.length);
+      setImages((prevImages) => [...prevImages, ...newImages]);
+      return;
+    }
+    setImages((prevImages) => [...prevImages, ...selectedImages]);
+  };
+
+  // Remove image
+  const removeImage = (index: number) => {
+    setImages(images.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -52,7 +83,7 @@ export default function NewProductPage() {
         price: Number(formData.price),
         category: formData.category,
         stock: Number(formData.stock),
-        images: [], // TODO: Add image upload
+        images: images.map((img) => img.name), // Storing image names for now
       });
 
       toast({
@@ -73,19 +104,17 @@ export default function NewProductPage() {
   };
 
   return (
-    <div className="w-full space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl sm:text-3xl font-semibold">Add New Product</h1>
-      </div>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="gap-6 sm:max-w-[800px] max-h-[95vh] overflow-y-auto bg-background p-6 right-0">
+        <DialogHeader>
+          <DialogTitle>Add New Product</DialogTitle>
+          <DialogDescription>
+            Here you can manage your selling preferences.
+          </DialogDescription>
+        </DialogHeader>
 
-      <Card className="grid lg:grid-cols-2 lg:gap-2 gap-6">
-        <div className="max-w-2xl">
-          <CardHeader>
-            <CardTitle className="text-lg sm:text-xl mb-6">
-              Product Details
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
+        <div className="grid lg:grid-cols-2 lg:gap-2 w-full">
+          <div className="max-w-2xl space-y-4">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Product Name</Label>
@@ -93,9 +122,7 @@ export default function NewProductPage() {
                   id="name"
                   placeholder="Enter product name"
                   value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
                 />
               </div>
@@ -107,9 +134,7 @@ export default function NewProductPage() {
                   placeholder="Enter product description"
                   rows={4}
                   value={formData.description}
-                  onChange={(e) =>
-                    setFormData({ ...formData, description: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   required
                 />
               </div>
@@ -122,9 +147,7 @@ export default function NewProductPage() {
                     type="number"
                     placeholder="0"
                     value={formData.price}
-                    onChange={(e) =>
-                      setFormData({ ...formData, price: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                     required
                   />
                 </div>
@@ -135,9 +158,7 @@ export default function NewProductPage() {
                     type="number"
                     placeholder="0"
                     value={formData.stock}
-                    onChange={(e) =>
-                      setFormData({ ...formData, stock: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
                     required
                   />
                 </div>
@@ -148,9 +169,7 @@ export default function NewProductPage() {
                   <Label htmlFor="category">Category</Label>
                   <Select
                     value={formData.category}
-                    onValueChange={(value) =>
-                      setFormData({ ...formData, category: value })
-                    }
+                    onValueChange={(value) => setFormData({ ...formData, category: value })}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select a category" />
@@ -166,20 +185,18 @@ export default function NewProductPage() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="category">Status</Label>
+                  <Label htmlFor="status">Status</Label>
                   <Select
                     value={formData.status}
-                    onValueChange={(value) =>
-                      setFormData({ ...formData, status: value })
-                    }
+                    onValueChange={(value) => setFormData({ ...formData, status: value })}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select a status" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="electronics">Available</SelectItem>
-                      <SelectItem value="fashion">Out of Stock</SelectItem>
-                      <SelectItem value="food">Low Stock</SelectItem>
+                      <SelectItem value="available">Available</SelectItem>
+                      <SelectItem value="out_of_stock">Out of Stock</SelectItem>
+                      <SelectItem value="low_stock">Low Stock</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -203,36 +220,29 @@ export default function NewProductPage() {
                 <div className="flex items-center gap-1">
                   <Select
                     value={formData.weight}
-                    onValueChange={(value) =>
-                      setFormData({ ...formData, weight: value })
-                    }
+                    onValueChange={(value) => setFormData({ ...formData, weight: value })}
                   >
-                    <SelectTrigger className="w-">
+                    <SelectTrigger className="w-1/4">
                       <SelectValue placeholder="KG" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="electronics">KG</SelectItem>
-                      <SelectItem value="fashion">LB</SelectItem>
-                      <SelectItem value="food">IN</SelectItem>
+                      <SelectItem value="kg">KG</SelectItem>
+                      <SelectItem value="lb">LB</SelectItem>
                     </SelectContent>
                   </Select>
 
                   <Input
-                    id="price"
                     type="number"
                     placeholder="0"
                     value={formData.weightValue}
-                    onChange={(e) =>
-                      setFormData({ ...formData, weightValue: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, weightValue: e.target.value })}
+                    className="w-3/4"
                     required
                   />
                 </div>
               </div>
 
-              <CardTitle className="text-lg sm:text-xl mt-6 mb-6">
-                Variants
-              </CardTitle>
+              <span className="text-lg sm:text-xl mt-6 mb-6">Variants</span>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
@@ -245,13 +255,10 @@ export default function NewProductPage() {
                     type="number"
                     placeholder="0"
                     value={formData.sizeNumber}
-                    onChange={(e) =>
-                      setFormData({ ...formData, sizeNumber: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, sizeNumber: e.target.value })}
                     required
                   />
                 </div>
-
 
                 <div className="space-y-2">
                   <div className="flex items-baseline gap-2">
@@ -259,12 +266,9 @@ export default function NewProductPage() {
                     <p className="text-sm text-muted-foreground">(Optional)</p>
                   </div>
 
-                  
                   <Select
                     value={formData.sizeText}
-                    onValueChange={(value) =>
-                      setFormData({ ...formData, sizeText: value })
-                    }
+                    onValueChange={(value) => setFormData({ ...formData, sizeText: value })}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select size" />
@@ -292,9 +296,7 @@ export default function NewProductPage() {
                     id="color"
                     type="color"
                     value={formData.color}
-                    onChange={(e) =>
-                      setFormData({ ...formData, color: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, color: e.target.value })}
                     className="w-10 px-2"
                     required
                   />
@@ -303,51 +305,68 @@ export default function NewProductPage() {
                     id="color"
                     placeholder="e.g. Black"
                     value={formData.colorName}
-                    onChange={(e) =>
-                      setFormData({ ...formData, colorName: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, colorName: e.target.value })}
                     required
                   />
                 </div>
               </div>
 
               <Button type="button" variant="ghost">
-                <PlusSquare/>
+                <PlusSquare />
                 Add another variant
               </Button>
-
-              <div className="flex flex-col-reverse sm:flex-row gap-4 pt-4">
-                <Button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full sm:w-auto"
-                >
-                  {isLoading ? "Creating..." : "Create Product"}
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => router.back()}
-                  className="w-full sm:w-auto"
-                >
-                  Cancel
-                </Button>
-              </div>
             </form>
-          </CardContent>
-        </div>
+          </div>
 
-        <div className="flex flex-col m-4 items-center justify-center gap-4 h-[200px] rounded-md bg-accent border-[1.5px] border-dashed border-primary">
-          <Upload />
+          {/* Image Upload Section */}
+          <div className="">
+            <div className="flex flex-col p-4 m-4 items-center justify-center gap-4 h-[200px] rounded-md bg-accent border-[1.5px] border-dashed border-primary">
+              <Upload />
 
-          <div className="flex flex-col items-center gap-1">
-            <Button variant="outline">Upload image</Button>
-            <p className="text-xs text-muted-foreground">
-              PDF, JPG or PNG (Max 5MB)
-            </p>
+              <div className="flex flex-col items-center gap-1">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="w-full px-2 py-2 bg-background border-2 border-input text-xs text-muted-foreground rounded-md"
+                  multiple
+                  disabled={images.length >= 5}
+                />
+                <p className="text-[10px] text-muted-foreground">
+                  PDF, JPG or PNG (Max 5MB)
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-2 overflow-x-auto">
+              {images.map((img, index) => (
+                <div key={index} className="relative w-16 h-16">
+                  <img
+                    src={URL.createObjectURL(img)}
+                    alt={`Product image ${index + 1}`}
+                    className="w-full h-full object-cover rounded"
+                  />
+                  <Button
+                    onClick={() => removeImage(index)}
+                    variant="destructive"
+                    className="absolute top-0 right-0 text-white p-1 w-4 h-6"
+                  >
+                    <X className="w-2 h-2" />
+                  </Button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </Card>
-    </div>
+
+        <DialogFooter>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? "Creating..." : "Create Product"}
+          </Button>
+          <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            Close
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

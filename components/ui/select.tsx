@@ -3,7 +3,7 @@
 import type * as React from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
-import { Iconex } from "@/components/icons/iconex"
+import Iconex from "@/components/icons/iconex"
 
 import { cn } from "@/lib/utils"
 
@@ -39,9 +39,7 @@ function SelectTrigger({
     >
       {children}
       <SelectPrimitive.Icon asChild>
-        <Iconex className="mr-2 h-5 w-5">
-          <ChevronDownIcon className="size-4 opacity-50" />
-        </Iconex>
+        <Iconex icon={ChevronDownIcon} className="mr-2 h-5 w-5 size-4 opacity-50"/>
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   )
@@ -96,16 +94,14 @@ function SelectItem({ className, children, ...props }: React.ComponentProps<type
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "focus:bg-[#2d080f] focus:text-primary focus:font-medium [&_svg:not([class*='text-'])]:text-primary relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
         className,
       )}
       {...props}
     >
       <span className="absolute right-2 flex size-3.5 items-center justify-center data-[disabled']:pointer-events-none">
         <SelectPrimitive.ItemIndicator>
-          <Iconex className="mr-2 h-5 w-5">
-            <CheckIcon className="size-4" />
-          </Iconex>
+          <Iconex icon={CheckIcon} className="mr-2 h-5 w-5 size-4"/>
         </SelectPrimitive.ItemIndicator>
       </span>
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
@@ -130,9 +126,7 @@ function SelectScrollUpButton({ className, ...props }: React.ComponentProps<type
       className={cn("flex cursor-default items-center justify-center py-1", className)}
       {...props}
     >
-      <Iconex className="mr-2 h-5 w-5">
-        <ChevronUpIcon className="size-4" />
-      </Iconex>
+      <Iconex icon={ChevronUpIcon} className="mr-2 h-5 w-5 size-4"/>
     </SelectPrimitive.ScrollUpButton>
   )
 }
@@ -147,9 +141,7 @@ function SelectScrollDownButton({
       className={cn("flex cursor-default items-center justify-center py-1", className)}
       {...props}
     >
-      <Iconex className="mr-2 h-5 w-5">
-        <ChevronDownIcon className="size-4" />
-      </Iconex>
+      <Iconex icon={ChevronDownIcon} className="mr-2 h-5 w-5 size-4"/>
     </SelectPrimitive.ScrollDownButton>
   )
 }

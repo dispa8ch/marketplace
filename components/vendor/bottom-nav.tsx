@@ -14,7 +14,7 @@ import {
   CreditCard,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Iconex } from "@/components/icons/iconex"
+import Iconex from "@/components/icons/iconex"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { useState } from "react"
 
@@ -57,12 +57,11 @@ export function VendorBottomNav() {
               href={item.href}
               className={cn(
                 "flex flex-col items-center justify-center gap-1 min-w-[64px] py-1 rounded-md transition-colors",
-                isActive ? "text-[#E41F47]" : "text-[#757575] hover:text-[#171717]",
+                isActive ? "bg-[#260e13] text-[#E41F47] font-medium" : "text-muted-foreground",
               )}
             >
-              <Iconex className={cn(isActive ? "text-[#E41F47]" : "text-current")}>
-                <Icon className="h-5 w-5" />
-              </Iconex>
+
+              <Iconex icon={Icon} className={cn(isActive ? "text-[#E41F47] h-5 w-5" : "text-current h-5 w-5")}/>
               <span className={cn("text-[10px] font-medium", isActive && "font-semibold")}>{item.name}</span>
             </Link>
           )
@@ -73,12 +72,10 @@ export function VendorBottomNav() {
             <button
               className={cn(
                 "flex flex-col items-center justify-center gap-1 min-w-[64px] py-1 rounded-md transition-colors",
-                isMoreOpen ? "text-[#E41F47]" : "text-[#757575] hover:text-[#171717]",
+                isMoreOpen ? "bg-[#260e13] text-[#E41F47] font-medium" : "text-muted-foreground hover:bg-muted",
               )}
             >
-              <Iconex className={isMoreOpen ? "text-[#E41F47]" : "text-current"}>
-                <MoreHorizontal className="h-5 w-5" />
-              </Iconex>
+              <Iconex icon={MoreHorizontal} className={isMoreOpen ? "text-[#E41F47] h-5 w-5" : "text-current h-5 w-5"}/>
               <span className={cn("text-[10px] font-medium", isMoreOpen && "font-semibold")}>More</span>
             </button>
           </SheetTrigger>
@@ -102,9 +99,7 @@ export function VendorBottomNav() {
                         : "bg-muted/20 border-transparent hover:bg-muted text-[#171717]",
                     )}
                   >
-                    <Iconex className={cn(isActive ? "text-[#E41F47]" : "text-[#757575]")}>
-                      <Icon className="h-6 w-6" />
-                    </Iconex>
+                    <Iconex icon={Icon} className={cn(isActive ? "text-[#E41F47] h-5 w-5" : "text-[#757575] h-5 w-5")}/>
                     <span className="text-xs font-medium">{item.name}</span>
                   </Link>
                 )

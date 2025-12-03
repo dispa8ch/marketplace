@@ -9,7 +9,7 @@ import {
   CheckCircle2,
   XCircle,
 } from "lucide-react";
-import { Iconex } from "@/components/icons/iconex";
+import Iconex from "@/components/icons/iconex";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 export default function WalletPage() {
@@ -53,21 +53,28 @@ export default function WalletPage() {
 
   return (
     <div>
-      <div className="bg-white border rounded-lg p-6 mb-6">
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold mb-2">Wallet</h2>
-          <p className="text-gray-600">
+      <div className="bg-background border rounded-lg p-6 mb-6">
+        <div className="mb-6 flex flex-col gap-1">
+          <h2 className="text-xl font-semibold">Wallet</h2>
+          <p className="text-muted-foreground text-sm">
             Manage your account information and preferences
           </p>
         </div>
 
-        <div className="bg-linear-to-br from-primary to-primary/80 text-white rounded-lg p-6 mb-6">
-          <div className="text-sm opacity-90 mb-2">Current Balance</div>
-          <div className="text-sm opacity-90 mb-4">
-            Available funds in your account
+        <div className="flex flex-col bg-linear-to-br from-primary to-primary/80 text-white rounded-lg p-6 mb-6 gap-4">
+          <div className="fle flex-col gap-1">
+            <div className="text-sm opacity-90">Current Balance</div>
+            <div className="text-sm opacity-40 mb-4">
+              Available funds in your account
+            </div>
           </div>
-          <div className="text-4xl font-bold mb-2">$0.00</div>
-          <div className="text-xs opacity-75">Last updated: 20 seconds ago</div>
+
+          <div className="flex flex-col gap-1">
+            <div className="text-4xl font-medium">₦0.00</div>
+            <div className="text-xs opacity-70">
+              Last updated: 20 seconds ago
+            </div>
+          </div>
         </div>
 
         <div className="mb-8">
@@ -77,28 +84,22 @@ export default function WalletPage() {
               variant="outline"
               className="h-auto py-4 flex flex-col gap-2"
             >
-              <Iconex className="h-5 w-5">
-                <ArrowUpFromLine className="h-5 w-5 text-red-600" />
-              </Iconex>
-              <span>Withdraw</span>
+              <Iconex icon={ArrowUpFromLine} className="h-5 w-5 text-red-600" />
+              <span className="text-muted-foreground text-sm">Withdraw</span>
             </Button>
             <Button
               variant="outline"
               className="h-auto py-4 flex flex-col gap-2"
             >
-              <Iconex className="h-5 w-5">
-                <ArrowDownToLine className="h-5 w-5 text-red-600" />
-              </Iconex>
-              <span>Deposit</span>
+              <Iconex icon={ArrowDownToLine} className="h-5 w-5 text-red-600" />
+              <span className="text-muted-foreground text-sm">Deposit</span>
             </Button>
             <Button
               variant="outline"
               className="h-auto py-4 flex flex-col gap-2"
             >
-              <Iconex className="h-5 w-5">
-                <Clock className="h-5 w-5 text-red-600" />
-              </Iconex>
-              <span>History</span>
+              <Iconex icon={Clock} className="h-5 w-5 text-red-600" />
+              <span className="text-muted-foreground text-sm">History</span>
             </Button>
           </div>
         </div>
@@ -110,7 +111,7 @@ export default function WalletPage() {
               View All
             </Button>
           </div>
-          <p className="text-sm text-gray-600 mb-4">
+          <p className="text-sm text-muted-foreground mb-4">
             Your latest wallet activity
           </p>
 
@@ -122,17 +123,16 @@ export default function WalletPage() {
               >
                 <div className="flex items-center gap-3">
                   {transaction.status === "Successful" ? (
-                    <Iconex className="h-5 w-5">
-                      <CheckCircle2 className="h-5 w-5 text-green-600" />
-                    </Iconex>
+                    <Iconex
+                      icon={CheckCircle2}
+                      className="h-5 w-5 text-green-600"
+                    />
                   ) : (
-                    <Iconex className="h-5 w-5">
-                      <XCircle className="h-5 w-5 text-red-600" />
-                    </Iconex>
+                    <Iconex icon={XCircle} className="h-5 w-5 text-red-600" />
                   )}
                   <div>
                     <div className="font-medium">{transaction.type}</div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-xs text-muted-foreground">
                       {transaction.date}
                     </div>
                   </div>
@@ -141,7 +141,7 @@ export default function WalletPage() {
                   <div className="font-semibold">${transaction.amount}</div>
                   <div
                     className={cn(
-                      "text-sm",
+                      "text-xs",
                       transaction.status === "Successful"
                         ? "text-green-600"
                         : "text-red-600"

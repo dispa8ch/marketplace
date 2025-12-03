@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Flag } from 'lucide-react'
-import { Iconex } from '@/components/icons/iconex'
+import Iconex from '@/components/icons/iconex'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
@@ -55,8 +55,8 @@ ${message}
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-          <Button variant="outline" className="border-[#E41F47] text-[#E41F47] hover:bg-[#FFEDF0]">
-            <Iconex as={Flag} className="w-4 h-4 mr-2" />
+          <Button variant="outline" className="border-[#E41F47] text-[#E41F47] hover:bg-[#2d080f]">
+            <Iconex icon={Flag} className="w-4 h-4 mr-2" />
             Report Vendor
           </Button>
       </DialogTrigger>
@@ -68,9 +68,9 @@ ${message}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="bg-[#FFEDF0] p-3 rounded-lg">
-            <p className="text-sm font-semibold text-[#171717]">{vendor.name}</p>
-            <p className="text-xs text-[#757575]">{vendor.email}</p>
+          <div className="bg-[#2d080f] p-3 rounded-lg border border-[#7b162a]">
+            <p className="text-sm font-semibold text-primary">{vendor.name}</p>
+            <p className="text-xs text-muted-foreground">{vendor.email}</p>
           </div>
 
           <div className="space-y-2">

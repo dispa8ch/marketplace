@@ -10,7 +10,7 @@ import {
   Shield,
   LogOut,
 } from "lucide-react";
-import { Iconex } from "@/components/icons/iconex";
+import Iconex from "@/components/icons/iconex";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -37,9 +37,7 @@ export function VendorHeader() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon" className="relative">
-            <Iconex>
-              <Bell className="h-5 w-5" />
-            </Iconex>
+            <Iconex icon={Bell} className="h-5 w-5"/>
             <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
               3
             </span>
@@ -94,22 +92,16 @@ export function VendorHeader() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <Iconex>
-              <User2 className="h-5 w-5" />
-            </Iconex>
+            <Iconex icon={User2} className="h-5 w-5"/>
             Profile Settings
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Iconex>
-              <Shield className="h-5 w-5" />
-            </Iconex>
+            <Iconex icon={Shield} className="h-5 w-5"/>
             Account & Security
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem className="text-destructive">
-            <Iconex>
-              <LogOut className="h-5 w-5 text-destructive" />
-            </Iconex>
+            <Iconex icon={LogOut} className="h-5 w-5 text-destructive"/>
             Logout
           </DropdownMenuItem>
         </DropdownMenuContent>

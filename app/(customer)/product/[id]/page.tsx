@@ -5,8 +5,20 @@ import BackButton from "@/components/ui/back-button";
 import { NavBar } from "@/components/marketplace/nav-bar";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/marketplace/product-card";
-import { Star, MapPin, Minus, Plus, Check, Shield } from "lucide-react";
-import { Iconex } from "@/components/icons/iconex";
+import {
+  Star,
+  MapPin,
+  Minus,
+  Plus,
+  Check,
+  Shield,
+  ShieldCheckIcon,
+  ShieldCheck,
+  Mail,
+  Phone,
+  ShieldIcon,
+} from "lucide-react";
+import Iconex from "@/components/icons/iconex";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import { addToCart } from "@/lib/storage";
@@ -66,10 +78,15 @@ export default function ProductDetailPage() {
       vendorName: "Amazing Brand",
     }));
 
+  const customer = {
+    id: "cust-001",
+    name: "John Doe",
+    email: "john.doe@example.com",
+  };
+
   return (
     <div className="min-h-screen bg-background">
-      <NavBar />
-
+      <NavBar customer={customer} />
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="mb-4">
           <BackButton />
@@ -105,30 +122,28 @@ export default function ProductDetailPage() {
               </div>
             </div>
 
-            <div className="bg-white border rounded-lg p-6 mb-6">
-              <div className="flex items-center gap-2 text-xs font-medium text-gray-600 mb-2">
-                <span className="px-2 py-1 bg-primary/10 text-primary rounded">
+            <div className="bg-background border rounded-lg p-6 mb-6">
+              <div className="flex items-center gap-6 font-medium text-[#757575] mb-4">
+                <span className="px-2 py-1 bg-primary/20 text-primary rounded">
                   {mockProduct.category}
                 </span>
-                <Iconex className="mr-2 h-3 w-3">
-                  <MapPin className="h-3 w-3" />
-                </Iconex>
-                <span>{mockProduct.location}</span>
+                <div className="flex items-center gap-1">
+                  <Iconex icon={MapPin} className="mr-2 h-4 w-4" />
+                  <span className="text-sm">{mockProduct.location}</span>
+                </div>
               </div>
 
-              <h1 className="text-2xl font-semibold mb-4">
-                {mockProduct.name}
-              </h1>
+              <h1 className="text-lg font-normal mb-4">{mockProduct.name}</h1>
 
               <div className="flex items-center gap-4 mb-6">
                 <div className="flex items-center gap-2">
-                  <div className="flex items-center text-2xl font-bold">
+                  <div className="flex items-center text-xl font-semibold">
                     ${mockProduct.price.toFixed(2)}
                   </div>
-                  <div className="flex items-center text-lg text-gray-400 line-through">
+                  <div className="flex items-center text-lg text-muted-foreground line-through">
                     ${mockProduct.originalPrice.toFixed(2)}
                   </div>
-                  <div className="px-2 py-1 bg-primary/10 text-primary rounded text-sm font-semibold">
+                  <div className="px-2 py-1 bg-primary/14 text-primary rounded text-sm font-medium">
                     {mockProduct.discount}% Off
                   </div>
                 </div>
@@ -136,14 +151,13 @@ export default function ProductDetailPage() {
 
               <div className="flex items-center gap-4 mb-6">
                 <div className="flex items-center gap-1">
-                  <Iconex className="mr-2 h-5 w-5">
-                    <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                  </Iconex>
-                  <span className="font-semibold">
-                    {mockProduct.rating}/5.0
-                  </span>
+                  <Iconex
+                    icon={Star}
+                    className="mr-2 h-5 w-5 fill-yellow-400 text-yellow-400"
+                  />
+                  <span className="font-medium">{mockProduct.rating}/5.0</span>
                 </div>
-                <span className="text-gray-600">
+                <span className="text-muted-foreground">
                   ({mockProduct.reviewCount} Reviews)
                 </span>
               </div>
@@ -155,9 +169,7 @@ export default function ProductDetailPage() {
                     size="icon"
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   >
-                    <Iconex className="mr-2 h-4 w-4">
-                      <Minus className="h-4 w-4" />
-                    </Iconex>
+                    <Iconex icon={Minus} className="mr-2 h-4 w-4" />
                   </Button>
                   <span className="text-xl font-semibold w-12 text-center">
                     {quantity}
@@ -169,12 +181,10 @@ export default function ProductDetailPage() {
                       setQuantity(Math.min(mockProduct.stock, quantity + 1))
                     }
                   >
-                    <Iconex className="mr-2 h-4 w-4">
-                      <Plus className="h-4 w-4" />
-                    </Iconex>
+                    <Iconex icon={Plus} className="mr-2 h-4 w-4" />
                   </Button>
                 </div>
-                <span className="text-gray-600">
+                <span className="text-[#757575]">
                   Stock: {mockProduct.stock}
                 </span>
               </div>
@@ -219,7 +229,7 @@ export default function ProductDetailPage() {
             <Tabs
               value={selectedTab}
               onValueChange={setSelectedTab}
-              className="bg-white border rounded-lg overflow-hidden"
+              className="bg-background border rounded-lg overflow-hidden"
             >
               <TabsList className="w-full justify-start border-b rounded-none h-auto p-0">
                 <TabsTrigger
@@ -251,20 +261,22 @@ export default function ProductDetailPage() {
               <TabsContent value="overview" className="p-6 rounded-md">
                 <div className="space-y-6">
                   <div>
-                    <h3 className="font-semibold mb-2">DESCRIPTION:</h3>
-                    <p className="text-gray-600">
+                    <h3 className="font-medium mb-2">DESCRIPTION:</h3>
+                    <p className="text-muted-foreground">
                       Product description goes here...
                     </p>
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2">SPECIFICATIONS</h3>
-                    <p className="text-gray-600">
+                    <h3 className="font-medium mb-2">SPECIFICATIONS</h3>
+                    <p className="text-muted-foreground">
                       Product specifications go here...
                     </p>
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2">VARIANTS</h3>
-                    <p className="text-gray-600">Product variants go here...</p>
+                    <h3 className="font-medium mb-2">VARIANTS</h3>
+                    <p className="text-muted-foreground">
+                      Product variants go here...
+                    </p>
                   </div>
                 </div>
               </TabsContent>
@@ -273,20 +285,19 @@ export default function ProductDetailPage() {
                 <div className="mb-6">
                   <div className="flex items-center gap-8 mb-6">
                     <div>
-                      <div className="text-4xl font-bold">
+                      <div className="lg:text-4xl text-2xl font-semibold">
                         {mockProduct.rating}
                       </div>
                       <div className="flex items-center gap-1 my-1">
                         {[...Array(5)].map((_, i) => (
-                          <Iconex className="mr-2 h-5 w-5">
-                            <Star
-                              key={i}
-                              className="h-4 w-4 fill-yellow-400 text-yellow-400"
-                            />
-                          </Iconex>
+                          <Iconex
+                            icon={Star}
+                            key={i}
+                            className="mr-2 h-5 w-5 fill-yellow-400 text-yellow-400"
+                          />
                         ))}
                       </div>
-                      <div className="text-sm text-gray-600">
+                      <div className="text-sm text-muted-foreground">
                         {mockProduct.reviewCount.toLocaleString()} Reviews
                       </div>
                     </div>
@@ -297,7 +308,7 @@ export default function ProductDetailPage() {
                           className="flex items-center gap-2 mb-1"
                         >
                           <span className="text-sm w-4">{stars}</span>
-                          <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                          <div className="flex-1 h-2 bg-accent rounded-full overflow-hidden">
                             <div
                               className="h-full bg-yellow-400"
                               style={{
@@ -320,38 +331,37 @@ export default function ProductDetailPage() {
                       className="border-b pb-6 last:border-0"
                     >
                       <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 bg-gray-200 rounded-full" />
+                        <div className="lg:[w-12 h-12] w-8 h-8 bg-gray-200 rounded-full" />
                         <div className="flex-1">
                           <div className="flex items-center justify-between mb-2">
                             <div>
-                              <div className="font-semibold">
+                              <div className="font-medium">
                                 {review.userName}
                               </div>
-                              <div className="text-sm text-gray-600">
+                              <div className="text-sm text-muted-foreground">
                                 {review.email}
                               </div>
                             </div>
-                            <div className="text-sm text-gray-600">
+                            <div className="text-sm text-muted-foreground">
                               {review.date}
                             </div>
                           </div>
                           <div className="flex items-center gap-1 mb-2">
                             {[...Array(review.rating)].map((_, i) => (
-                              <Iconex className="mr-2 h-5 w-5">
-                                <Star
-                                  key={i}
-                                  className="h-5 w-5 fill-amber-400 text-yellow-400"
-                                />
-                              </Iconex>
+                              <Iconex
+                                icon={Star}
+                                key={i}
+                                className="mr-2 h-5 w-5 fill-yellow-400 text-yellow-400"
+                              />
                             ))}
                           </div>
-                          <p className="text-gray-700 mb-3">{review.comment}</p>
-                          <div className="flex items-center gap-4">
-                            <span className="text-sm text-gray-600">
+                          <p className="text-white mb-3">{review.comment}</p>
+                          <div className="lg:[flex items-center justify-between] block spacing-y-2">
+                            <span className="text-sm text-muted-foreground">
                               {review.helpful} people found this helpful
                             </span>
                             <div className="flex items-center gap-2">
-                              <span className="text-sm text-gray-600">
+                              <span className="text-sm text-muted-foreground">
                                 Was this review helpful?
                               </span>
                               <Button variant="outline" size="sm">
@@ -374,55 +384,89 @@ export default function ProductDetailPage() {
 
               <TabsContent value="vendor" className="p-6">
                 <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-16 h-16 bg-gray-200 rounded-full" />
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-semibold text-lg">
-                          Vendor Shop Name
-                        </h3>
-                        <Iconex className="mr-2 h-5 w-5">
-                          <Check className="h-5 w-5 text-primary bg-primary/10 roundd-full p-0.5" />
-                        </Iconex>
-                        <span className="text-xs font-medium text-primary">
-                          Verified
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-4 text-sm text-gray-600 mb-2">
-                        <div className="flex items-center gap-1">
-                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                          <span>4.5/5.0</span>
+                  <div className="w-full flex items-start justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-18 h-18 bg-gray-200 rounded-lg" />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-4 mb-1">
+                          <h3 className="font-semibold text-lg">
+                            Vendor Shop Name
+                          </h3>
+                          <div className="flex items-center gap-1 bg-[#2d080f] px-1.5 py-1 rounded-md">
+                            <Iconex
+                              icon={ShieldCheck}
+                              className="h-3 w-3 text-background fill-primary"
+                            />
+                            <span className="text-xs font-medium text-primary">
+                              Verified
+                            </span>
+                          </div>
                         </div>
-                        <span>44 Reviews</span>
-                      </div>
-                      <div className="flex gap-4">
-                        <div className="text-sm text-gray-600 mb-1">
-                          Retail Store
+                        <div className="flex items-center gap-4 text-xs text-muted-foreground mb-2">
+                          <div className="flex items-center gap-1">
+                            <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                            <span>4.5/5.0</span>
+                          </div>
+                          <span>44 Reviews</span>
                         </div>
-                        <div className="text-sm text-gray-600 mb-3">
-                          10m on Dispa8h
+                        <div className="flex items-center gap-4">
+                          <div className="text-xs px-1.5 py-1 bg-accent rounded-md text-muted-foreground">
+                            Retail Store
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            10m on Dispa8h
+                          </div>
                         </div>
                       </div>
-                      <Button
-                        variant="outline"
-                        onClick={() =>
-                          router.push(`/vendor/${mockProduct.vendorId}`)
-                        }
-                      >
-                        View Profile
-                      </Button>
-
-                      <div className="space-y-1 text-sm mb-4 hidden">
-                        <div>vendorshopemail@gmail.com</div>
-                        <div>+234 709 786 6890</div>
-                        <div>No, 43 Alabaja Road</div>
-                      </div>
+                    </div>
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        router.push(`/vendor/${mockProduct.vendorId}`)
+                      }
+                    >
+                      View Profile
+                    </Button>
+                  </div>
+                  <div className="space-y-2 text-sm mb-4">
+                    <div className="flex items-center gap-2">
+                      <Iconex
+                        icon={Mail}
+                        className="h-4 w-4 text-muted-foreground"
+                      />
+                      <span className="text-muted-foreground">
+                        vendorshopemail@gmail.com
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Iconex
+                        icon={Phone}
+                        className="h-4 w-4 text-muted-foreground"
+                      />
+                      <span className="text-muted-foreground">
+                        +234 709 786 6890
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Iconex
+                        icon={MapPin}
+                        className="h-4 w-4 text-muted-foreground"
+                      />
+                      <span className="text-muted-foreground">
+                        No, 43 Alabaja Road
+                      </span>
                     </div>
                   </div>
 
-                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                    <h4 className="font-semibold mb-3">Safety Tips</h4>
-                    <ol className="list-decimal list-inside space-y-2 text-sm text-gray-700">
+                  <div className="bg-[#1b0d02] border border-yellow-900 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Iconex icon={ShieldIcon} className="fill-yellow-600 text-yellow-600" />
+                      <h4 className="font-semibold text-yellow-600">
+                        Safety Tips
+                      </h4>
+                    </div>
+
+                    <ol className="list-decimal list-inside space-y-2 text-sm text-yellow-700">
                       <li>Avoid sending any payments outside of Dispa8ch</li>
                       <li>Meet the dispatch rider at a safe public space</li>
                       <li>
@@ -436,13 +480,14 @@ export default function ProductDetailPage() {
                     </ol>
                   </div>
 
-                  <div className="bg-gray-100 rounded-lg h-64 flex items-center justify-center">
+                  <div className="bg-accent rounded-lg h-64 flex items-center justify-center">
                     <div className="text-center">
-                      <Iconex>
-                        <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                      </Iconex>
+                      <Iconex
+                        icon={MapPin}
+                        className="h-12 w-12 stroke-1 text-accent fill-[#757575] mx-auto mb-2"
+                      />
                       <div className="font-semibold">Deluxe Plaza</div>
-                      <div className="text-sm text-gray-600">
+                      <div className="text-sm text-muted-foreground">
                         No, 43 Alabaja Road, Lagos Nig.
                       </div>
                     </div>

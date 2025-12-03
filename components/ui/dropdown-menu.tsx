@@ -10,7 +10,7 @@ function DropdownMenuGroup({
 import * as React from "react";
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import { CheckIcon, ChevronRightIcon, CircleIcon } from "lucide-react";
-import { Iconex } from "@/components/icons/iconex";
+import Iconex from "@/components/icons/iconex";
 
 import { cn } from "@/lib/utils";
 
@@ -100,9 +100,7 @@ function DropdownMenuCheckboxItem({
     >
       <span className="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
         <DropdownMenuPrimitive.ItemIndicator>
-          <Iconex className="h-5 w-5">
-            <CheckIcon className="h-5 w-5 size-4" />
-          </Iconex>
+          <Iconex icon={CheckIcon} className="h-5 w-5" />
         </DropdownMenuPrimitive.ItemIndicator>
       </span>
       {children}
@@ -137,9 +135,7 @@ function DropdownMenuRadioItem({
     >
       <span className="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
         <DropdownMenuPrimitive.ItemIndicator>
-          <Iconex className="h-5 w-5">
-            <CircleIcon className="h-5 w-5 size-4" />
-          </Iconex>
+          <Iconex icon={CircleIcon} className="h-5 w-5 size-4" />
         </DropdownMenuPrimitive.ItemIndicator>
       </span>
       {children}
@@ -221,9 +217,7 @@ function DropdownMenuSubTrigger({
       {...props}
     >
       {children}
-      <Iconex className="h-5 w-5">
-        <ChevronRightIcon className="h-5 w-5 size-4" />
-      </Iconex>
+      <Iconex icon={ChevronRightIcon} className="h-5 w-5" />
     </DropdownMenuPrimitive.SubTrigger>
   );
 }

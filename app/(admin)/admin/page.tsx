@@ -29,7 +29,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-[#171717]">Dashboard Overview</h1>
+      <h1 className="text-2xl font-semibold text-white">Dashboard Overview</h1>
 
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         <Card>
@@ -38,7 +38,7 @@ export default function AdminDashboard() {
             <Store className="h-4 w-4 text-[#E41F47]" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-[#171717]">{stats?.totalVendors || 0}</div>
+            <div className="text-2xl font-medium text-white">{stats?.totalVendors || 0}</div>
             <p className="text-xs text-[#757575] mt-1">+12% from last month</p>
           </CardContent>
         </Card>
@@ -49,7 +49,7 @@ export default function AdminDashboard() {
             <Users className="h-4 w-4 text-[#E41F47]" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-[#171717]">{stats?.totalCustomers || 0}</div>
+            <div className="text-2xl font-medium text-white">{stats?.totalCustomers || 0}</div>
             <p className="text-xs text-[#757575] mt-1">+8% from last month</p>
           </CardContent>
         </Card>
@@ -60,7 +60,7 @@ export default function AdminDashboard() {
             <ShoppingBag className="h-4 w-4 text-[#E41F47]" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-[#171717]">{stats?.totalOrders || 0}</div>
+            <div className="text-2xl font-medium text-white">{stats?.totalOrders || 0}</div>
             <p className="text-xs text-[#757575] mt-1">+24% from last month</p>
           </CardContent>
         </Card>
@@ -71,7 +71,7 @@ export default function AdminDashboard() {
             <TrendingUp className="h-4 w-4 text-[#E41F47]" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-[#171717]">₦{stats?.platformRevenue.toLocaleString() || 0}</div>
+            <div className="text-2xl font-medium text-white">₦{stats?.platformRevenue.toLocaleString() || 0}</div>
             <p className="text-xs text-[#757575] mt-1">+15% from last month</p>
           </CardContent>
         </Card>
@@ -81,7 +81,7 @@ export default function AdminDashboard() {
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg font-semibold text-[#171717]">Recent Signups</CardTitle>
+            <CardTitle className="text-lg font-semibold text-white">Recent Signups</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">No recent signups.</p>
@@ -90,7 +90,7 @@ export default function AdminDashboard() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg font-semibold text-[#171717]">Recent Orders</CardTitle>
+            <CardTitle className="text-lg font-semibold text-white">Recent Orders</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">No recent orders.</p>

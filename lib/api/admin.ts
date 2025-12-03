@@ -17,6 +17,7 @@ export interface Vendor {
     street: string
     lga: string
     state: string
+    city: string
   }
   verified: boolean
   createdAt: string

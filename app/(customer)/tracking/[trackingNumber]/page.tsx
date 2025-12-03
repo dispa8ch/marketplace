@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import {
   ChevronLeft,
   Package,
@@ -11,7 +11,7 @@ import {
   Star,
   CheckCircle,
 } from "lucide-react";
-import { Iconex } from "@/components/icons/iconex";
+import Iconex from "@/components/icons/iconex";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -26,13 +26,14 @@ import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export default function TrackingPage() {
+export default function TrackingPage({ className }: { className?: string }) {
   const params = useParams();
   const [showRatingModal, setShowRatingModal] = useState(false);
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
   const [review, setReview] = useState("");
   const { toast } = useToast();
+  const router = useRouter();
 
   const tracking = {
     trackingNumber: "JE-ZAF-1862318952-0401",
@@ -103,38 +104,43 @@ export default function TrackingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD]">
+    <div className="min-h-screen bg-background">
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="flex items-center gap-4 mb-6">
           <Link href="/settings/orders">
-            <Button variant="ghost" size="icon">
-              <Iconex>
-                <ChevronLeft className="h-5 w-5" />
-              </Iconex>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => router.back()}
+              className={`inline-flex items-center gap-2 text-sm text-[#757575] ${
+                className || ""
+              }`}
+            >
+              <Iconex icon={ChevronLeft} className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-2xl font-bold text-[#171717]">
-            Package Tracking
-          </h1>
+          <h1 className="text-2xl font-medium text-white">Package Tracking</h1>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column - Tracking Info */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
-              <h2 className="font-bold text-[#171717] mb-4">Shipping Status</h2>
-              <p className="text-sm text-[#757575] mb-4">
-                Set your location and delivery preferences
-              </p>
+            <div className="bg-background rounded-lg border border-input p-6 mb-6">
+              <div className="flex flex-col gap-1 mb-6">
+                <h2 className="font-medium text-white">Shipping Status</h2>
+                <p className="text-sm text-[#757575]">
+                  Set your location and delivery preferences
+                </p>
+              </div>
 
               <div className="space-y-4 mb-6">
-                <div>
+                <div className="flex flex-col gap-3">
                   <Label htmlFor="tracking">Tracking Number</Label>
                   <Input
                     id="tracking"
                     value={tracking.trackingNumber}
                     readOnly
-                    className="bg-gray-50"
+                    className="bg-accent text-muted-foreground"
                   />
                 </div>
               </div>
@@ -146,15 +152,16 @@ export default function TrackingPage() {
                     <div className="flex flex-col items-center">
                       <div
                         className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                          item.completed ? "bg-[#E41F47]" : "bg-gray-200"
+                          item.completed ? "bg-[#E41F47]" : "bg-[#2d080f]"
                         }`}
                       >
                         {item.completed ? (
-                          <Iconex>
-                            <CheckCircle className="h-5 w-5 text-white" />
-                          </Iconex>
+                          <Iconex
+                            icon={CheckCircle}
+                            className="h-5 w-5 text-white"
+                          />
                         ) : (
-                          <div className="w-3 h-3 rounded-full bg-gray-400" />
+                          <div className="w-3 h-3 rounded-full bg-[#E41F47]" />
                         )}
                       </div>
                       {index < tracking.timeline.length - 1 && (
@@ -168,7 +175,9 @@ export default function TrackingPage() {
                     <div className="flex-1">
                       <p
                         className={`font-semibold ${
-                          item.completed ? "text-[#171717]" : "text-[#757575]"
+                          item.completed
+                            ? "text-white"
+                            : "text-muted-foreground"
                         }`}
                       >
                         {item.status}
@@ -182,8 +191,8 @@ export default function TrackingPage() {
             </div>
 
             {/* Items in Delivery */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <h3 className="font-semibold text-[#171717] mb-3">In Delivery</h3>
+            <div className="bg-background rounded-lg border border-input p-6">
+              <h3 className="font-semibold text-white mb-3">In Delivery</h3>
               <div className="space-y-2">
                 {tracking.items.map((item, index) => (
                   <div
@@ -191,12 +200,12 @@ export default function TrackingPage() {
                     className="flex justify-between items-center"
                   >
                     <div className="flex-1">
-                      <p className="text-sm text-[#171717]">{item.name}</p>
+                      <p className="text-sm text-primary">{item.name}</p>
                       <p className="text-xs text-[#757575]">
                         Quantity: {item.quantity}
                       </p>
                     </div>
-                    <p className="font-semibold text-[#171717]">
+                    <p className="text-sm font-medium text-white">
                       ₦{item.price.toLocaleString()}
                     </p>
                   </div>
@@ -206,52 +215,58 @@ export default function TrackingPage() {
           </div>
 
           {/* Right Column - Order Details */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h2 className="font-bold text-[#171717] mb-4">Order Details</h2>
+          <div className="bg-background rounded-lg border border-input p-6 flex flex-col justify-between">
+            <div>
+              <h2 className="font-semibold text-white mb-4">Order Details</h2>
 
-            <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-              <div>
-                <p className="text-[#757575]">Order Number</p>
-                <p className="font-semibold text-[#171717]">
-                  {tracking.orderNumber}
-                </p>
-              </div>
-              <div>
-                <p className="text-[#757575]">Courier</p>
-                <p className="font-semibold text-[#171717]">
-                  {tracking.courier}
-                </p>
-              </div>
-              <div>
-                <p className="text-[#757575]">From</p>
-                <p className="font-semibold text-[#171717]">{tracking.from}</p>
-              </div>
-              <div>
-                <p className="text-[#757575]">To</p>
-                <p className="font-semibold text-[#171717]">{tracking.to}</p>
-              </div>
-              <div>
-                <p className="text-[#757575]">Pickup</p>
-                <p className="font-semibold text-[#171717]">
-                  {tracking.pickup}
-                </p>
-              </div>
-              <div>
-                <p className="text-[#757575]">Drop-off</p>
-                <p className="font-semibold text-[#171717]">
-                  {tracking.dropoff}
-                </p>
-              </div>
-              <div>
-                <p className="text-[#757575]">Status</p>
-                <p className="font-semibold text-[#E41F47]">
-                  {tracking.status.charAt(0).toUpperCase() +
-                    tracking.status.slice(1)}
-                </p>
+              <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+                <div>
+                  <p className="text-[#757575]">Order Number</p>
+                  <p className="text-sm font-normal text-white">
+                    {tracking.orderNumber}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[#757575]">Courier</p>
+                  <p className="text-sm font-normal text-white">
+                    {tracking.courier}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[#757575]">From</p>
+                  <p className="text-sm font-normal text-white">
+                    {tracking.from}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[#757575]">To</p>
+                  <p className="text-sm font-normal text-white">
+                    {tracking.to}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[#757575]">Pickup</p>
+                  <p className="text-sm font-normal text-white">
+                    {tracking.pickup}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[#757575]">Drop-off</p>
+                  <p className="text-sm font-normal text-white">
+                    {tracking.dropoff}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[#757575]">Status</p>
+                  <p className="font-semibold text-[#E41F47]">
+                    {tracking.status.charAt(0).toUpperCase() +
+                      tracking.status.slice(1)}
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="border-t border-gray-200 pt-4">
+            {/* <div className="border-t border-gray-200 pt-4">
               <h3 className="font-semibold text-[#171717] mb-3">In Delivery</h3>
               <div className="space-y-2">
                 {tracking.items.map((item, index) => (
@@ -271,10 +286,10 @@ export default function TrackingPage() {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
 
             {/* Button */}
-            <div className="mt-6 pt-4 border-t border-gray-200">
+            <div className="mt-6 pt-4 border-t border-input">
               <Button
                 onClick={() => setShowRatingModal(true)}
                 className="w-full bg-[#E41F47] hover:bg-[#c11839] text-white"
@@ -291,10 +306,11 @@ export default function TrackingPage() {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 rounded-full bg-[#FFEDF0] flex items-center justify-center">
-                <Iconex>
-                  <Star className="h-8 w-8 text-[#E41F47]" />
-                </Iconex>
+              <div className="w-16 h-16 rounded-full bg-[#2d080f] flex items-center justify-center">
+                <Iconex
+                  icon={Star}
+                  className="h-8 w-8 text-[#E41F47] fill-[#E41F47]"
+                />
               </div>
             </div>
             <DialogTitle className="text-center">Rate This Vendor</DialogTitle>
@@ -316,15 +332,14 @@ export default function TrackingPage() {
                   onMouseLeave={() => setHoveredRating(0)}
                   className="transition-transform hover:scale-110"
                 >
-                  <Iconex className="mr-2 h-5 w-5">
-                    <Star
-                      className={`w-10 h-10 ${
-                        star <= (hoveredRating || rating)
-                          ? "fill-[#FFA500] text-[#FFA500]"
-                          : "text-gray-300"
-                      }`}
-                    />
-                  </Iconex>
+                  <Iconex
+                    icon={Star}
+                    className={`mr-2 w-10 h-10 ${
+                      star <= (hoveredRating || rating)
+                        ? "fill-[#FFA500] text-[#FFA500]"
+                        : "text-[#757575] stroke-1"
+                    }`}
+                  />
                 </button>
               ))}
             </div>

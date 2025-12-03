@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Users } from "lucide-react";
-import { Iconex } from "@/components/icons/iconex";
+import Iconex from "@/components/icons/iconex";
 
 type FollowButtonProps = {
   vendorId: string;
@@ -63,11 +63,9 @@ export function FollowButton({
     <Button
       onClick={toggle}
       className="flex items-center gap-2"
-      variant={followed ? "destructive" : "outline"}
+      variant={followed ? "default" : "outline"}
     >
-      <Iconex className="h-5 w-5">
-        <Users className="h-5 w-5 text-red-600" />
-      </Iconex>
+      <Iconex icon={Users} className="h-5 w-5 text-white"/>
       {followed ? "Following" : "Follow"}
     </Button>
   );

@@ -1,15 +1,13 @@
 "use client"
 
-import type React from "react"
 import { cn } from "@/lib/utils"
+import { LucideIcon } from "lucide-react"
 
 interface IconexProps {
-  children: React.ReactNode;
-  className?: string;
+  icon: LucideIcon
+  className?: string
 }
 
-export function Iconex({ children, className }: IconexProps) {
-  return <span className={cn("h-5 w-5 flex items-center", className)}>{children}</span>;
+export default function Iconex({ icon: Icon, className }: IconexProps) {
+  return <Icon className={cn("h-5 w-5", className)} />
 }
-
-export default Iconex

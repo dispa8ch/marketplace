@@ -48,13 +48,13 @@ export default function VendorOrdersPage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "paid":
-        return "default";
+        return "green";
       case "assigned":
-        return "secondary";
+        return "gray";
       case "in_transit":
-        return "default";
+        return "orange";
       case "delivered":
-        return "default";
+        return "primary";
       default:
         return "secondary";
     }
@@ -63,7 +63,7 @@ export default function VendorOrdersPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Orders</h1>
+        <h1 className="text-3xl font-semibold">Orders</h1>
         <Select defaultValue="all">
           <SelectTrigger className="w-48">
             <SelectValue />
@@ -114,7 +114,6 @@ export default function VendorOrdersPage() {
           </Table>
         </CardContent>
       </Card>
-      <OrderDetailsModal open={modalOpen} order={selectedOrder} onClose={() => { setModalOpen(false); setSelectedOrder(null); }} />
     </div>
   );
 }

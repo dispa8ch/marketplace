@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ChevronLeft, Bell } from "lucide-react";
-import { Iconex } from "@/components/icons/iconex";
+import Iconex from "@/components/icons/iconex";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
@@ -59,9 +59,9 @@ export default function NotificationsPage() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Notifications</h1>
-        <p className="text-gray-600">
+      <div className="mb-6 flex flex-col gap-1">
+        <h1 className="text-xl font-semibold text-white">Notifications</h1>
+        <p className="text-sm text-muted-foreground">
           Manage your notification alerts and preferences
         </p>
       </div>
@@ -69,10 +69,10 @@ export default function NotificationsPage() {
       {/* Notifications List */}
       <Card className="p-6 mb-8">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold text-gray-900">
+          <h2 className="text-lg font-semibold text-white">
             Recent Notifications
           </h2>
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="sm" className="font-medium text-primary">
             Mark All As Read
           </Button>
         </div>
@@ -81,41 +81,39 @@ export default function NotificationsPage() {
           {alerts.map((alert, index) => (
             <div
               key={index}
-              className="flex items-start gap-4 p-4 bg-blue-50 rounded-lg"
+              className="flex items-start gap-4 p-4 bg-accent rounded-lg"
             >
-              <div className="p-2 bg-blue-100 rounded-full">
-                <Iconex className="h-5 w-5">
-                  <Bell className="h-5 w-5 text-red-600" />
-                </Iconex>
+              <div className="p-2 bg-[#2d080f] rounded-full">
+                <Iconex icon={Bell} className="h-5 w-5 text-primary"/>
               </div>
               <div className="flex-1">
-                <p className="font-medium text-gray-900">{alert.message}</p>
-                <p className="text-sm text-gray-500">{alert.time}</p>
+                <p className="font-medium text-white">{alert.message}</p>
+                <p className="text-sm text-[#757575]">{alert.time}</p>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-6 text-center">
+        {/* <div className="mt-6 text-center">
           <Button variant="ghost" size="sm">
             Mark All As Read
           </Button>
-        </div>
+        </div> */}
       </Card>
 
       {/* Alert Settings */}
       <Card className="p-6">
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">
+        <div className="mb-6 flex flex-col gap-1">
+          <h2 className="text-lg font-semibold text-white">
             Alert Settings
           </h2>
-          <p className="text-gray-600 text-sm">
+          <p className="text-muted-foreground text-sm">
             Manage your notification alerts and preferences
           </p>
         </div>
 
         <div className="space-y-6">
-          <div className="grid grid-cols-3 gap-4 pb-4 border-b text-sm font-medium text-gray-700">
+          <div className="grid grid-cols-3 gap-4 pb-4 border-b text-sm font-medium text-[#757575]">
             <div>Alert Type</div>
             <div className="text-center">SMS</div>
             <div className="text-center">Email</div>
@@ -133,7 +131,7 @@ export default function NotificationsPage() {
               key={item.key}
               className="grid grid-cols-3 gap-4 items-center py-4 border-b last:border-0"
             >
-              <div className="text-gray-900">{item.label}</div>
+              <div className="text-white">{item.label}</div>
               <div className="flex justify-center">
                 <Switch
                   checked={settings[item.key as keyof typeof settings].sms}

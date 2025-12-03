@@ -21,7 +21,7 @@ export default function VendorStats({ vendorId, initialFollowers, productCount, 
           <Users className="w-4 h-4" />
           <span className="text-sm">Followers</span>
         </div>
-        <p className="text-lg font-bold text-[#171717] mt-1">{followers.toLocaleString()}</p>
+        <p className="text-lg font-medium text-white mt-1">{followers.toLocaleString()}</p>
         <div className="mt-3">
           <FollowButton
             vendorId={vendorId}
@@ -36,7 +36,7 @@ export default function VendorStats({ vendorId, initialFollowers, productCount, 
           <Package className="w-4 h-4" />
           <span className="text-sm">Products</span>
         </div>
-        <p className="text-lg font-bold text-[#171717] mt-1">{productCount}</p>
+        <p className="text-lg font-medium text-white mt-1">{productCount}</p>
       </div>
 
       <div>
@@ -44,7 +44,7 @@ export default function VendorStats({ vendorId, initialFollowers, productCount, 
           <Star className="w-4 h-4" />
           <span className="text-sm">Rating</span>
         </div>
-        <p className="text-lg font-bold text-[#171717] mt-1">{rating}</p>
+        <p className="text-lg font-medium text-white mt-1">{rating}</p>
       </div>
     </div>
   )

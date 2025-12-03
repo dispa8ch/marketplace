@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Plus } from "lucide-react"
-import { Iconex } from "@/components/icons/iconex"
+import Iconex from "@/components/icons/iconex"
 import { getTeamMembers, inviteTeamMember } from "@/lib/api/vendor"
 import { useToast } from "@/hooks/use-toast"
 import { AddTeamMemberModal } from "@/components/vendor/modals/add-team-member-modal"
@@ -62,9 +62,7 @@ export default function VendorTeamSettingsPage() {
             onClick={() => setIsModalOpen(true)}
             className="bg-[#E41F47] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-[#C11A3D] transition-colors flex items-center gap-2"
           >
-            <Iconex>
-              <Plus className="h-4 w-4" />
-            </Iconex>
+            <Iconex icon={Plus} className="h-4 w-4"/>
             Invite Member
           </button>
         </CardHeader>

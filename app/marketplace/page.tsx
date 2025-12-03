@@ -39,9 +39,17 @@ export default function MarketplacePage() {
     },
   ]
 
+  const customer = {
+    id: "cust_123456",
+    name: "John Doe",
+    email: "john.doe@example.com",
+    phone: "+234 800 333 3333",
+    orders: 12,
+  }
+
   return (
     <div className="min-h-screen bg-background">
-      <NavBar />
+      <NavBar customer={customer} />
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/10 via-accent to-background py-20">

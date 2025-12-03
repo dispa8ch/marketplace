@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { User, MapPin, ShoppingBag, LogOut } from 'lucide-react';
-import { Iconex } from '@/components/icons/iconex'
+import Iconex from '@/components/icons/iconex'
 import { useRouter } from 'next/navigation';
 import { apiClient } from '@/lib/api-client';
 
@@ -17,9 +17,15 @@ export default function ProfilePage() {
     router.push('/auth/login');
   };
 
+  const customer = {
+    id: 'cust-001',
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+  }
+
   return (
     <div className="min-h-screen bg-background">
-      <NavBar />
+      <NavBar customer={customer} />
 
       <main className="container px-4 py-6 max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-6">My Profile</h1>
@@ -28,7 +34,7 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Iconex as={User} className="h-5 w-5" />
+                <Iconex icon={User} className="h-5 w-5" />
                 Personal Information
               </CardTitle>
             </CardHeader>
@@ -61,7 +67,7 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Iconex as={MapPin} className="h-5 w-5" />
+                <Iconex icon={MapPin} className="h-5 w-5" />
                 Saved Addresses
               </CardTitle>
             </CardHeader>
@@ -83,7 +89,7 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Iconex as={ShoppingBag} className="h-5 w-5" />
+                <Iconex icon={ShoppingBag} className="h-5 w-5" />
                 Order History
               </CardTitle>
             </CardHeader>
@@ -99,7 +105,7 @@ export default function ProfilePage() {
             className="w-full"
             onClick={handleLogout}
           >
-            <Iconex as={LogOut} className="h-4 w-4 mr-2" />
+            <Iconex icon={LogOut} className="h-4 w-4 mr-2" />
             Logout
           </Button>
         </div>

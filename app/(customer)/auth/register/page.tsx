@@ -77,7 +77,7 @@ export default function RegisterPage() {
       <div className="flex flex-col justify-center items-center p-6 lg:p-24 relative order-2 lg:order-1">
         <div className="w-full max-w-[400px] space-y-12">
           <div className="space-y-2">
-            <h2 className="text-4xl font-serif text-primary">Create Account</h2>
+            <h2 className="text-4xl text-primary">Create Account</h2>
             <p className="text-muted-foreground text-sm tracking-wide">Join our community of vendors and shoppers.</p>
           </div>
 
@@ -85,7 +85,7 @@ export default function RegisterPage() {
             <div className="space-y-6">
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="firstName">FIRST NAME</Label>
+                  <Label htmlFor="firstName">First Name</Label>
                   <Input
                     id="firstName"
                     placeholder="Jane"
@@ -95,7 +95,7 @@ export default function RegisterPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="lastName">LAST NAME</Label>
+                  <Label htmlFor="lastName">Last Name</Label>
                   <Input
                     id="lastName"
                     placeholder="Doe"
@@ -107,7 +107,7 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email">EMAIL ADDRESS</Label>
+                <Label htmlFor="email">Email Address</Label>
                 <Input
                   id="email"
                   type="email"
@@ -119,7 +119,7 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="phone">PHONE NUMBER</Label>
+                <Label htmlFor="phone">Phone Number</Label>
                 <Input
                   id="phone"
                   type="tel"
@@ -131,7 +131,7 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password">PASSWORD</Label>
+                <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
                   type="password"
@@ -144,7 +144,7 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">CONFIRM PASSWORD</Label>
+                <Label htmlFor="confirmPassword">Confirm Password</Label>
                 <Input
                   id="confirmPassword"
                   type="password"
@@ -160,7 +160,7 @@ export default function RegisterPage() {
             <div className="space-y-4 pt-4">
               <Button
                 type="submit"
-                className="w-full rounded-full h-12 text-xs uppercase tracking-widest font-medium bg-[#2A402D] hover:bg-[#2A402D]/90 text-[#EBE1DC]"
+                className="w-full h-12 text-sm tracking-widest font-medium bg-[#E41F47] hover:bg-[#E41F47]/90 text-white"
                 disabled={isLoading}
               >
                 {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Create Account"}
@@ -170,7 +170,7 @@ export default function RegisterPage() {
                 <span className="text-xs text-muted-foreground">Already have an account? </span>
                 <Link
                   href="/auth/login"
-                  className="text-xs font-bold text-primary hover:text-accent transition-colors underline decoration-1 underline-offset-4"
+                  className="text-xs font-bold text-primary hover:underline transition-colors decoration-1 underline-offset-4"
                 >
                   Sign in
                 </Link>
@@ -186,14 +186,14 @@ export default function RegisterPage() {
       </div>
 
       {/* Visual Section - Right Side on Desktop */}
-      <div className="hidden lg:flex flex-col relative bg-[#D4C5BE] text-[#2A402D] p-12 overflow-hidden order-1 lg:order-2">
+      <div className="hidden lg:flex flex-col relative bg-[#E41F47] text-white p-12 overflow-hidden order-1 lg:order-2">
         <div className="absolute inset-0 z-0 opacity-20">
           <Image src="/botanical-minimalist-drawing.jpg" alt="Background pattern" fill className="object-cover" priority />
         </div>
 
         <div className="relative z-10 flex flex-col h-full justify-between items-end text-right">
           <div>
-            <h1 className="font-serif text-[60px] leading-[0.9] mb-4">
+            <h1 className="text-[60px] leading-[0.9] mb-4">
               Join the
               <br />
               Movement
@@ -202,7 +202,7 @@ export default function RegisterPage() {
 
           <div className="max-w-md border-t border-[#2A402D]/20 pt-8">
             <p className="text-xl font-serif italic mb-2">"Dedicated to Creativity, Culture & Growth."</p>
-            <p className="text-sm tracking-wide opacity-80">
+            <p className="text-sm font-light tracking-wide opacity-80">
               Dispa8ch is a creative hub where brands and people come to define who they are.
             </p>
           </div>

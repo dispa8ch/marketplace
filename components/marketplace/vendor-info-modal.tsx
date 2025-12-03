@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Copy, Phone, Mail, MapPin } from "lucide-react";
-import { Iconex } from "@/components/icons/iconex";
+import Iconex from "@/components/icons/iconex";
 import { useToast } from "@/hooks/use-toast";
 
 interface Props {
@@ -54,9 +54,7 @@ export function VendorInfoModal({ vendor }: Props) {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Iconex className="mr-2 h-5 w-5">
-                <Phone className="h-5 w-5" />
-              </Iconex>
+              <Iconex icon={Phone} className="mr-2 h-5 w-5"/>
               <div>
                 <div className="font-medium">Phone</div>
                 <div className="text-sm text-muted-foreground">
@@ -65,17 +63,13 @@ export function VendorInfoModal({ vendor }: Props) {
               </div>
             </div>
             <Button variant="ghost" onClick={() => copy(vendor.phone, "Phone")}>
-              <Iconex className="mr-2 h-4 w-4">
-                <Copy className="h-4 w-4" />
-              </Iconex>
+              <Iconex icon={Copy} className="mr-2 h-4 w-4"/>
             </Button>
           </div>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Iconex className="mr-2 h-5 w-5">
-                <Mail className="h-5 w-5" />
-              </Iconex>
+              <Iconex icon={Mail} className="mr-2 h-5 w-5"/>
               <div>
                 <div className="font-medium">Email</div>
                 <div className="text-sm text-muted-foreground">
@@ -84,17 +78,13 @@ export function VendorInfoModal({ vendor }: Props) {
               </div>
             </div>
             <Button variant="ghost" onClick={() => copy(vendor.email, "Email")}>
-              <Iconex className="mr-2 h-5 w-5">
-                <Copy className="h-4 w-4" />
-              </Iconex>
+              <Iconex icon={Copy} className="mr-2 h-5 w-5"/>
             </Button>
           </div>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Iconex className="mr-2 h-5 w-5">
-                <MapPin className="h-5 w-5" />
-              </Iconex>
+              <Iconex icon={MapPin} className="mr-2 h-5 w-5"/>
               <div>
                 <div className="font-medium">Address</div>
                 <div className="text-sm text-muted-foreground">
@@ -106,9 +96,7 @@ export function VendorInfoModal({ vendor }: Props) {
               variant="ghost"
               onClick={() => copy(vendor.address, "Address")}
             >
-              <Iconex className="mr-2 h-4 w-4">
-                <Copy className="h-4 w-4" />
-              </Iconex>
+              <Iconex icon={Copy} className="mr-2 h-4 w-4"/>
             </Button>
           </div>
         </div>

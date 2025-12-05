@@ -95,11 +95,11 @@ export function VendorBottomNav() {
                     className={cn(
                       "flex flex-col items-center justify-center gap-2 p-4 rounded-xl border transition-all",
                       isActive
-                        ? "bg-[#FFEDF0] border-[#E41F47] text-[#E41F47]"
-                        : "bg-muted/20 border-transparent hover:bg-muted text-[#171717]",
+                        ? "bg-[#260e13] text-[#E41F47] font-medium"
+                        : "text-muted-foreground hover:bg-muted",
                     )}
                   >
-                    <Iconex icon={Icon} className={cn(isActive ? "text-[#E41F47] h-5 w-5" : "text-[#757575] h-5 w-5")}/>
+                    <Iconex icon={Icon} className={cn(isActive ? "text-[#E41F47] h-5 w-5" : "text-muted-foreground h-5 w-5")}/>
                     <span className="text-xs font-medium">{item.name}</span>
                   </Link>
                 )

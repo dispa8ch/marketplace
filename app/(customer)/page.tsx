@@ -10,7 +10,7 @@ import Link from "next/link";
 import productsData from "@/data/seed/products.json";
 import shopsData from "@/data/seed/shops.json";
 import { useEffect, useState } from "react";
-import supabase from "@/lib/supabase/client";
+import { getSupabaseClient } from '@/lib/supabase/client';
 import type { Customer } from "@/components/marketplace/nav-bar";
 
 const categories = [
@@ -26,6 +26,7 @@ export default function HomePage() {
   const featuredProducts = productsData.filter((p) => p.featured).slice(0, 6);
   const allProducts = productsData.slice(0, 18);
   const verifiedShops = shopsData.filter((s) => s.verified).slice(0, 7);
+  const supabase = getSupabaseClient();
 
   const [customer, setCustomer] = useState<Customer | null>(null);
 

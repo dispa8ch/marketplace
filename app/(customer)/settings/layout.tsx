@@ -4,11 +4,12 @@
 import { useEffect, useState } from 'react';
 import { NavBar } from '@/components/marketplace/nav-bar';
 import { SettingsSidebar } from '@/components/settings/settings-sidebar';
-import supabase from '@/lib/supabase/client';
+import { getSupabaseClient } from '@/lib/supabase/client';
 import type { Customer } from '@/components/marketplace/nav-bar';
 
 export default function SettingsLayout({ children }: { children: React.ReactNode }) {
   const [customer, setCustomer] = useState<Customer | null>(null);
+  const supabase = getSupabaseClient();
 
   useEffect(() => {
     const fetchUser = async () => {

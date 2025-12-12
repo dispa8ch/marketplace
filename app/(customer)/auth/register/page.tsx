@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Store, User } from "lucide-react";
-import supabase from "@/lib/supabase/client";
+import { getSupabaseClient } from '@/lib/supabase/client';
 import Iconex from "@/components/icons/iconex";
 
 /**
@@ -41,6 +41,7 @@ export default function RegisterPage() {
   const [userType, setUserType] = useState<"buyer" | "seller">("buyer");
 
   const returnUrl = searchParams.get("returnUrl") || "/";
+  const supabase = getSupabaseClient();
 
   // Redirect if already authenticated
   useEffect(() => {

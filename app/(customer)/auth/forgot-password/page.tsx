@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import supabase from "@/lib/supabase/client"; // Correct import of supabase client
+import { getSupabaseClient } from '@/lib/supabase/client';
 import { Loader2, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 
@@ -15,6 +15,7 @@ export default function ForgotPasswordPage() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
+  const supabase = getSupabaseClient();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

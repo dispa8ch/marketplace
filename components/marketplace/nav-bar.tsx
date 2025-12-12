@@ -40,7 +40,7 @@ import LogoutModal from "@/components/ui/logout-modal";
 import LocationModal from "./location-modal";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { NewProductDialog } from "./addnewproduct-modal";
-import { supabase } from "@/lib/supabase/client";
+import { getSupabaseClient } from '@/lib/supabase/client';
 
 export interface Customer {
   id: string;
@@ -58,6 +58,7 @@ interface CustomerProps {
 }
 
 export function NavBar({ customer }: CustomerProps) {
+  const supabase = getSupabaseClient();
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [isLocationOpen, setIsLocationOpen] = useState(false);

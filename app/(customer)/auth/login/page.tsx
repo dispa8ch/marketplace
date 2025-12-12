@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import supabase from "@/lib/supabase/client";
+import { getSupabaseClient } from '@/lib/supabase/client';
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 
@@ -28,6 +28,7 @@ export default function LoginPage() {
     password: "",
   });
   const returnUrl = searchParams.get("returnUrl") || "/";
+  const supabase = getSupabaseClient();
 
   // Redirect if already authenticated
   useEffect(() => {

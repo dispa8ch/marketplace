@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
-import supabase from "@/lib/supabase/client"; // Ensure correct Supabase client import
+import { getSupabaseClient } from '@/lib/supabase/client';
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -17,6 +17,7 @@ export default function ResetPasswordPage() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const email = new URLSearchParams(window.location.search).get("email") || "";
+  const supabase = getSupabaseClient();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

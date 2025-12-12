@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import supabase from "@/lib/supabase/client";
+import { getSupabaseClient } from '@/lib/supabase/client';
 import { useToast } from "@/hooks/use-toast";
 import type { Customer } from "@/components/marketplace/nav-bar";
 import {
@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils";
  * are persisted via upsert.
  */
 export default function SettingsPage() {
+  const supabase = getSupabaseClient();
   const { toast } = useToast();
   // The combined customer record (id, name, email, phone, role, address)
   const [customer, setCustomer] = useState<Customer | null>(null);

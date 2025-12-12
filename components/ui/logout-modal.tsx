@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/lib/supabase/client";
+import { getSupabaseClient } from '@/lib/supabase/client';
 import { useAuth } from "@/lib/contexts/auth-context";
 
 export function LogoutModal({
@@ -25,6 +25,7 @@ export function LogoutModal({
   const router = useRouter();
   const { toast } = useToast();
   const { logout } = useAuth();
+  const supabase = getSupabaseClient();
 
   const confirmLogout = async () => {
     setLoading(true);

@@ -1,12 +1,17 @@
-import { Package, Shirt, Gamepad2, Laptop, Heart, Sofa } from "lucide-react"
-import { NavBar } from "@/components/marketplace/nav-bar"
-import { ProductCard } from "@/components/marketplace/product-card"
-import { VendorCard } from "@/components/marketplace/vendor-card"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import Link from "next/link"
-import productsData from "@/data/seed/products.json"
-import shopsData from "@/data/seed/shops.json"
+"use client";
+
+import { Package, Shirt, Gamepad2, Laptop, Heart, Sofa } from "lucide-react";
+import { NavBar } from "@/components/marketplace/nav-bar";
+import { ProductCard } from "@/components/marketplace/product-card";
+import { VendorCard } from "@/components/marketplace/vendor-card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import Link from "next/link";
+import productsData from "@/data/seed/products.json";
+import shopsData from "@/data/seed/shops.json";
+import { useEffect, useState } from "react";
+import supabase from "@/lib/supabase/client";
+import type { Customer } from "@/components/marketplace/nav-bar";
 
 const categories = [
   { name: "Toys & Hobby", icon: Package, slug: "toys-hobby" },
@@ -15,17 +20,48 @@ const categories = [
   { name: "Health & Beauty", icon: Heart, slug: "health-beauty" },
   { name: "Furniture", icon: Sofa, slug: "furniture" },
   { name: "Fashion", icon: Shirt, slug: "fashion" },
-]
+];
 
 export default function HomePage() {
-  const featuredProducts = productsData.filter((p) => p.featured).slice(0, 6)
-  const allProducts = productsData.slice(0, 18)
-  const verifiedShops = shopsData.filter((s) => s.verified).slice(0, 7)
+  const featuredProducts = productsData.filter((p) => p.featured).slice(0, 6);
+  const allProducts = productsData.slice(0, 18);
+  const verifiedShops = shopsData.filter((s) => s.verified).slice(0, 7);
 
-  const customer = {
-    id: 'cust-001',
-    name: 'John Doe',
-    email: 'john.doe@example.com',
+  const [customer, setCustomer] = useState<Customer | null>(null);
+
+  // Fetch the current user’s profile on mount
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      // Check localStorage first for a cached profile
+      const stored = localStorage.getItem("dispa8ch_customer");
+      if (stored) {
+        setCustomer(JSON.parse(stored));
+        return;
+      }
+
+      // Otherwise, get the session and fetch from database
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (session?.user) {
+        const { data, error } = await supabase
+          .from("users")
+          .select("id, name, email, phone, role")
+          .eq("id", session.user.id)
+          .single();
+        if (!error && data) {
+          setCustomer(data);
+          localStorage.setItem("dispa8ch_customer", JSON.stringify(data));
+        }
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
+  // Optional loading state while fetching
+  if (!customer) {
+    return <p>Loading…</p>;
   }
 
   return (
@@ -33,27 +69,33 @@ export default function HomePage() {
       <NavBar customer={customer} />
       <main className="container mx-auto px-4 py-6 space-y-10">
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <Card className="md:col-span-2 bg-gradient-to-r from-primary/10 to-accent overflow-hidden">
-            <CardContent className="p-8 flex flex-col justify-center min-h-[240px]">
+          <Card className="md:col-span-2 bg-linear-to-r from-primary/10 to-accent overflow-hidden">
+            <CardContent className="p-8 flex flex-col justify-center min-h-60">
               <h2 className="text-3xl font-bold mb-2">Today&apos;s Promos</h2>
-              <p className="text-muted-foreground mb-4">Get the best offers from vendors around the world</p>
+              <p className="text-muted-foreground mb-4">
+                Get the best offers from vendors around the world
+              </p>
               <Button className="w-fit">Shop Now</Button>
             </CardContent>
           </Card>
           <div className="grid grid-cols-1 gap-4">
-            <Card className="bg-gradient-to-br from-primary/5 to-accent/50">
-              <CardContent className="p-6 flex items-center justify-center min-h-[112px]">
+            <Card className="bg-linear-to-br from-primary/5 to-accent/50">
+              <CardContent className="p-6 flex items-center justify-center min-h-28">
                 <div className="text-center">
                   <p className="font-bold text-lg">Fast Delivery</p>
-                  <p className="text-xs text-muted-foreground">Same day delivery</p>
+                  <p className="text-xs text-muted-foreground">
+                    Same day delivery
+                  </p>
                 </div>
               </CardContent>
             </Card>
-            <Card className="bg-gradient-to-br from-accent/50 to-primary/5">
-              <CardContent className="p-6 flex items-center justify-center min-h-[112px]">
+            <Card className="bg-linear-to-br from-accent/50 to-primary/5">
+              <CardContent className="p-6 flex items-center justify-center min-h-28">
                 <div className="text-center">
                   <p className="font-bold text-lg">Secure Payments</p>
-                  <p className="text-xs text-muted-foreground">100% protected</p>
+                  <p className="text-xs text-muted-foreground">
+                    100% protected
+                  </p>
                 </div>
               </CardContent>
             </Card>
@@ -64,7 +106,7 @@ export default function HomePage() {
           <h2 className="text-xl font-medium mb-4">Popular Categories</h2>
           <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
             {categories.map((category) => {
-              const Icon = category.icon
+              const Icon = category.icon;
               return (
                 <Link key={category.name} href={`/categories/${category.slug}`}>
                   <Card className="hover:border-primary transition-colors cursor-pointer">
@@ -72,11 +114,13 @@ export default function HomePage() {
                       <div className="h-12 w-12 rounded-full bg-accent flex items-center justify-center">
                         <Icon className="h-6 w-6 text-primary" />
                       </div>
-                      <p className="font-medium text-xs text-center">{category.name}</p>
+                      <p className="font-medium text-xs text-center">
+                        {category.name}
+                      </p>
                     </CardContent>
                   </Card>
                 </Link>
-              )
+              );
             })}
           </div>
         </section>
@@ -92,7 +136,10 @@ export default function HomePage() {
               </div>
             </div>
             <Link href="/flash-sale">
-              <Button variant="ghost" className="text-primary hover:text-primary">
+              <Button
+                variant="ghost"
+                className="text-primary hover:text-primary"
+              >
                 See More
               </Button>
             </Link>
@@ -121,7 +168,10 @@ export default function HomePage() {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-medium">Verified Stores</h2>
             <Link href="/shops">
-              <Button variant="ghost" className="text-primary hover:text-primary">
+              <Button
+                variant="ghost"
+                className="text-primary hover:text-primary"
+              >
                 See More
               </Button>
             </Link>
@@ -172,7 +222,8 @@ export default function HomePage() {
             <div>
               <h3 className="font-bold text-lg mb-4">dispa8ch</h3>
               <p className="text-sm text-muted-foreground">
-                Shop from trusted local businesses near you. Discover, order, and get your items delivered seamlessly.
+                Shop from trusted local businesses near you. Discover, order,
+                and get your items delivered seamlessly.
               </p>
             </div>
             <div>
@@ -239,7 +290,10 @@ export default function HomePage() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/vendor/commission" className="hover:text-primary">
+                  <Link
+                    href="/vendor/commission"
+                    className="hover:text-primary"
+                  >
                     Commission Structure
                   </Link>
                 </li>
@@ -257,5 +311,5 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

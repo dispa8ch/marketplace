@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Dispa8ch Marketplace",
+  title: "Dispa8ch",
   description: "The modern platform for local commerce.",
   icons: {
     icon: "/favicon.ico",

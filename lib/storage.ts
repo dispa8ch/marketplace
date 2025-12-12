@@ -100,6 +100,7 @@ export interface MockUser {
   name: string;
   email: string;
   phone?: string;
+  role?: string;
 }
 
 export function getAuthToken(): string | null {

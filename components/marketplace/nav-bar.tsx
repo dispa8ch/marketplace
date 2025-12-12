@@ -40,8 +40,9 @@ import LogoutModal from "@/components/ui/logout-modal";
 import LocationModal from "./location-modal";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { NewProductDialog } from "./addnewproduct-modal";
+import { supabase } from "@/lib/supabase/client";
 
-interface Customer {
+export interface Customer {
   id: string;
   name: string;
   email: string;
@@ -61,6 +62,8 @@ export function NavBar({ customer }: CustomerProps) {
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [newproductDialogOpen, setNewProductDialogOpen] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const [userRecord, setUserRecord] = useState<Customer>(customer);
 
   const [cartCount, setCartCount] = useState(0);
   const [likesCount, setLikesCount] = useState(0);
@@ -72,15 +75,64 @@ export function NavBar({ customer }: CustomerProps) {
   const [debouncedTerm, setDebouncedTerm] = useState(searchTerm);
   const router = useRouter();
 
+  // Fetch the user's name, email, phone and role from the users table (refresh user details)
   useEffect(() => {
-    // Load from localStorage
+    async function fetchUserDetails() {
+      const { data, error } = await supabase
+        .from("users")
+        .select("name, email, phone, role")
+        .eq("id", customer.id)
+        .single();
+      if (!error && data) {
+        setUserRecord((prev) => ({
+          ...prev,
+          name: data.name ?? prev.name,
+          phone: data.phone ?? prev.phone,
+          email: data.email ?? prev.email,
+        }));
+        setUserRole(data.role);
+      }
+    }
+    fetchUserDetails();
+  }, [customer.id]);
+
+  // Listen for sign‑out events to clear cache and refresh only when a real logout occurs
+  const initialLoadRef = useRef(true);
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      // Skip the first call on initial load
+      if (initialLoadRef.current) {
+        initialLoadRef.current = false;
+        return;
+      }
+      // Only reload if there was a cached user and session becomes null
+      const cached = typeof window !== "undefined"
+        ? localStorage.getItem("dispa8ch_customer")
+        : null;
+      if (!session && cached) {
+        localStorage.removeItem("dispa8ch_customer");
+        localStorage.removeItem("dispa8ch_user");
+        router.push("/");
+        // Force full reload so the navbar reflects the new state
+        window.location.reload();
+      }
+    });
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [router]);
+
+  // Load cart and likes counts from localStorage
+  useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("dispa8ch_cart") || "[]");
     const likes = JSON.parse(localStorage.getItem("dispa8ch_likes") || "[]");
     setCartCount(cart.length);
     setLikesCount(likes.length);
   }, []);
 
-  // Small in-file mock dataset for suggestions (client-only)
+  // Mock suggestions to fall back on if API is unavailable
   const MOCK_SUGGESTIONS = [
     {
       id: "p-1",
@@ -266,7 +318,7 @@ export function NavBar({ customer }: CustomerProps) {
               <div className="mr-2">
                 <Select
                   value={selectedCategory}
-                  onValueChange={(v) => setSelectedCategory(v)}
+                  onValueChange={(v: string) => setSelectedCategory(v)}
                 >
                   <SelectTrigger className="lg:w-38 w-24">
                     <SelectValue placeholder="Category" />
@@ -495,10 +547,10 @@ export function NavBar({ customer }: CustomerProps) {
                     <div>
                       <Avatar>
                         <AvatarImage
-                          src={`https://avatar.vercel.sh/${customer.email}`}
+                          src={`https://avatar.vercel.sh/${userRecord.email}`}
                         />
                         <AvatarFallback className="text-md bg-primary/10 text-primary">
-                          {(customer?.name ?? "??")
+                          {(userRecord.name ?? "??")
                             .substring(0, 2)
                             .toUpperCase()}
                         </AvatarFallback>
@@ -525,100 +577,114 @@ export function NavBar({ customer }: CustomerProps) {
                     </div>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-64">
+                <DropdownMenuContent align="end" className="w-80">
                   <div className="flex items-center gap-3 px-3 py-3">
-                    <Avatar>
+                    <Avatar className="w-14 h-14">
                       <AvatarImage
-                        src={`https://avatar.vercel.sh/${customer.email}`}
+                        src={`https://avatar.vercel.sh/${userRecord.email}`}
                       />
                       <AvatarFallback className="text-xl bg-primary/10 text-primary">
-                        {(customer?.name ?? "??").substring(0, 2).toUpperCase()}
+                        {(userRecord.name ?? "??")
+                          .substring(0, 2)
+                          .toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
-                    {/* <div className="w-12 h-12 bg-gray-200 rounded-full" /> */}
                     <div className="flex-1">
-                      <div className="font-medium">{customer.name}</div>
-                      <div className="text-sm text-muted-foreground">
-                        {customer.email}
+                      <div className="font-medium text-md">
+                        {userRecord.name}
                       </div>
+                      <div className="text-xs text-muted-foreground">
+                        {userRecord.email}
+                      </div>
+                      {userRole && (
+                        <div className="text-xs mt-2 px-2 py-1 capitalize rounded-sm bg-accent w-fit text-muted-foreground line-clamp-1">
+                          {userRole}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <DropdownMenuSeparator />
                   {/* Wishlist & Cart as menu items with counts for mobile users */}
-                  <DropdownMenuItem asChild className="lg:hidden">
-                    <Link
-                      href="/wishlist"
-                      className="flex items-center gap-2 group"
-                    >
-                      <Heart className="h-4 w-4 group-hover:text-foreground" />
-                      <span>Wishlist</span>
-                      <span className="ml-auto text-sm text-muted-foreground">
-                        {likesCount}
-                      </span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild className="lg:hidden">
-                    <Link
-                      href="/cart"
-                      className="flex items-center gap-2 group"
-                    >
-                      <ShoppingCart className="h-4 w-4 group-hover:text-foreground" />
-                      <span>Cart</span>
-                      <span className="ml-auto text-sm text-muted-foreground">
-                        {cartCount}
-                      </span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator className="lg:hidden" />
-                  <DropdownMenuItem onClick={() => setNewProductDialogOpen(true)}>
-                    <ShoppingCart className="h-4 w-4 group-hover:text-foreground" />
-                    <span>Sell</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link
-                      href="/settings/wallet"
+                    <DropdownMenuItem asChild className="lg:hidden">
+                      <Link
+                        href="/wishlist"
+                        className="flex items-center gap-2 group"
+                      >
+                        <Heart className="h-4 w-4 group-hover:text-foreground" />
+                        <span>Wishlist</span>
+                        <span className="ml-auto text-sm text-muted-foreground">
+                          {likesCount}
+                        </span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild className="lg:hidden">
+                      <Link
+                        href="/cart"
+                        className="flex items-center gap-2 group"
+                      >
+                        <ShoppingCart className="h-4 w-4 group-hover:text-foreground" />
+                        <span>Cart</span>
+                        <span className="ml-auto text-sm text-muted-foreground">
+                          {cartCount}
+                        </span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator className="lg:hidden" />
+                    {/* Conditional 'Sell' option for 'seller' role */}
+                    {userRole === "seller" && (
+                      <DropdownMenuItem
+                        onClick={() => setNewProductDialogOpen(true)}
+                      >
+                        <ShoppingCart className="h-4 w-4 group-hover:text-foreground" />
+                        <span>Sell</span>
+                      </DropdownMenuItem>
+                    )}
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/settings/wallet"
+                        className="flex items-center gap-2 cursor-pointer group"
+                      >
+                        <Wallet className="h-4 w-4 group-hover:text-foreground" />
+                        <span>Wallet</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/settings/orders"
+                        className="flex items-center gap-2 cursor-pointer group"
+                      >
+                        <Package className="h-4 w-4 group-hover:text-foreground" />
+                        <span>Orders</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/settings"
+                        className="flex items-center gap-2 cursor-pointer group"
+                      >
+                        <Settings className="h-4 w-4 group-hover:text-foreground" />
+                        <span>Settings</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onSelect={(e) => {
+                        e.preventDefault();
+                        setIsLocationOpen(true);
+                      }}
                       className="flex items-center gap-2 cursor-pointer group"
                     >
-                      <Wallet className="h-4 w-4 group-hover:text-foreground" />
-                      <span>Wallet</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link
-                      href="/settings/orders"
-                      className="flex items-center gap-2 cursor-pointer group"
+                      <MapPin className="h-4 w-4 group-hover:text-foreground" />
+                      <span>Location</span>
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem
+                      className="text-destructive flex items-center gap-2 cursor-pointer group"
+                      onClick={() => setLogoutOpen(true)}
                     >
-                      <Package className="h-4 w-4 group-hover:text-foreground" />
-                      <span>Orders</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild>
-                    <Link
-                      href="/settings"
-                      className="flex items-center gap-2 cursor-pointer group"
-                    >
-                      <Settings className="h-4 w-4 group-hover:text-foreground" />
-                      <span>Settings</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onSelect={(e) => {
-                      e.preventDefault();
-                      setIsLocationOpen(true);
-                    }}
-                    className="flex items-center gap-2 cursor-pointer group"
-                  >
-                    <MapPin className="h-4 w-4 group-hover:text-foreground" />
-                    <span>Location</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="text-destructive flex items-center gap-2 cursor-pointer group"
-                    onClick={() => setLogoutOpen(true)}
-                  >
-                    <LogOut className="h-4 w-4 text-destructive group-hover:text-foreground" />
-                    <span>Logout</span>
-                  </DropdownMenuItem>
+                      <LogOut className="h-4 w-4 text-destructive group-hover:text-foreground" />
+                      <span>Logout</span>
+                    </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
               <LogoutModal open={logoutOpen} onOpenChange={setLogoutOpen} />

@@ -17,6 +17,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>
   signup: (name: string, email: string, password: string) => Promise<void>
   forgotPassword: (email: string) => Promise<void>
+  resetPassword: (email: string, newPassword: string) => Promise<void> // Added resetPassword method
   verifyOtp: (email: string, otp: string) => Promise<void>
   loginAdmin: (email: string, password: string) => Promise<void>
   logout: () => void
@@ -74,6 +75,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     console.log(`[v0] Password reset requested for ${email}`)
   }
 
+  const resetPassword = async (email: string, newPassword: string) => {
+    // Simulate password reset
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    console.log(`[v0] Password has been reset for ${email} with new password: ${newPassword}`)
+  }
+
   const verifyOtp = async (email: string, otp: string) => {
     // Simulate API delay
     await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -117,6 +124,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         login,
         signup,
         forgotPassword,
+        resetPassword, // Provided resetPassword function
         verifyOtp,
         loginAdmin,
         logout,

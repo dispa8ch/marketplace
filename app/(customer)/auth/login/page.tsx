@@ -1,67 +1,98 @@
 "use client";
 
-import type React from "react";
-
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/lib/contexts/auth-context";
+import supabase from "@/lib/supabase/client";
 import { Loader2 } from "lucide-react";
+import Image from "next/image";
 
+/**
+ * LoginPage handles user authentication. Upon successful sign in, it
+ * retrieves the account information from the custom `users` table and
+ * personal details from the `profiles` table, then combines them and
+ * caches the result in localStorage. This ensures the correct role
+ * (buyer/seller) and personal data are displayed across the app.
+ */
 export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
-  const { login, isAuthenticated } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
   const returnUrl = searchParams.get("returnUrl") || "/";
 
+  // Redirect if already authenticated
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push(returnUrl);
-    }
-  }, [isAuthenticated, returnUrl, router]);
+    const checkSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (session) {
+        router.push(returnUrl);
+      }
+    };
+    checkSession();
+  }, [router, returnUrl]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
     try {
-      await login(formData.email, formData.password);
-
+      const { data: signInData, error: signInError } =
+        await supabase.auth.signInWithPassword({
+          email: formData.email,
+          password: formData.password,
+        });
+      if (signInError) throw signInError;
+      // Retrieve userId from the current session
+      const { data: sessionData } = await supabase.auth.getSession();
+      const userId = sessionData?.session?.user.id;
+      if (userId) {
+        // Fetch account data from users (role, email)
+        const { data: userRow, error: userErr } = await supabase
+          .from("users")
+          .select("id, email, role")
+          .eq("id", userId)
+          .single();
+        // Fetch profile data from profiles (first/last names, phone)
+        const { data: profileRow, error: profileErr } = await supabase
+          .from("profiles")
+          .select("first_name, last_name, phone")
+          .eq("id", userId)
+          .single();
+        if (!userErr && userRow) {
+          const fullName = `${profileRow?.first_name ?? ""} ${
+            profileRow?.last_name ?? ""
+          }`.trim();
+          const combined = {
+            id: userRow.id,
+            name: fullName,
+            email: userRow.email,
+            phone: profileRow?.phone ?? "",
+            role: userRow.role,
+          };
+          if (typeof window !== "undefined") {
+            localStorage.setItem("dispa8ch_customer", JSON.stringify(combined));
+          }
+        }
+      }
       toast({
         title: "Welcome back",
         description: "You have successfully signed in.",
       });
-
-      let redirect = returnUrl;
-      try {
-        const stored = window.localStorage.getItem(
-          "dispa8ch_post_login_redirect"
-        );
-        if (stored) {
-          redirect = stored;
-          window.localStorage.removeItem("dispa8ch_post_login_redirect");
-        }
-      } catch (e) {
-        // ignore
-      }
-
-      router.push(redirect);
-    } catch (error: any) {
+      router.push(returnUrl);
+    } catch (err: any) {
       toast({
         title: "Login failed",
-        description: error.message || "Please check your credentials",
+        description: err.message || "Please check your credentials",
         variant: "destructive",
       });
     } finally {
@@ -71,49 +102,29 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen grid lg:grid-cols-2 bg-background">
-      {/* Visual Section - Left Side */}
       <div className="hidden lg:flex flex-col relative bg-[#E41F47] text-white p-12 overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-40">
+        <div className="absolute inset-0 z-0 opacity-30">
           <Image
-            src="/abstract-nature-lines-elegant.jpg"
-            alt="Background pattern"
+            src="/placeholder.svg"
+            alt="Abstract lines"
             fill
             className="object-cover"
             priority
           />
         </div>
-
         <div className="relative z-10 flex flex-col h-full justify-between">
           <div>
-            <h1 className="text-[80px] leading-[0.9] mb-4">
-              DIS
-              <br />
-              PA8
-              <br />
-              CH
-            </h1>
+            <h1 className="text-[60px] leading-[0.9] mb-4">Welcome Back</h1>
             <p className="text-xl tracking-wide font-light max-w-md mt-8 border-t border-[#EBE1DC]/30 pt-8">
               Connect directly with local vendors. Logistics simplified for the
               modern world.
             </p>
           </div>
-
-          <div className="font-mono text-xs tracking-widest opacity-60">
-            © 2025 DISPA8CH MARKETPLACE
-          </div>
         </div>
       </div>
-
-      {/* Form Section - Right Side */}
       <div className="flex flex-col justify-center items-center p-6 lg:p-24 relative">
         <div className="w-full max-w-[400px] space-y-12">
-          <div className="space-y-2">
-            <h2 className="text-4xl text-primary">Sign in</h2>
-            <p className="text-muted-foreground text-sm tracking-wide">
-              Welcome back. Please enter your details.
-            </p>
-          </div>
-
+          <h2 className="text-4xl text-primary">Sign In</h2>
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="space-y-6">
               <div className="space-y-2">
@@ -127,19 +138,10 @@ export default function LoginPage() {
                     setFormData({ ...formData, email: e.target.value })
                   }
                   required
-                  className="placeholder:text-muted-foreground/40"
                 />
               </div>
               <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <Label htmlFor="password">Password</Label>
-                  <Link
-                    href="/auth/forgot-password"
-                    className="text-xs hover:text-primary transition-colors border-b border-transparent hover:border-primary"
-                  >
-                    Forgot Password?
-                  </Link>
-                </div>
+                <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
                   type="password"
@@ -149,45 +151,33 @@ export default function LoginPage() {
                     setFormData({ ...formData, password: e.target.value })
                   }
                   required
-                  className="placeholder:text-muted-foreground/40"
                 />
               </div>
             </div>
-
-            <div className="space-y-4 pt-4">
-              <Button
-                variant="default"
-                type="submit"
-                className="w-full h-12 text-sm tracking-widest font-medium bg-[#E41F47] hover:bg-[#E41F47]/90 text-white"
-                disabled={isLoading}
+            <Button
+              variant="default"
+              type="submit"
+              className="w-full h-12 text-sm tracking-widest font-medium bg-[#E41F47] hover:bg-[#E41F47]/90 text-white"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                "Sign In"
+              )}
+            </Button>
+            <div className="text-center">
+              <span className="text-xs text-muted-foreground">
+                Don't have an account?{" "}
+              </span>
+              <Link
+                href="/auth/register"
+                className="text-xs font-medium text-primary hover:underline transition-colors"
               >
-                {isLoading ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  "Sign In"
-                )}
-              </Button>
-
-              <div className="text-center">
-                <span className="text-xs text-muted-foreground">
-                  Don't have an account?{" "}
-                </span>
-                <Link
-                  href="/auth/register"
-                  className="text-xs font-medium text-primary hover:underline transition-colors decoration-1 underline-offset-4"
-                >
-                  Sign up
-                </Link>
-              </div>
+                Sign up
+              </Link>
             </div>
           </form>
-        </div>
-
-        {/* Mobile only branding */}
-        <div className="absolute top-6 left-6 lg:hidden">
-          <span className="font-serif font-bold text-xl tracking-tight">
-            DISPA8CH
-          </span>
         </div>
       </div>
     </div>

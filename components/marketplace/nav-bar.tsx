@@ -75,8 +75,12 @@ export function NavBar({ customer }: CustomerProps) {
   const [debouncedTerm, setDebouncedTerm] = useState(searchTerm);
   const router = useRouter();
 
-  // Fetch the user's name, email, phone and role from the users table (refresh user details)
+  // Determine if the current user is a guest (no ID)
+  const isGuest = !userRecord?.id;
+
+  // Fetch the user's details from the users table (only if ID exists)
   useEffect(() => {
+    if (!customer.id) return;
     async function fetchUserDetails() {
       const { data, error } = await supabase
         .from("users")
@@ -84,7 +88,7 @@ export function NavBar({ customer }: CustomerProps) {
         .eq("id", customer.id)
         .single();
       if (!error && data) {
-        setUserRecord((prev) => ({
+      setUserRecord((prev) => ({
           ...prev,
           name: data.name ?? prev.name,
           phone: data.phone ?? prev.phone,
@@ -95,34 +99,6 @@ export function NavBar({ customer }: CustomerProps) {
     }
     fetchUserDetails();
   }, [customer.id]);
-
-  // Listen for sign‑out events to clear cache and refresh only when a real logout occurs
-  const initialLoadRef = useRef(true);
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      // Skip the first call on initial load
-      if (initialLoadRef.current) {
-        initialLoadRef.current = false;
-        return;
-      }
-      // Only reload if there was a cached user and session becomes null
-      const cached = typeof window !== "undefined"
-        ? localStorage.getItem("dispa8ch_customer")
-        : null;
-      if (!session && cached) {
-        localStorage.removeItem("dispa8ch_customer");
-        localStorage.removeItem("dispa8ch_user");
-        router.push("/");
-        // Force full reload so the navbar reflects the new state
-        window.location.reload();
-      }
-    });
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [router]);
 
   // Load cart and likes counts from localStorage
   useEffect(() => {
@@ -216,7 +192,6 @@ export function NavBar({ customer }: CustomerProps) {
         params.set("search", debouncedTerm);
         params.set("limit", "6");
         const res = await apiClient.get(`/api/products?${params.toString()}`);
-        // Map products to suggestion shape
         const items = (res.products || []).map((p: any) => ({
           id: p._id,
           type: "product",
@@ -226,8 +201,7 @@ export function NavBar({ customer }: CustomerProps) {
           image: p.images && p.images[0],
         }));
         if (mounted) setLiveSuggestions(items);
-      } catch (e) {
-        // API may not be available in dev environment; ignore and rely on mock
+      } catch {
         if (mounted) setLiveSuggestions([]);
       }
     })();
@@ -298,7 +272,7 @@ export function NavBar({ customer }: CustomerProps) {
       <header className="sticky top-0 z-50 w-full border-b bg-background shadow-sm">
         <div className="w-full container lg:px-0 px-2 mx-auto">
           <div className="flex h-16 items-center justify-between gap-4">
-            {/* Logo (icon only on mobile) - single instance */}
+            {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
               <Image
                 src="/logo-icon.svg"
@@ -312,9 +286,9 @@ export function NavBar({ customer }: CustomerProps) {
               </span>
             </Link>
 
-            {/* Middle/Right grouping: categories dropdown + search (icon on mobile) + account */}
+            {/* Category dropdown + search */}
             <div className="flex items-center gap-3 ml-auto">
-              {/* Categories dropdown: visible on all sizes (compact on mobile) */}
+              {/* Category dropdown */}
               <div className="mr-2">
                 <Select
                   value={selectedCategory}
@@ -336,7 +310,7 @@ export function NavBar({ customer }: CustomerProps) {
                 </Select>
               </div>
 
-              {/* Unified search: icon-only trigger on mobile, full input on desktop. Uses a single form and suggestion handling. */}
+              {/* Unified search */}
               <div className="flex-1 min-w-0">
                 <form
                   className="relative"
@@ -351,7 +325,7 @@ export function NavBar({ customer }: CustomerProps) {
                     router.push(`/search?${params.toString()}`);
                   }}
                 >
-                  {/* Mobile: show icon-only button that opens SearchModal */}
+                  {/* Mobile: search button */}
                   <div className="sm:hidden absolute left-2 top-1/2 -translate-y-1/2">
                     <Button
                       variant="ghost"
@@ -408,7 +382,7 @@ export function NavBar({ customer }: CustomerProps) {
                       }}
                     />
 
-                    {/* Clear button for desktop input */}
+                    {/* Clear button */}
                     {searchTerm && (
                       <button
                         type="button"
@@ -420,7 +394,7 @@ export function NavBar({ customer }: CustomerProps) {
                       </button>
                     )}
 
-                    {/* Suggestions dropdown - accessible */}
+                    {/* Suggestions dropdown */}
                     {showSuggestions && filteredSuggestions.length > 0 && (
                       <div
                         ref={suggestionsRef}
@@ -490,7 +464,7 @@ export function NavBar({ customer }: CustomerProps) {
                     )}
                   </div>
 
-                  {/* Hidden input element for mobile spacing; actual mobile search opens modal */}
+                  {/* Hidden input for mobile spacing */}
                   <div className="sm:hidden">
                     <Input
                       aria-hidden
@@ -505,7 +479,7 @@ export function NavBar({ customer }: CustomerProps) {
 
             {/* Right Side Actions */}
             <div className="flex items-center gap-2">
-              {/* On small screens we hide wishlist/cart icons; they appear inside account dropdown */}
+              {/* Wishlist/cart icons for desktop */}
               <div className="hidden sm:block">
                 <Button
                   variant="ghost"
@@ -540,158 +514,166 @@ export function NavBar({ customer }: CustomerProps) {
                 </Button>
               </div>
 
-              {/* User Menu */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center gap-2">
-                    <div>
-                      <Avatar>
-                        <AvatarImage
-                          src={`https://avatar.vercel.sh/${userRecord.email}`}
-                        />
-                        <AvatarFallback className="text-md bg-primary/10 text-primary">
-                          {(userRecord.name ?? "??")
-                            .substring(0, 2)
-                            .toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-                    </div>
-
-                    {/* Replace arrow with counts on small screens */}
-                    <div className="hidden sm:inline">
-                      <ChevronDown className="h-4 w-4" />
-                    </div>
-                    <div className="sm:hidden">
-                      <div className="flex items-center gap-2">
-                        {likesCount > 0 && (
-                          <Badge className="h-5 w-5 flex items-center justify-center p-0 text-xs bg-primary">
-                            {likesCount}
-                          </Badge>
-                        )}
-                        {cartCount > 0 && (
-                          <Badge className="h-5 w-5 flex items-center justify-center p-0 text-xs bg-primary">
-                            {cartCount}
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-80">
-                  <div className="flex items-center gap-3 px-3 py-3">
-                    <Avatar className="w-14 h-14">
-                      <AvatarImage
-                        src={`https://avatar.vercel.sh/${userRecord.email}`}
-                      />
-                      <AvatarFallback className="text-xl bg-primary/10 text-primary">
-                        {(userRecord.name ?? "??")
-                          .substring(0, 2)
-                          .toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1">
-                      <div className="font-medium text-md">
-                        {userRecord.name}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {userRecord.email}
-                      </div>
-                      {userRole && (
-                        <div className="text-xs mt-2 px-2 py-1 capitalize rounded-sm bg-accent w-fit text-muted-foreground line-clamp-1">
-                          {userRole}
+              {/* Account area: show Login button for guests, dropdown for logged-in users */}
+              {isGuest ? (
+                <Button
+                  variant="ghost"
+                  className="flex items-center gap-2"
+                  onClick={() => router.push("/auth/login")}
+                >
+                  <User className="h-5 w-5" />
+                  <span className="hidden sm:inline">Login</span>
+                </Button>
+              ) : (
+                <>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" className="flex items-center gap-2">
+                        <div>
+                          <Avatar>
+                            <AvatarImage
+                              src={`https://avatar.vercel.sh/${userRecord.email}`}
+                            />
+                            <AvatarFallback className="text-md bg-primary/10 text-primary">
+                              {(userRecord.name ?? "??")
+                                .substring(0, 2)
+                                .toUpperCase()}
+                            </AvatarFallback>
+                          </Avatar>
                         </div>
-                      )}
-                    </div>
-                  </div>
-                  <DropdownMenuSeparator />
-                  {/* Wishlist & Cart as menu items with counts for mobile users */}
-                    <DropdownMenuItem asChild className="lg:hidden">
-                      <Link
-                        href="/wishlist"
-                        className="flex items-center gap-2 group"
-                      >
-                        <Heart className="h-4 w-4 group-hover:text-foreground" />
-                        <span>Wishlist</span>
-                        <span className="ml-auto text-sm text-muted-foreground">
-                          {likesCount}
-                        </span>
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild className="lg:hidden">
-                      <Link
-                        href="/cart"
-                        className="flex items-center gap-2 group"
-                      >
-                        <ShoppingCart className="h-4 w-4 group-hover:text-foreground" />
-                        <span>Cart</span>
-                        <span className="ml-auto text-sm text-muted-foreground">
-                          {cartCount}
-                        </span>
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator className="lg:hidden" />
-                    {/* Conditional 'Sell' option for 'seller' role */}
-                    {userRole === "seller" && (
-                      <DropdownMenuItem
-                        onClick={() => setNewProductDialogOpen(true)}
-                      >
-                        <ShoppingCart className="h-4 w-4 group-hover:text-foreground" />
-                        <span>Sell</span>
+                        <div className="hidden sm:inline">
+                          <ChevronDown className="h-4 w-4" />
+                        </div>
+                        <div className="sm:hidden">
+                          <div className="flex items-center gap-2">
+                            {likesCount > 0 && (
+                              <Badge className="h-5 w-5 flex items-center justify-center p-0 text-xs bg-primary">
+                                {likesCount}
+                              </Badge>
+                            )}
+                            {cartCount > 0 && (
+                              <Badge className="h-5 w-5 flex items-center justify-center p-0 text-xs bg-primary">
+                                {cartCount}
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-80">
+                      <div className="flex items-center gap-3 px-3 py-3">
+                        <Avatar className="w-14 h-14">
+                          <AvatarImage
+                            src={`https://avatar.vercel.sh/${userRecord.email}`}
+                          />
+                          <AvatarFallback className="text-xl bg-primary/10 text-primary">
+                            {(userRecord.name ?? "??")
+                              .substring(0, 2)
+                              .toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1">
+                          <div className="font-medium text-md">
+                            {userRecord.name}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {userRecord.email}
+                          </div>
+                          {userRole && (
+                            <div className="text-xs mt-2 px-2 py-1 capitalize rounded-sm bg-accent w-fit text-muted-foreground line-clamp-1">
+                              {userRole}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem asChild className="lg:hidden">
+                        <Link
+                          href="/wishlist"
+                          className="flex items-center gap-2 group"
+                        >
+                          <Heart className="h-4 w-4 group-hover:text-foreground" />
+                          <span>Wishlist</span>
+                          <span className="ml-auto text-sm text-muted-foreground">
+                            {likesCount}
+                          </span>
+                        </Link>
                       </DropdownMenuItem>
-                    )}
-                    <DropdownMenuItem asChild>
-                      <Link
-                        href="/settings/wallet"
+                      <DropdownMenuItem asChild className="lg:hidden">
+                        <Link
+                          href="/cart"
+                          className="flex items-center gap-2 group"
+                        >
+                          <ShoppingCart className="h-4 w-4 group-hover:text-foreground" />
+                          <span>Cart</span>
+                          <span className="ml-auto text-sm text-muted-foreground">
+                            {cartCount}
+                          </span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator className="lg:hidden" />
+                      {userRole === "seller" && (
+                        <DropdownMenuItem
+                          onClick={() => setNewProductDialogOpen(true)}
+                        >
+                          <ShoppingCart className="h-4 w-4 group-hover:text-foreground" />
+                          <span>Sell</span>
+                        </DropdownMenuItem>
+                      )}
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/settings/wallet"
+                          className="flex items-center gap-2 cursor-pointer group"
+                        >
+                          <Wallet className="h-4 w-4 group-hover:text-foreground" />
+                          <span>Wallet</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/settings/orders"
+                          className="flex itemscenter gap-2 cursor-pointer group"
+                        >
+                          <Package className="h-4 w-4 group-hover:text-foreground" />
+                          <span>Orders</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/settings"
+                          className="flex items-center gap-2 cursor-pointer group"
+                        >
+                          <Settings className="h-4 w-4 group-hover:text-foreground" />
+                          <span>Settings</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onSelect={(e) => {
+                          e.preventDefault();
+                          setIsLocationOpen(true);
+                        }}
                         className="flex items-center gap-2 cursor-pointer group"
                       >
-                        <Wallet className="h-4 w-4 group-hover:text-foreground" />
-                        <span>Wallet</span>
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link
-                        href="/settings/orders"
-                        className="flex items-center gap-2 cursor-pointer group"
+                        <MapPin className="h-4 w-4 group-hover:text-foreground" />
+                        <span>Location</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="text-destructive flex items-center gap-2 cursor-pointer group"
+                        onClick={() => setLogoutOpen(true)}
                       >
-                        <Package className="h-4 w-4 group-hover:text-foreground" />
-                        <span>Orders</span>
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild>
-                      <Link
-                        href="/settings"
-                        className="flex items-center gap-2 cursor-pointer group"
-                      >
-                        <Settings className="h-4 w-4 group-hover:text-foreground" />
-                        <span>Settings</span>
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onSelect={(e) => {
-                        e.preventDefault();
-                        setIsLocationOpen(true);
-                      }}
-                      className="flex items-center gap-2 cursor-pointer group"
-                    >
-                      <MapPin className="h-4 w-4 group-hover:text-foreground" />
-                      <span>Location</span>
-                    </DropdownMenuItem>
-
-                    <DropdownMenuItem
-                      className="text-destructive flex items-center gap-2 cursor-pointer group"
-                      onClick={() => setLogoutOpen(true)}
-                    >
-                      <LogOut className="h-4 w-4 text-destructive group-hover:text-foreground" />
-                      <span>Logout</span>
-                    </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              <LogoutModal open={logoutOpen} onOpenChange={setLogoutOpen} />
-              <LocationModal
-                open={isLocationOpen}
-                onOpenChange={setIsLocationOpen}
-              />
+                        <LogOut className="h-4 w-4 text-destructive group-hover:text-foreground" />
+                        <span>Logout</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  <LogoutModal open={logoutOpen} onOpenChange={setLogoutOpen} />
+                  <LocationModal
+                    open={isLocationOpen}
+                    onOpenChange={setIsLocationOpen}
+                  />
+                </>
+              )}
             </div>
           </div>
         </div>
